@@ -21,7 +21,7 @@
               <h2 class="font-semibold text-gray-900 mb-2">{{ $t('contact.info.location') }}</h2>
               <div class="text-gray-600">
                 <p class="mb-2"><strong>{{ $t('club.name') }}</strong></p>
-                <p class="mb-2">{{ $t('contact.info.address') }}</p>
+                <p class="mb-2" v-html="$t('contact.info.address', { br: '<br>' })"></p>
                 <div class="flex flex-col sm:flex-row gap-2 justify-center mt-3">
                   <a
                     href="https://maps.app.goo.gl/iM693niyT1RCcPyU9"

@@ -12,9 +12,9 @@
       :aria-expanded="isOpen"
       id="language-selector-button"
     >
-      <span class="text-lg" role="img" :aria-label="`${currentLanguage.name} flag`">
-        {{ currentLanguage.flag }}
-      </span>
+      <div class="w-5 h-4 rounded-sm overflow-hidden shadow-sm">
+        <FlagIcon :country="currentLanguage.code" />
+      </div>
       <span class="hidden sm:block">{{ currentLanguage.name }}</span>
       <svg
         class="w-4 h-4 transition-transform duration-200"
@@ -54,9 +54,9 @@
           :tabindex="isOpen ? 0 : -1"
           :aria-label="`${$t('accessibility.changeLanguageTo')} ${language.name}`"
         >
-          <span class="text-lg" role="img" :aria-label="`${language.name} flag`">
-            {{ language.flag }}
-          </span>
+          <div class="w-5 h-4 rounded-sm overflow-hidden shadow-sm flex-shrink-0">
+            <FlagIcon :country="language.code" />
+          </div>
           <span>{{ language.name }}</span>
           <svg
             v-if="currentLocale === language.code"
@@ -84,6 +84,7 @@
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { setLocale, getCurrentLocale, availableLocales } from '../i18n'
+import FlagIcon from './FlagIcon.vue'
 
 // Composables
 const { } = useI18n()

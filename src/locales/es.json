@@ -20,10 +20,11 @@
     "programs": "Programas",
     "contact": "Contacto",
     "language": "Idioma",
+    "clubName": "Arquers Club Castelldefels",
     "clubTagline": "Tiro con Arco"
   },
   "hero": {
-    "title": "Arques Club Castelldefels",
+    "title": "Arquers Club Castelldefels",
     "subtitle": "Precisión y Tradición",
     "description": "Club de tiro con arco en Castelldefels con más de 25 años de experiencia. Únete a nuestra comunidad de arqueros catalanes y descubre el arte milenario del tiro con arco deportivo.",
     "detailedDescription": "Ofrecemos cursos de formación de arqueros, entrenamientos especializados en arco recurvo y arco compuesto, y actividades para todas las edades. Desde principiantes hasta competidores olímpicos, desarrollamos tu técnica en el deporte de la arquería.",
@@ -47,9 +48,9 @@
     }
   },
   "about": {
-    "title": "Arques Club Castelldefels",
+    "title": "Arquers Club Castelldefels",
     "subtitle": "Club de Tiro con Arco en Catalunya desde 1998",
-    "description1": "El Arques Club Castelldefels es un club de tiro con arco deportivo ubicado en Castelldefels, Barcelona, con más de 25 años de experiencia en la formación de arqueros y la práctica de la arquería en Catalunya.",
+    "description1": "El Arquers Club Castelldefels es un club de tiro con arco deportivo ubicado en Castelldefels, Barcelona, con más de 25 años de experiencia en la formación de arqueros y la práctica de la arquería en Catalunya.",
     "description2": "Ofrecemos cursos de tiro con arco para principiantes y entrenamientos especializados en arco recurvo y arco compuesto. Nuestros instructores certificados por la Federació Catalana de Tir amb Arc garantizan una formación de calidad en el deporte olímpico de la arquería.",
     "stats": {
       "members": "Miembros Activos",
@@ -107,7 +108,7 @@
   },
   "contact": {
     "title": "Contacto",
-    "subtitle": "¿Interesado en formar parte del Arques Club Castelldefels? Contacta con nosotros para más información sobre nuestros cursos de tiro con arco.",
+    "subtitle": "¿Interesado en formar parte del Arquers Club Castelldefels? Contacta con nosotros para más información sobre nuestros cursos de tiro con arco.",
     "form": {
       "name": "Nombre completo",
       "email": "Correo electrónico",
@@ -122,7 +123,7 @@
     },
     "info": {
       "location": "Ubicación",
-      "address": "Canal Olímpico de Catalunya<br>Castelldefels, Catalunya",
+      "address": "Canal Olímpico de Catalunya{br}Castelldefels, Catalunya",
       "viewMaps": "Ver en Maps",
       "olympicCanal": "Canal Olímpico",
       "email": "Email Secretaría",
@@ -135,7 +136,7 @@
     }
   },
   "footer": {
-    "description": "El Arques Club Castelldefels es tu club de tiro con arco en Catalunya. Únete a nuestra comunidad de arqueros y descubre la pasión por el deporte de la arquería.",
+    "description": "El Arquers Club Castelldefels es tu club de tiro con arco en Catalunya. Únete a nuestra comunidad de arqueros y descubre la pasión por el deporte de la arquería.",
     "quickLinks": "Enlaces Rápidos",
     "contact": "Contacto",
     "social": "Redes Sociales",
@@ -152,7 +153,7 @@
     "changeLanguageTo": "Cambiar idioma a"
   },
   "seo": {
-    "metaTitle": "Arques Club Castelldefels - Club de Tiro con Arco en Catalunya | Cursos y Entrenamientos",
+    "metaTitle": "Arquers Club Castelldefels - Club de Tiro con Arco en Catalunya | Cursos y Entrenamientos",
     "metaDescription": "Club de tiro con arco en Castelldefels con más de 25 años de experiencia. Cursos de formación, entrenamientos especializados y actividades para todas las edades. ¡Descubre la arquería en Catalunya!"
   }
 }
