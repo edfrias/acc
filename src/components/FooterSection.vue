@@ -50,13 +50,25 @@
               <svg class="w-5 h-5 text-gray-400 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
               </svg>
-              <span class="text-gray-300 text-sm">{{ $t('club.emails.secretaria') }}</span>
+              <a
+                :href="`mailto:${$t('club.emails.secretaria')}`"
+                class="text-gray-300 hover:text-white text-sm underline transition-colors"
+                :aria-label="`${$t('contact.info.email')}: ${$t('club.emails.secretaria')}`"
+              >
+                {{ $t('club.emails.secretaria') }}
+              </a>
             </li>
             <li class="flex items-center">
               <svg class="w-5 h-5 text-gray-400 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
               </svg>
-              <span class="text-gray-300 text-sm">{{ $t('club.emails.junta') }}</span>
+              <a
+                :href="`mailto:${$t('club.emails.junta')}`"
+                class="text-gray-300 hover:text-white text-sm underline transition-colors"
+                :aria-label="`${$t('contact.info.emailJunta')}: ${$t('club.emails.junta')}`"
+              >
+                {{ $t('club.emails.junta') }}
+              </a>
             </li>
           </ul>
         </div>

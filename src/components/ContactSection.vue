@@ -56,7 +56,13 @@
                 </svg>
               </div>
               <h2 class="font-semibold text-gray-900 mb-2">{{ $t('contact.info.email') }}</h2>
-              <p class="text-gray-600 break-words">{{ $t('club.emails.secretaria') }}</p>
+              <a
+                :href="`mailto:${$t('club.emails.secretaria')}`"
+                class="text-blue-600 hover:text-blue-800 break-words underline transition-colors"
+                :aria-label="`${$t('contact.info.email')}: ${$t('club.emails.secretaria')}`"
+              >
+                {{ $t('club.emails.secretaria') }}
+              </a>
             </div>
 
             <div class="flex flex-col items-center text-center">
@@ -66,7 +72,13 @@
                 </svg>
               </div>
               <h2 class="font-semibold text-gray-900 mb-2">{{ $t('contact.info.emailJunta') }}</h2>
-              <p class="text-gray-600 break-words">{{ $t('club.emails.junta') }}</p>
+              <a
+                :href="`mailto:${$t('club.emails.junta')}`"
+                class="text-blue-600 hover:text-blue-800 break-words underline transition-colors"
+                :aria-label="`${$t('contact.info.emailJunta')}: ${$t('club.emails.junta')}`"
+              >
+                {{ $t('club.emails.junta') }}
+              </a>
             </div>
           </div>
 
