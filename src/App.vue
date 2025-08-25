@@ -24,10 +24,10 @@
 </template>
 
 <script setup lang="ts">
-import NavBar from './assets/components/NavBar.vue';
-import HeroSection from './assets/components/HeroSection.vue';
+import NavBar from './components/NavBar.vue';
+import HeroSection from './components/HeroSection.vue';
 import AboutSection from './assets/components/AboutSection.vue';
 // import ProgramsSection from './assets/components/ProgramsSection.vue';
-import ContactSection from './assets/components/ContactSection.vue';
-import FooterSection from './assets/components/FooterSection.vue';
+import ContactSection from './components/ContactSection.vue';
+import FooterSection from './components/FooterSection.vue';
 </script>

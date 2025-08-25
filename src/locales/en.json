@@ -1,0 +1,161 @@
+{
+  "club": {
+    "nav": {
+      "home": "Home",
+      "about": "About Us",
+      "programs": "Programs",
+      "contact": "Contact",
+      "language": "Language",
+      "clubTagline": "Archery"
+    },
+    "hero": {},
+    "social": {
+      "instagram": {
+        "url": "https://instagram.com/arquersclubc",
+        "handle": "@arquersclubc"
+      }
+    }
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About Us",
+    "programs": "Programs",
+    "contact": "Contact",
+    "language": "Language",
+    "clubName": "Arques Club Castelldefels",
+    "clubTagline": "Archery Club"
+  },
+  "hero": {
+    "title": "Arques Club Castelldefels",
+    "subtitle": "Precision and Tradition",
+    "description": "Archery club in Castelldefels with over 25 years of experience. Join our community of Catalan archers and discover the ancient art of competitive archery.",
+    "detailedDescription": "We offer archer training courses, specialized coaching in recurve and compound bows, and activities for all ages. From beginners to Olympic competitors, we develop your technique in the sport of archery.",
+    "cta": {
+      "primary": "Join Now",
+      "secondary": "Learn More"
+    },
+    "features": {
+      "courses": {
+        "title": "Training Courses",
+        "description": "Learn archery from scratch with certified instructors"
+      },
+      "location": {
+        "title": "Castelldefels Location",
+        "description": "Shooting range equipped with the latest technology in Catalonia"
+      },
+      "community": {
+        "title": "Archers Community",
+        "description": "Join tournaments, competitions and archery activities in Barcelona"
+      }
+    }
+  },
+  "about": {
+    "title": "Arques Club Castelldefels",
+    "subtitle": "Archery Club in Catalonia since 1998",
+    "description1": "Arques Club Castelldefels is a competitive archery club located in Castelldefels, Barcelona, with over 25 years of experience in archer training and archery practice in Catalonia.",
+    "description2": "We offer archery courses for beginners and specialized training in recurve and compound bows. Our instructors certified by the Catalan Archery Federation guarantee quality training in the Olympic sport of archery.",
+    "stats": {
+      "members": "Active Members",
+      "years": "Years of History",
+      "tournaments": "Tournaments Won"
+    },
+    "features": {
+      "certified": "Certified Instructors",
+      "certifiedDescription": "Trainers with international certification and years of experience",
+      "facilities": "Modern Facilities",
+      "facilitiesDescription": "Recurve bow, compound bow, traditional and field archery",
+      "community": "Active Community",
+      "competition": "Competitive Preparation",
+      "competitionDescription": "Local, regional and international tournaments"
+    }
+  },
+  "programs": {
+    "title": "Archery Courses and Programs",
+    "subtitle": "We offer archer training courses and specialized programs in recurve and compound bows for all ages, from archery initiation to competitive sports in Castelldefels, Barcelona.",
+    "courses": {
+      "beginner": {
+        "title": "Beginner Archery Course",
+        "description": "8-week basic archer training course designed for beginners. Learn the fundamental techniques of competitive archery, safety rules and professional handling of archery equipment.",
+        "duration": "8 classes of 2 hours",
+        "equipment": "Equipment included",
+        "certificate": "Official certificate",
+        "price": "Affordable price",
+        "enrollAriaLabel": "Enroll in the beginner program"
+      },
+      "intermediate": {
+        "title": "Specialized Training",
+        "description": "Advanced program for experienced archers looking to improve their technique and participate in official competitions.",
+        "technique": "Technical improvement",
+        "competition": "Competitive preparation",
+        "equipment": "Personalized equipment",
+        "coaching": "Individual training",
+        "enrollAriaLabel": "Enroll in the advanced program"
+      },
+      "youth": {
+        "title": "Youth Archery",
+        "description": "Special program designed for children and youth, focused on developing skills and values through the sport of archery.",
+        "ages": "Ages 8 to 16",
+        "safety": "Maximum safety",
+        "fun": "Fun learning",
+        "development": "Comprehensive development",
+        "enrollAriaLabel": "Enroll in the youth program"
+      }
+    },
+    "cta": {
+      "enroll": "Enroll",
+      "notFound": "Can't find the program you're looking for?",
+      "custom": "Check Our Personalized Training Sessions",
+      "info": "Request Information"
+    }
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Interested in becoming part of Arques Club Castelldefels? Contact us for more information about our archery courses.",
+    "form": {
+      "name": "Full name",
+      "email": "Email address",
+      "phone": "Phone",
+      "program": "Program of interest",
+      "message": "Message",
+      "submit": "Send Request",
+      "required": "Required field",
+      "selectProgram": "Select a program",
+      "success": "Message sent successfully!",
+      "error": "Error sending message"
+    },
+    "info": {
+      "location": "Location",
+      "address": "Olympic Canal of Catalunya<br>Castelldefels, Catalonia",
+      "viewMaps": "View in Maps",
+      "olympicCanal": "Olympic Canal",
+      "email": "Secretary Email",
+      "emailJunta": "Board Email",
+      "schedule": "Training Schedule"
+    },
+    "social": {
+      "instagram": "Follow us on Instagram @arquersclubc",
+      "facebook": "Follow us on Facebook"
+    }
+  },
+  "footer": {
+    "description": "Arques Club Castelldefels is your archery club in Catalonia. Join our community of archers and discover the passion for the sport of archery.",
+    "quickLinks": "Quick Links",
+    "contact": "Contact",
+    "social": "Social Media",
+    "rights": "All rights reserved",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use"
+  },
+  "accessibility": {
+    "skipToContent": "Skip to main content",
+    "openMenu": "Open navigation menu",
+    "closeMenu": "Close navigation menu",
+    "scrollDown": "Scroll down to see more content",
+    "languageSelector": "Language selector",
+    "changeLanguageTo": "Change language to"
+  },
+  "seo": {
+    "metaTitle": "Arques Club Castelldefels - Archery Club in Catalonia | Courses and Training",
+    "metaDescription": "Archery club in Castelldefels with over 25 years of experience. Training courses, specialized coaching and activities for all ages. Discover archery in Catalonia!"
+  }
+}
