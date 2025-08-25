@@ -2,7 +2,6 @@
   <footer class="bg-gray-900 text-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <!-- Club Info -->
         <div class="col-span-1 lg:col-span-2">
           <div class="flex items-center space-x-2 mb-4">
             <img
@@ -34,7 +33,6 @@
           </div>
         </div>
 
-        <!-- Contact Info -->
         <div>
           <h2 class="font-semibold text-lg mb-4">{{ $t('footer.contact') }}</h2>
           <ul class="space-y-3">
@@ -64,7 +62,6 @@
         </div>
       </div>
 
-      <!-- Bottom Bar -->
       <div class="border-t border-gray-800 mt-12 pt-8">
         <div class="text-center">
           <p class="text-white text-sm">

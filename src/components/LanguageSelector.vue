@@ -1,6 +1,5 @@
 <template>
   <div class="relative">
-    <!-- Botón selector de idioma -->
     <button
       ref="languageSelectorButton"
       @click="toggleDropdown"
@@ -29,7 +28,6 @@
       </svg>
     </button>
 
-    <!-- Dropdown de idiomas -->
     <div
       v-if="isOpen"
       ref="languageDropdown"
@@ -73,7 +71,6 @@
       </div>
     </div>
 
-    <!-- Overlay para cerrar dropdown -->
     <div
       v-if="isOpen"
       @click="closeDropdown"

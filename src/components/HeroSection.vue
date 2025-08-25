@@ -18,18 +18,15 @@
           </div>
         </div>
 
-        <!-- Main Heading -->
         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-white mb-6 leading-tight">
           {{ $t('hero.title') }}
           <span class="block text-yellow-500">{{ $t('hero.subtitle') }}</span>
         </h1>
 
-        <!-- Subtitle -->
         <p class="text-xl sm:text-2xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
           {{ $t('hero.description') }}
         </p>
 
-        <!-- SEO Rich Description -->
         <p class="text-lg text-white/80 mb-12 max-w-2xl mx-auto">
           {{ $t('hero.detailedDescription') }}
         </p>

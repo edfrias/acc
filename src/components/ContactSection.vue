@@ -70,7 +70,6 @@
             </div>
           </div>
 
-          <!-- Social Links -->
           <div class="mt-16 text-center">
             <h2 class="font-semibold text-gray-900 mb-6 text-xl">{{ $t('footer.social') }}</h2>
             <div class="flex justify-center">

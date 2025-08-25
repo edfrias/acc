@@ -20,7 +20,6 @@
           </a>
         </div>
 
-        <!-- Desktop Menu -->
         <div class="hidden md:block">
           <div class="ml-10 flex items-center space-x-8">
             <a
@@ -45,7 +44,6 @@
               {{ $t('nav.contact') }}
             </a>
 
-            <!-- Language Selector -->
             <LanguageSelector />
           </div>
         </div>
@@ -109,7 +107,6 @@
           {{ $t('nav.contact') }}
         </a>
 
-        <!-- Mobile Language Selector -->
         <div class="px-3 py-2">
           <LanguageSelector />
         </div>
@@ -120,7 +117,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import LanguageSelector from '../../components/LanguageSelector.vue'
+import LanguageSelector from './LanguageSelector.vue'
 
 const logoACC = '/assets/images/logo_acc.jpg';
 const isMobileMenuOpen = ref(false);
