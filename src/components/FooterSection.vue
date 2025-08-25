@@ -14,23 +14,6 @@
           <p class="text-gray-300 mb-6 max-w-md">
             {{ $t('footer.description') }}
           </p>
-
-          <div class="flex space-x-4">
-            <a
-              :href="$t('club.social.instagram.url')"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-yellow-600 transition-colors duration-200"
-              :aria-label="$t('contact.social.instagram')"
-            >
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987c6.62 0 11.987-5.367 11.987-11.987C24.014 5.367 18.637.001 12.017.001zM8.449 16.988c-1.297 0-2.448-.611-3.197-1.559-.748-.948-.748-2.122 0-3.07.749-.948 1.9-1.559 3.197-1.559s2.448.611 3.197 1.559c.748.948.748 2.122 0 3.07-.749.948-1.9 1.559-3.197 1.559zm7.138 0c-1.297 0-2.448-.611-3.197-1.559-.748-.948-.748-2.122 0-3.07.749-.948 1.9-1.559 3.197-1.559s2.448.611 3.197 1.559c.748.948.748 2.122 0 3.07-.749.948-1.9 1.559-3.197 1.559z"/>
-              </svg>
-            </a>
-            <div class="flex items-center text-gray-300 text-sm">
-              {{ $t('club.social.instagram.handle') }}
-            </div>
-          </div>
         </div>
 
         <div>
