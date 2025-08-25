@@ -5,16 +5,19 @@
         <!-- Content -->
         <div class="mb-12 lg:mb-0">
           <h2 class="text-3xl lg:text-4xl font-display font-bold text-gray-900 mb-6">
-            Sobre el Arques Club Castelldefels
+            <span class="sr-only">Información sobre el</span>Arquers Club Castelldefels
+            <span class="block text-xl font-normal text-gray-600 mt-2">Club de Tiro con Arco en Catalunya desde 1998</span>
           </h2>
           <p class="text-lg text-gray-600 mb-6 leading-relaxed">
-            El Arques Club Castelldefels es una comunidad apasionada de arqueros ubicada en el corazón de Cataluña.
-            Nos dedicamos a preservar y promover el noble arte del tiro con arco, ofreciendo un ambiente
-            acogedor y profesional para arqueros de todas las edades y niveles de experiencia en Castelldefels.
+            El <strong>Arquers Club Castelldefels</strong> es un club de <strong>tiro con arco deportivo</strong>
+            ubicado en <strong>Castelldefels, Barcelona</strong>, con más de 25 años de experiencia en la
+            <strong>formación de arqueros</strong> y la práctica de la <strong>arquería en Catalunya</strong>.
           </p>
-          <p class="text-lg text-gray-600 mb-8 leading-relaxed">
-            Realizamos diversas actividades y cursos de formación en tiro con arco, contamos con instructores
-            certificados y una comunidad vibrante que comparte la pasión por la precisión, la disciplina y la tradición catalana del tiro con arco.
+          <p class="text-lg text-gray-600 mb-6 leading-relaxed">
+            Ofrecemos <strong>cursos de tiro con arco</strong> para principiantes y entrenamientos especializados
+            en <strong>arco recurvo</strong> y <strong>arco compuesto</strong>. Nuestros instructores certificados
+            por la Federació Catalana de Tir amb Arc garantizan una formación de calidad en el deporte olímpico
+            de la arquería.
           </p>
 
           <!-- Stats -->
@@ -77,7 +80,7 @@
             <!-- Club logo image -->
             <img
               :src="logoAcc"
-              alt="Arques Club Castelldefels Logo"
+              alt="Arquers Club Castelldefels Logo"
               class="w-full h-full object-cover rounded-lg"
             />
           </div>

@@ -1,15 +1,26 @@
-# Arques Club Castelldefels - Landing Page
+# Arquers Club Castelldefels - Landing Page Oficial
 
-Una landing page moderna y accesible para el Arques Club Castelldefels, construida con Vue.js 3 y Tailwind CSS.
+Sitio web oficial del **Arquers Club Castelldefels**, club de **tiro con arco** en Castelldefels, Catalunya, construido con Vue.js 3 y optimizado para SEO.
 
-## 🏹 Características
+## 🏹 Sobre el Club
 
-- **Framework moderno**: Vue.js 3 con TypeScript
-- **Diseño responsivo**: Totalmente adaptable a dispositivos móviles y desktop
-- **Accesibilidad**: Implementa mejores prácticas de accesibilidad web (WCAG 2.1)
-- **SEO optimizado**: Meta tags, structured data y OpenGraph
-- **Styling moderno**: Tailwind CSS con componentes reutilizables
-- **Semántico**: HTML semántico para mejor SEO y accesibilidad
+El Arquers Club Castelldefels es un club deportivo especializado en **tiro con arco** ubicado en **Castelldefels, Barcelona**. Ofrecemos:
+
+- **Cursos de formación** para principiantes
+- Entrenamientos en **arco recurvo** y **arco compuesto**
+- Actividades para todas las edades
+- Participación en competiciones oficiales
+- Más de 25 años de experiencia en arquería
+
+## 🌐 Características SEO
+
+- **SEO técnico completo**: Meta tags optimizados, sitemap.xml, robots.txt
+- **Structured Data**: Schema.org markup para SportsClub y LocalBusiness
+- **OpenGraph y Twitter Cards**: Optimizado para redes sociales
+- **Core Web Vitals**: Optimizado para velocidad y rendimiento
+- **Mobile-first**: Diseño responsivo y Progressive Web App
+- **Accesibilidad**: WCAG 2.1 AA compliance
+- **Keywords targeting**: Optimizado para "tiro con arco", "arquería", "Castelldefels", "Catalunya"
 
 ## 🛠️ Tecnologías Utilizadas
 

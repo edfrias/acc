@@ -22,7 +22,7 @@
               </div>
               <h2 class="font-semibold text-gray-900 mb-2">Ubicación</h2>
               <div class="text-gray-600">
-                <p class="mb-2"><strong>Arques Club Castelldefels</strong></p>
+                <p class="mb-2"><strong>Arquers Club Castelldefels</strong></p>
                 <p class="mb-2">Canal Olímpico de Catalunya<br>Castelldefels, Cataluña</p>
                 <div class="flex flex-col sm:flex-row gap-2 justify-center mt-3">
                   <a

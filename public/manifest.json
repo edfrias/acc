@@ -1,0 +1,40 @@
+{
+  "name": "Arquers Club Castelldefels - Club de Tiro con Arco",
+  "short_name": "ACC Tiro Arco",
+  "description": "Club de tiro con arco en Castelldefels, Catalunya. Cursos de formación, entrenamientos especializados y actividades para todos los niveles.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1e3a8a",
+  "theme_color": "#2563eb",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "es",
+  "dir": "ltr",
+  "categories": [
+    "sports",
+    "education",
+    "social"
+  ],
+  "icons": [
+    {
+      "src": "/assets/images/logo_acc.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/assets/images/logo_acc.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "maskable any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/assets/images/logo_acc.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg",
+      "label": "Landing page del Arquers Club Castelldefels"
+    }
+  ]
+}

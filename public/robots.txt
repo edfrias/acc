@@ -1,0 +1,25 @@
+# robots.txt para Arquers Club Castelldefels
+# Permitir acceso a todos los motores de búsqueda
+
+User-agent: *
+Allow: /
+
+# Sitemap ubicación
+Sitemap: https://www.arquerscastelldefels.com//sitemap.xml
+
+# Optimización para motores de búsqueda específicos
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# Directivas para mejorar crawling
+Crawl-delay: 1
+
+# Información adicional
+# Sitio web: https://www.arquerscastelldefels.com/
+# Email de contacto: secretaria@arquerscastelldefels.com

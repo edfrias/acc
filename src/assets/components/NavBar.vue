@@ -2,7 +2,6 @@
   <nav class="fixed top-0 left-0 right-0 z-50 bg-white bg-opacity-95 backdrop-blur-sm border-b border-gray-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
-        <!-- Logo -->
         <div class="flex-shrink-0">
           <a
             href="#"
@@ -11,14 +10,13 @@
           >
             <img
               :src="logoACC"
-              alt="Logo Arques Club Castelldefels"
+              alt="Logo Arquers Club Castelldefels"
               class="w-8 h-8 rounded-lg object-cover"
             />
             <span class="font-display font-bold text-xl text-gray-900">Arques Club Castelldefels</span>
           </a>
         </div>
 
-        <!-- Desktop Menu -->
         <div class="hidden md:block">
           <div class="ml-10 flex items-baseline space-x-8">
             <a
@@ -58,7 +56,6 @@
           </div>
         </div>
 
-        <!-- Mobile menu button -->
         <div class="md:hidden">
           <button
             @click="toggleMobileMenu"
@@ -91,7 +88,6 @@
       </div>
     </div>
 
-    <!-- Mobile Menu -->
     <div
       v-if="isMobileMenuOpen"
       class="md:hidden bg-white border-t border-gray-200"

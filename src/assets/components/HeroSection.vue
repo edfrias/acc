@@ -1,6 +1,5 @@
 <template>
   <section class="relative bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 min-h-screen flex items-center justify-center">
-    <!-- Background Pattern -->
     <div class="absolute inset-0 bg-black opacity-20"></div>
     <div
       class="absolute inset-0 bg-repeat"
@@ -9,30 +8,32 @@
 
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <div class="max-w-4xl mx-auto">
-        <!-- Logo/Icon -->
         <div class="mb-8">
           <div class="inline-flex items-center justify-center w-20 h-20 bg-white bg-opacity-10 rounded-full mb-6 p-2">
             <img
               :src="logoACC"
-              alt="Logo Arques Club Castelldefels"
+              alt="Logo Arquers Club Castelldefels"
               class="w-full h-full rounded-full object-cover"
             />
           </div>
         </div>
 
-        <!-- Main Heading -->
         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-white mb-6 leading-tight">
-          Arques Club Castelldefels
+          Arquers Club Castelldefels
           <span class="block text-yellow-500">Precisión y Tradición</span>
         </h1>
 
-        <!-- Subtitle -->
-        <p class="text-xl sm:text-2xl text-white/90 mb-16 max-w-3xl mx-auto leading-relaxed">
-          Únete a nuestra comunidad de arqueros catalanes y descubre el arte milenario del tiro con arco en Castelldefels.
-          Ofrecemos entrenamientos y cursos de formación para todos los niveles, desde principiantes hasta competidores expertos.
+        <p class="text-xl sm:text-2xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
+          <span class="font-semibold">Club de tiro con arco en Castelldefels</span> con más de 25 años de experiencia.
+          Únete a nuestra comunidad de arqueros catalanes y descubre el arte milenario del <span class="font-semibold">tiro con arco deportivo</span>.
         </p>
 
-        <!-- Features Preview -->
+        <p class="text-lg text-white/80 mb-12 max-w-2xl mx-auto">
+          Ofrecemos <span class="font-semibold">cursos de formación de arqueros</span>, entrenamientos especializados en
+          <span class="font-semibold">arco recurvo y arco compuesto</span>, y actividades para todas las edades.
+          Desde principiantes hasta competidores olímpicos, desarrollamos tu técnica en el deporte de la arquería.
+        </p>
+
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
           <div class="text-center">
             <div class="inline-flex items-center justify-center w-12 h-12 bg-yellow-500 rounded-full mb-4">
@@ -40,8 +41,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-4m-5 0H3m2 0h4M9 7h6m-6 4h6m-2 8h.01"/>
               </svg>
             </div>
-            <h2 class="text-lg font-semibold text-white mb-2">Entrenamientos Personalizados</h2>
-            <p class="text-white/80">Programas adaptados a tu nivel y objetivos</p>
+            <h2 class="text-lg font-semibold text-white mb-2">Cursos de Formación</h2>
+            <p class="text-white/80">Aprende tiro con arco desde cero con instructores certificados</p>
           </div>
 
           <div class="text-center">
@@ -51,8 +52,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
               </svg>
             </div>
-            <h2 class="text-lg font-semibold text-white mb-2">Instalaciones Modernas</h2>
-            <p class="text-white/80">Campo de tiro equipado con la última tecnología</p>
+            <h2 class="text-lg font-semibold text-white mb-2">Ubicación Castelldefels</h2>
+            <p class="text-white/80">Campo de tiro equipado con la última tecnología en Catalunya</p>
           </div>
 
           <div class="text-center">
@@ -61,14 +62,13 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"/>
               </svg>
             </div>
-            <h2 class="text-lg font-semibold text-white mb-2">Comunidad Activa</h2>
-            <p class="text-white/80">Únete a eventos, competiciones y actividades sociales</p>
+            <h2 class="text-lg font-semibold text-white mb-2">Comunidad de Arqueros</h2>
+            <p class="text-white/80">Únete a torneos, competiciones y actividades de arquería en Barcelona</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Scroll Indicator -->
     <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2">
       <button
         @click="scrollToSection('sobre-nosotros')"

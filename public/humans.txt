@@ -1,0 +1,30 @@
+/* TEAM */
+	Club: Arquers Club Castelldefels
+	Site: https://www.arquerscastelldefels.com/
+	Twitter: @ArquersClubC
+	Instagram: @arquersclubc
+	Location: Castelldefels, Catalunya, España
+
+/* CLUB INFO */
+	Fundado: 1998
+	Especialidad: Tiro con Arco Deportivo
+	Modalidades: Arco Recurvo, Arco Compuesto
+	Federación: Federació Catalana de Tir amb Arc
+
+/* CONTACTO */
+	Email: secretaria@arquerscastelldefels.com
+	Email Junta: junta@arquerscastelldefels.com
+	Ubicación: Castelldefels, Barcelona, Catalunya
+
+/* SITE */
+	Última actualización: 2025/08/25
+	Lenguaje: Español
+	Doctype: HTML5
+	Framework: Vue.js 3
+	CSS: Tailwind CSS
+	IDE: Visual Studio Code
+
+/* KEYWORDS */
+	tiro con arco, arquería, Castelldefels, Catalunya, Barcelona,
+	arco recurvo, arco compuesto, cursos formación arqueros,
+	club deportivo, deporte olímpico, precisión, disciplina

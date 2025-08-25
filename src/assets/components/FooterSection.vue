@@ -7,10 +7,10 @@
           <div class="flex items-center space-x-2 mb-4">
             <img
               :src="logoACC"
-              alt="Logo Arques Club Castelldefels"
+              alt="Logo Arquers Club Castelldefels"
               class="w-8 h-8 rounded-lg object-cover"
             />
-            <span class="font-display font-bold text-xl">Arques Club Castelldefels</span>
+            <span class="font-display font-bold text-xl">Arquers Club Castelldefels</span>
           </div>
           <p class="text-gray-300 mb-6 max-w-md">
             Comunidad catalana apasionada por el tiro con arco en Castelldefels.
@@ -46,7 +46,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
               </svg>
               <span class="text-gray-300 text-sm">
-                Arques Club Castelldefels<br>
+                Arquers Club Castelldefels<br>
                 Castelldefels, Cataluña
               </span>
             </li>
@@ -70,7 +70,7 @@
       <div class="border-t border-gray-800 mt-12 pt-8">
         <div class="text-center">
           <p class="text-white text-sm">
-            &copy; {{ currentYear }} Arques Club Castelldefels. Todos los derechos reservados.
+            &copy; {{ currentYear }} Arquers Club Castelldefels. Todos los derechos reservados.
           </p>
         </div>
       </div>

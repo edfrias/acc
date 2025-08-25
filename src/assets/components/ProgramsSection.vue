@@ -4,17 +4,17 @@
       <!-- Section Header -->
       <div class="text-center mb-16">
         <h2 class="text-3xl lg:text-4xl font-display font-bold text-gray-900 mb-4">
-          Nuestros Programas
+          Cursos y Programas de Tiro con Arco
         </h2>
         <p class="text-lg text-gray-600 max-w-3xl mx-auto">
-          Ofrecemos una amplia variedad de programas diseñados para arqueros de todos los niveles,
-          desde principiantes hasta competidores avanzados.
+          Ofrecemos <strong>cursos de formación de arqueros</strong> y programas especializados en
+          <strong>arco recurvo</strong> y <strong>arco compuesto</strong> para todas las edades,
+          desde <strong>iniciación al tiro con arco</strong> hasta <strong>competición deportiva</strong>
+          en Castelldefels, Barcelona.
         </p>
       </div>
 
-      <!-- Programs Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Beginners Program -->
         <article class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
           <div class="p-6">
             <div class="inline-flex items-center justify-center w-12 h-12 bg-blue-100 rounded-lg mb-4">
@@ -22,10 +22,11 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C20.832 18.477 19.246 18 17.5 18c-1.746 0-3.332.477-4.5 1.253"/>
               </svg>
             </div>
-            <h2 class="text-xl font-semibold text-gray-900 mb-3">Iniciación al Tiro con Arco</h2>
+            <h2 class="text-xl font-semibold text-gray-900 mb-3">Curso de Iniciación al Tiro con Arco</h2>
             <p class="text-gray-600 mb-4">
-              Curso básico de 8 semanas diseñado para principiantes. Aprende las técnicas fundamentales,
-              seguridad y manejo del equipo.
+              <strong>Curso básico de formación de arqueros</strong> de 8 semanas diseñado para principiantes.
+              Aprende las técnicas fundamentales del <strong>tiro con arco deportivo</strong>,
+              normas de seguridad y manejo profesional del equipo de arquería.
             </p>
             <ul class="text-sm text-gray-600 space-y-2 mb-6">
               <li class="flex items-center">
@@ -59,7 +60,6 @@
           </div>
         </article>
 
-        <!-- Intermediate Program -->
         <article class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
           <div class="p-6">
             <div class="inline-flex items-center justify-center w-12 h-12 bg-amber-100 rounded-lg mb-4">
@@ -104,7 +104,6 @@
           </div>
         </article>
 
-        <!-- Kids Program -->
         <article class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
           <div class="p-6">
             <div class="inline-flex items-center justify-center w-12 h-12 bg-green-100 rounded-lg mb-4">
@@ -150,7 +149,6 @@
         </article>
       </div>
 
-      <!-- Call to Action -->
       <div class="text-center mt-12">
         <p class="text-lg text-gray-600 mb-6">
           ¿No encuentras el programa que buscas?
@@ -163,6 +161,4 @@
   </section>
 </template>
 
-<script setup lang="ts">
-// Component logic can be added here if needed
-</script>
+<script setup lang="ts"></script>
