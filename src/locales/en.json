@@ -27,7 +27,7 @@
     "title": "Arquers Club Castelldefels",
     "subtitle": "Precision and Tradition",
     "description": "Archery club in Castelldefels with over 25 years of experience. Join our community of Catalan archers and discover the ancient art of sport archery.",
-    "detailedDescription": "We offer archer training courses, specialized training in recurve bow and compound bow, and activities for all ages. From beginners to Olympic competitors, we develop your technique in the sport of archery.",
+    "detailedDescription": "We offer archer training courses, specialized training in recurve bow, compound bow, traditional bow and barebow, and activities for all ages. From beginners to Olympic competitors, we develop your technique in the sport of archery.",
     "cta": {
       "primary": "Join Now",
       "secondary": "More Information"
@@ -35,7 +35,7 @@
     "features": {
       "courses": {
         "title": "Training Courses",
-        "description": "Learn archery from scratch with certified instructors"
+  "description": "Learn archery from scratch with officially approved ROPE instructors"
       },
       "location": {
         "title": "Castelldefels Location",
@@ -51,15 +51,16 @@
     "title": "Arquers Club Castelldefels",
     "subtitle": "Archery Club in Catalonia since 1998",
     "description1": "The Arquers Club Castelldefels is a sport archery club located in Castelldefels, Barcelona, with more than 25 years of experience in archer training and the practice of archery in Catalonia.",
-    "description2": "We offer archery courses for beginners and specialized training in recurve bow and compound bow. Our instructors certified by the Catalan Archery Federation guarantee quality training in the Olympic sport of archery.",
+    "description2": "We offer archery courses for beginners and specialized training in recurve bow, compound bow, traditional bow and barebow. Our instructors certified by the Catalan Archery Federation and the Royal Spanish Archery Federation guarantee quality training in the Olympic sport of archery.",
     "stats": {
       "members": "Active Members",
       "years": "Years of History",
-      "tournaments": "Tournaments Won"
+      "medals": "Medals Achieved",
+      "records": "Regional Records and National Marks"
     },
     "features": {
-      "certified": "Certified Instructors",
-      "certifiedDescription": "Trainers with international certification and years of experience",
+  "certified": "Officially approved ROPE Instructors",
+  "certifiedDescription": "Trainers officially approved by ROPE and years of experience",
       "facilities": "Modern Facilities",
       "facilitiesDescription": "Recurve bow, compound, traditional and field archery",
       "community": "Active Community",
@@ -68,41 +69,36 @@
     }
   },
   "programs": {
-    "title": "Archery Courses and Programs",
-    "subtitle": "We offer archer training courses and specialized programs in recurve bow and compound bow for all ages, from archery initiation to sports competition in Castelldefels, Barcelona.",
+    "title": "Archery Initiation Course",
+  "subtitle": "Federated sport by the Catalan Archery Federation and the Royal Spanish Archery Federation. We offer certified training at the Olympic Canal of Catalonia facilities. All equipment and insurance during classes are included.",
     "courses": {
       "beginner": {
-        "title": "Archery Initiation Course",
-        "description": "Basic 8-week archer training course designed for beginners. Learn the fundamental techniques of sport archery, safety rules and professional handling of archery equipment.",
-        "duration": "8 classes of 2 hours",
-        "equipment": "Equipment included",
-        "certificate": "Participation certificate",
-        "price": "Affordable price",
-        "enrollAriaLabel": "Enroll in the initiation program"
+        "title": "Initiation Course - Adults",
+        "description": "Federated sport requiring aptitude certificate. Complete course for adults with training in barebow, instinctive, traditional and recurve/Olympic archery.",
+        "duration": "7 classes of 2 hours",
+        "modalities": "Barebow, instinctive, traditional and recurve",
+        "includes": "Material and license included",
+        "certificate": "Aptitude certificate",
+        "enrollAriaLabel": "Enroll in the adult initiation course"
       },
-      "intermediate": {
-        "title": "Specialized Training",
-        "description": "Advanced program for experienced archers who seek to improve their technique and participate in official competitions.",
-        "technique": "Technical improvement",
-        "competition": "Competitive preparation",
-        "equipment": "Personalized equipment",
-        "coaching": "Individual training",
-        "enrollAriaLabel": "Enroll in the improvement program"
-      },
-      "youth": {
-        "title": "Youth Archery",
-        "description": "Special program designed for children and youth, focused on developing skills and values through the sport of archery.",
-        "ages": "From 8 to 16 years",
-        "safety": "Maximum safety",
-        "fun": "Fun learning",
-        "development": "Comprehensive development",
-        "enrollAriaLabel": "Enroll in the junior program"
+      "junior": {
+        "title": "Initiation Course - Junior",
+        "description": "Specialized course for youth from 15 years old. Complete training with certified instructor at the Olympic Canal facilities.",
+        "ages": "From 15 years old",
+        "duration": "5 classes of 2 hours",
+        "includes": "Material and license included",
+        "certificate": "Aptitude certificate",
+        "enrollAriaLabel": "Enroll in the junior course"
       }
+    },
+    "freeClass": {
+      "title": "Free Promotional Class",
+      "description": "As is customary in our club, we offer a free promotional class so you can experience the sport directly before starting the course."
     },
     "cta": {
       "enroll": "Enroll",
-      "notFound": "Can't find the program you're looking for?",
-      "custom": "Check Our Personalized Training",
+      "notFound": "Interested in learning more?",
+      "custom": "Book your Free Promotional Class",
       "info": "Request Information"
     }
   },

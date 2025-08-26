@@ -27,7 +27,7 @@
     "title": "Arquers Club Castelldefels",
     "subtitle": "Precisión y Tradición",
     "description": "Club de tiro con arco en Castelldefels con más de 25 años de experiencia. Únete a nuestra comunidad de arqueros catalanes y descubre el arte milenario del tiro con arco deportivo.",
-    "detailedDescription": "Ofrecemos cursos de formación de arqueros, entrenamientos especializados en arco recurvo y arco compuesto, y actividades para todas las edades. Desde principiantes hasta competidores olímpicos, desarrollamos tu técnica en el deporte de la arquería.",
+    "detailedDescription": "Ofrecemos cursos de formación de arqueros, entrenamientos especializados en arco recurvo, arco compuesto, arco tradicional y arco desnudo, y actividades para todas las edades. Desde principiantes hasta competidores olímpicos, desarrollamos tu técnica en el deporte de la arquería.",
     "cta": {
       "primary": "Únete Ahora",
       "secondary": "Más Información"
@@ -35,7 +35,7 @@
     "features": {
       "courses": {
         "title": "Cursos de Formación",
-        "description": "Aprende tiro con arco desde cero con instructores certificados"
+  "description": "Aprende tiro con arco desde cero con instructores homologados oficial de la ROPE"
       },
       "location": {
         "title": "Ubicación Castelldefels",
@@ -51,15 +51,16 @@
     "title": "Arquers Club Castelldefels",
     "subtitle": "Club de Tiro con Arco en Catalunya desde 1998",
     "description1": "El Arquers Club Castelldefels es un club de tiro con arco deportivo ubicado en Castelldefels, Barcelona, con más de 25 años de experiencia en la formación de arqueros y la práctica de la arquería en Catalunya.",
-    "description2": "Ofrecemos cursos de tiro con arco para principiantes y entrenamientos especializados en arco recurvo y arco compuesto. Nuestros instructores certificados por la Federació Catalana de Tir amb Arc garantizan una formación de calidad en el deporte olímpico de la arquería.",
+    "description2": "Ofrecemos cursos de tiro con arco para principiantes y entrenamientos especializados en arco recurvo, arco compuesto, arco tradicional y arco desnudo. Nuestros instructores certificados por la Federación Catalana y la Real Federación Española de Tiro con Arco garantizan una formación de calidad en el deporte olímpico de la arquería.",
     "stats": {
       "members": "Miembros Activos",
       "years": "Años de Historia",
-      "tournaments": "Torneos Ganados"
+      "medals": "Medallas Conseguidas",
+      "records": "Records Autonómicos y Plusmarcas"
     },
     "features": {
-      "certified": "Instructores Certificados",
-      "certifiedDescription": "Entrenadores con certificación internacional y años de experiencia",
+  "certified": "Instructores homologados oficial de la ROPE",
+  "certifiedDescription": "Entrenadores homologados oficial de la ROPE y años de experiencia",
       "facilities": "Instalaciones Modernas",
       "facilitiesDescription": "Arco recurvo, compuesto, tradicional y tiro de campo",
       "community": "Comunidad Activa",
@@ -68,41 +69,36 @@
     }
   },
   "programs": {
-    "title": "Cursos y Programas de Tiro con Arco",
-    "subtitle": "Ofrecemos cursos de formación de arqueros y programas especializados en arco recurvo y arco compuesto para todas las edades, desde iniciación al tiro con arco hasta competición deportiva en Castelldefels, Barcelona.",
+    "title": "Curso de Iniciación al Tiro con Arco",
+  "subtitle": "Deporte federado por la Federación Catalana y la Real Federación Española de Tiro con Arco. Ofrecemos formación certificada en las instalaciones del Canal Olímpico de Catalunya. Se incluye todo el material y el seguro durante las clases.",
     "courses": {
       "beginner": {
-        "title": "Curso de Iniciación al Tiro con Arco",
-        "description": "Curso básico de formación de arqueros de 8 semanas diseñado para principiantes. Aprende las técnicas fundamentales del tiro con arco deportivo, normas de seguridad y manejo profesional del equipo de arquería.",
-        "duration": "8 clases de 2 horas",
-        "equipment": "Equipo incluido",
-        "certificate": "Certificado de participación",
-        "price": "Precio accesible",
-        "enrollAriaLabel": "Inscribirse al programa de iniciación"
+        "title": "Curso de Iniciación - Adultos",
+        "description": "Deporte federado que requiere certificado de aptitud. Curso completo para adultos con formación en arco desnudo, instintivo, tradicional y recurvo/olímpico.",
+        "duration": "7 clases de 2 horas",
+        "modalities": "Arco desnudo, instintivo, tradicional y recurvo",
+        "includes": "Material y licencia incluidos",
+        "certificate": "Certificado de aptitud",
+        "enrollAriaLabel": "Inscribirse al curso de iniciación para adultos"
       },
-      "intermediate": {
-        "title": "Entrenamientos Especializados",
-        "description": "Programa avanzado para arqueros con experiencia que buscan mejorar su técnica y participar en competiciones oficiales.",
-        "technique": "Perfeccionamiento técnico",
-        "competition": "Preparación competitiva",
-        "equipment": "Equipo personalizado",
-        "coaching": "Entrenamiento individual",
-        "enrollAriaLabel": "Inscribirse al programa de perfeccionamiento"
-      },
-      "youth": {
-        "title": "Arquería para Jóvenes",
-        "description": "Programa especial diseñado para niños y jóvenes, enfocado en el desarrollo de habilidades y valores a través del deporte de la arquería.",
-        "ages": "De 8 a 16 años",
-        "safety": "Máxima seguridad",
-        "fun": "Aprendizaje divertido",
-        "development": "Desarrollo integral",
-        "enrollAriaLabel": "Inscribirse al programa junior"
+      "junior": {
+        "title": "Curso de Iniciación - Junior",
+        "description": "Curso especializado para jóvenes a partir de 15 años. Formación completa con técnico homologado en las instalaciones del Canal Olímpico.",
+        "ages": "A partir de 15 años",
+        "duration": "5 clases de 2 horas",
+        "includes": "Material y licencia incluidos",
+        "certificate": "Certificado de aptitud",
+        "enrollAriaLabel": "Inscribirse al curso junior"
       }
+    },
+    "freeClass": {
+      "title": "Clase Promocional Gratuita",
+      "description": "Como es costumbre en nuestro club, ofrecemos una clase promocional gratuita para que conozcas el deporte de forma directa antes de iniciar el curso."
     },
     "cta": {
       "enroll": "Inscribirse",
-      "notFound": "¿No encuentras el programa que buscas?",
-      "custom": "Consulta Nuestros Entrenamientos Personalizados",
+      "notFound": "¿Interesado en conocer más?",
+      "custom": "Reserva tu Clase Promocional Gratuita",
       "info": "Solicitar Información"
     }
   },

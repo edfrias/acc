@@ -14,18 +14,22 @@
             {{ $t('about.description2') }}
           </p>
 
-          <div class="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
             <div class="text-center">
-              <div class="text-3xl font-bold text-blue-600 mb-2">300+</div>
+              <div class="text-3xl font-bold text-blue-600 mb-2">100+</div>
               <div class="text-sm text-gray-600 font-medium">{{ $t('about.stats.members') }}</div>
             </div>
             <div class="text-center">
               <div class="text-3xl font-bold text-blue-600 mb-2">26</div>
               <div class="text-sm text-gray-600 font-medium">{{ $t('about.stats.years') }}</div>
             </div>
-            <div class="text-center col-span-2 md:col-span-1">
-              <div class="text-3xl font-bold text-blue-600 mb-2">50+</div>
-              <div class="text-sm text-gray-600 font-medium">{{ $t('about.stats.tournaments') }}</div>
+            <div class="text-center">
+              <div class="text-3xl font-bold text-blue-600 mb-2">150+</div>
+              <div class="text-sm text-gray-600 font-medium">{{ $t('about.stats.medals') }}</div>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl font-bold text-blue-600 mb-2">16</div>
+              <div class="text-sm text-gray-600 font-medium">{{ $t('about.stats.records') }}</div>
             </div>
           </div>
 
