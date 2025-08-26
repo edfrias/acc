@@ -3,6 +3,16 @@
     "name": "Arquers Club Castelldefels",
     "fullName": "Arquers Club Castelldefels",
     "location": "Castelldefels, Catalonia",
+    "info": {
+      "location": "Location",
+      "address": "Olympic Canal of Catalonia{br}Castelldefels, Catalonia",
+      "viewMaps": "View on Maps",
+      "olympicCanal": "Olympic Canal",
+      "email": "Contact Emails",
+      "whatsapp": "WhatsApp",
+      "whatsappMessage": "Send us a message to WhatsApp number:",
+      "schedule": "Training Schedule"
+    },
     "emails": {
       "secretaria": "secretaria@arquerscastelldefels.com",
       "junta": "junta@arquerscastelldefels.com"
@@ -119,11 +129,12 @@
     },
     "info": {
       "location": "Location",
-      "address": "Olympic Canal of Catalunya{br}Castelldefels, Catalunya",
+      "address": "Olympic Canal of Catalonia{br}Castelldefels, Catalonia",
       "viewMaps": "View on Maps",
       "olympicCanal": "Olympic Canal",
-      "email": "Secretary Email",
-      "emailJunta": "Board Email",
+      "email": "Contact Emails",
+      "whatsapp": "WhatsApp",
+      "whatsappMessage": "Send us a message to WhatsApp number:",
       "schedule": "Training Schedule"
     },
     "social": {

@@ -122,8 +122,9 @@
       "address": "Canal Olímpico de Catalunya{br}Castelldefels, Catalunya",
       "viewMaps": "Ver en Maps",
       "olympicCanal": "Canal Olímpico",
-      "email": "Email Secretaría",
-      "emailJunta": "Email Junta",
+      "email": "Emails de Contacto",
+      "whatsapp": "WhatsApp",
+      "whatsappMessage": "Escríbenos un mensaje al número de WhatsApp:",
       "schedule": "Horarios de Entrenamiento"
     },
     "social": {

@@ -29,29 +29,37 @@
                 {{ $t('club.location') }}
               </span>
             </li>
-            <li class="flex items-center">
-              <svg class="w-5 h-5 text-gray-400 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <li class="flex items-start">
+              <svg class="w-5 h-5 text-gray-400 mt-0.5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
               </svg>
-              <a
-                :href="'mailto:' + getRawTranslation('club.emails.secretaria')"
-                class="text-gray-300 hover:text-white text-sm underline transition-colors"
-                :aria-label="$t('contact.info.email') + ': ' + getRawTranslation('club.emails.secretaria')"
-              >
-                {{ getRawTranslation('club.emails.secretaria') }}
-              </a>
+              <div class="text-gray-300 text-sm">
+                <a
+                  :href="'mailto:' + getRawTranslation('club.emails.secretaria')"
+                  class="text-gray-300 hover:text-white underline transition-colors block"
+                  :aria-label="$t('contact.info.email') + ': ' + getRawTranslation('club.emails.secretaria')"
+                >
+                  {{ getRawTranslation('club.emails.secretaria') }}
+                </a>
+                <a
+                  :href="'mailto:' + getRawTranslation('club.emails.junta')"
+                  class="text-gray-300 hover:text-white underline transition-colors block"
+                  :aria-label="$t('contact.info.email') + ': ' + getRawTranslation('club.emails.junta')"
+                >
+                  {{ getRawTranslation('club.emails.junta') }}
+                </a>
+              </div>
             </li>
-            <li class="flex items-center">
-              <svg class="w-5 h-5 text-gray-400 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            <li class="flex items-start">
+              <svg class="w-5 h-5 text-gray-400 mt-0.5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8c0-1.104-.896-2-2-2H9C7.896 6 7 6.896 7 8v8c0 1.104.896 2 2 2h6c1.104 0 2-.896 2-2V8z"/>
+                <circle cx="12" cy="12" r="3"/>
               </svg>
-              <a
-                :href="'mailto:' + getRawTranslation('club.emails.junta')"
-                class="text-gray-300 hover:text-white text-sm underline transition-colors"
-                :aria-label="$t('contact.info.emailJunta') + ': ' + getRawTranslation('club.emails.junta')"
-              >
-                {{ getRawTranslation('club.emails.junta') }}
-              </a>
+              <div class="text-gray-300 text-sm">
+                <div class="mb-1">{{ $t('contact.info.whatsapp') }}</div>
+                <div class="font-semibold">+34 606 75 06 39</div>
+                <div class="font-semibold">+34 666 94 18 45</div>
+              </div>
             </li>
           </ul>
         </div>

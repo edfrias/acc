@@ -56,29 +56,37 @@
                 </svg>
               </div>
               <h2 class="font-semibold text-gray-900 mb-2">{{ $t('contact.info.email') }}</h2>
-              <a
-                :href="'mailto:' + getRawTranslation('club.emails.secretaria')"
-                class="text-blue-800 hover:text-blue-900 break-words underline transition-colors"
-                :aria-label="$t('contact.info.email') + ': ' + getRawTranslation('club.emails.secretaria')"
-              >
-                {{ getRawTranslation('club.emails.secretaria') }}
-              </a>
+              <div class="text-gray-600">
+                <a
+                  :href="'mailto:' + getRawTranslation('club.emails.secretaria')"
+                  class="text-blue-800 hover:text-blue-900 break-words underline transition-colors"
+                  :aria-label="$t('contact.info.email') + ': ' + getRawTranslation('club.emails.secretaria')"
+                >
+                  {{ getRawTranslation('club.emails.secretaria') }}
+                </a>
+                <br />
+                <a
+                  :href="'mailto:' + getRawTranslation('club.emails.junta')"
+                  class="text-blue-800 hover:text-blue-900 break-words underline transition-colors"
+                  :aria-label="$t('contact.info.email') + ': ' + getRawTranslation('club.emails.junta')"
+                >
+                  {{ getRawTranslation('club.emails.junta') }}
+                </a>
+              </div>
             </div>
 
             <div class="flex flex-col items-center text-center">
-              <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8c0-1.104-.896-2-2-2H9C7.896 6 7 6.896 7 8v8c0 1.104.896 2 2 2h6c1.104 0 2-.896 2-2V8z"/>
+                  <circle cx="12" cy="12" r="3"/>
                 </svg>
               </div>
-              <h2 class="font-semibold text-gray-900 mb-2">{{ $t('contact.info.emailJunta') }}</h2>
-              <a
-                :href="'mailto:' + getRawTranslation('club.emails.junta')"
-                class="text-blue-800 hover:text-blue-900 break-words underline transition-colors"
-                :aria-label="$t('contact.info.emailJunta') + ': ' + getRawTranslation('club.emails.junta')"
-              >
-                {{ getRawTranslation('club.emails.junta') }}
-              </a>
+              <h2 class="font-semibold text-gray-900 mb-2">{{ $t('contact.info.whatsapp') }}</h2>
+              <div class="text-gray-600">
+                {{ $t('contact.info.whatsappMessage') }}<br />
+                <strong>+34 606 75 06 39</strong> / <strong>+34 666 94 18 45</strong>
+              </div>
             </div>
           </div>
 
