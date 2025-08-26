@@ -34,11 +34,11 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
               </svg>
               <a
-                :href="`mailto:${$t('club.emails.secretaria')}`"
+                :href="'mailto:' + getRawTranslation('club.emails.secretaria')"
                 class="text-gray-300 hover:text-white text-sm underline transition-colors"
-                :aria-label="`${$t('contact.info.email')}: ${$t('club.emails.secretaria')}`"
+                :aria-label="$t('contact.info.email') + ': ' + getRawTranslation('club.emails.secretaria')"
               >
-                {{ $t('club.emails.secretaria') }}
+                {{ getRawTranslation('club.emails.secretaria') }}
               </a>
             </li>
             <li class="flex items-center">
@@ -46,11 +46,11 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
               </svg>
               <a
-                :href="`mailto:${$t('club.emails.junta')}`"
+                :href="'mailto:' + getRawTranslation('club.emails.junta')"
                 class="text-gray-300 hover:text-white text-sm underline transition-colors"
-                :aria-label="`${$t('contact.info.emailJunta')}: ${$t('club.emails.junta')}`"
+                :aria-label="$t('contact.info.emailJunta') + ': ' + getRawTranslation('club.emails.junta')"
               >
-                {{ $t('club.emails.junta') }}
+                {{ getRawTranslation('club.emails.junta') }}
               </a>
             </li>
           </ul>
@@ -70,6 +70,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import { getRawTranslation } from '../i18n';
 
 const logoACC = '/assets/images/logo_acc.jpg';
 const currentYear = computed(() => new Date().getFullYear());

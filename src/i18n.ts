@@ -50,6 +50,15 @@ const i18n = createI18n({
   globalInjection: true,
   silentTranslationWarn: true,
   silentFallbackWarn: true,
+  missingWarn: false,
+  fallbackWarn: false,
+  warnHtmlMessage: false,
+  // Desactivar completamente el procesamiento de linked messages
+  modifiers: {
+    '@': () => '',
+    '|': () => '',
+    '%': () => ''
+  }
 })
 
 // Función para cambiar idioma y actualizar localStorage
@@ -149,3 +158,23 @@ export const availableLocales = [
 ]
 
 export default i18n
+
+// Función helper para obtener valores que contengan @ sin procesamiento de linked format
+export const getRawTranslation = (key: string): string => {
+  const currentLocale = i18n.global.locale.value
+  const messages = i18n.global.messages.value[currentLocale] as any
+
+  // Navegar por el objeto usando la clave (ej: 'club.emails.secretaria')
+  const keys = key.split('.')
+  let value = messages
+
+  for (const k of keys) {
+    if (value && typeof value === 'object' && k in value) {
+      value = value[k]
+    } else {
+      return key // Fallback si no se encuentra
+    }
+  }
+
+  return typeof value === 'string' ? value : key
+}
