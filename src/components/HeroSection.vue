@@ -7,7 +7,7 @@
     ></div>
 
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <div class="max-w-4xl mx-auto md:mt-[65px]">
+      <div class="max-w-4xl mx-auto mt-16 md:mt-0 lg:mt-0">
         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-white mb-6 leading-tight">
           {{ $t('hero.title') }}
           <span class="block text-yellow-500">{{ $t('hero.subtitle') }}</span>
@@ -71,8 +71,6 @@
 </template>
 
 <script setup lang="ts">
-const logoACC = '/assets/images/logo_acc.jpg';
-
 const scrollToSection = (sectionId: string) => {
   const element = document.getElementById(sectionId);
   if (element) {
