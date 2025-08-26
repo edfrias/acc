@@ -55,8 +55,14 @@ export default {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
         display: ['Montserrat', 'Inter', 'system-ui', 'sans-serif'],
+      },
+      screens: {
+        'max-h-750': { 'raw': '(max-height: 750px)' },
+        'min-h-750': { 'raw': '(min-height: 750px)' },
+        'md-h-750': { 'raw': '(min-width: 768px) and (min-height: 750px)' },
+        'lg-h-750': { 'raw': '(min-width: 1024px) and (min-height: 750px)' },
       }
     },
   },
-}
+  plugins: [],
 }
