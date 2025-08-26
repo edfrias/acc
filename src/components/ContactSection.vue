@@ -58,7 +58,7 @@
               <h2 class="font-semibold text-gray-900 mb-2">{{ $t('contact.info.email') }}</h2>
               <a
                 :href="`mailto:${$t('club.emails.secretaria')}`"
-                class="text-blue-600 hover:text-blue-800 break-words underline transition-colors"
+                class="text-blue-800 hover:text-blue-900 break-words underline transition-colors"
                 :aria-label="`${$t('contact.info.email')}: ${$t('club.emails.secretaria')}`"
               >
                 {{ $t('club.emails.secretaria') }}
@@ -74,7 +74,7 @@
               <h2 class="font-semibold text-gray-900 mb-2">{{ $t('contact.info.emailJunta') }}</h2>
               <a
                 :href="`mailto:${$t('club.emails.junta')}`"
-                class="text-blue-600 hover:text-blue-800 break-words underline transition-colors"
+                class="text-blue-800 hover:text-blue-900 break-words underline transition-colors"
                 :aria-label="`${$t('contact.info.emailJunta')}: ${$t('club.emails.junta')}`"
               >
                 {{ $t('club.emails.junta') }}
