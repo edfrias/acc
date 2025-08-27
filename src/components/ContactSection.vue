@@ -56,18 +56,17 @@
                 </svg>
               </div>
               <h2 class="font-semibold text-gray-900 mb-2">{{ $t('contact.info.email') }}</h2>
-              <div class="text-gray-600">
+              <div class="text-gray-600" style="display: flex; flex-direction: column; gap: 16px;">
                 <a
                   :href="'mailto:' + getRawTranslation('club.emails.secretaria')"
-                  class="text-blue-800 hover:text-blue-900 break-words underline transition-colors"
+                  class="email-link text-blue-800 hover:text-blue-900 underline break-words"
                   :aria-label="$t('contact.info.email') + ': ' + getRawTranslation('club.emails.secretaria')"
                 >
                   {{ getRawTranslation('club.emails.secretaria') }}
                 </a>
-                <br />
                 <a
                   :href="'mailto:' + getRawTranslation('club.emails.junta')"
-                  class="text-blue-800 hover:text-blue-900 break-words underline transition-colors"
+                  class="email-link text-blue-800 hover:text-blue-900 underline break-words"
                   :aria-label="$t('contact.info.email') + ': ' + getRawTranslation('club.emails.junta')"
                 >
                   {{ getRawTranslation('club.emails.junta') }}

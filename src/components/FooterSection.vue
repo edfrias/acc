@@ -33,17 +33,17 @@
               <svg class="w-5 h-5 text-gray-400 mt-0.5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
               </svg>
-              <div class="text-gray-300 text-sm">
+              <div class="text-gray-300 text-sm" style="display: flex; flex-direction: column; gap: 16px;">
                 <a
                   :href="'mailto:' + getRawTranslation('club.emails.secretaria')"
-                  class="text-gray-300 hover:text-white underline transition-colors block"
+                  class="email-link text-gray-300 hover:text-white underline block"
                   :aria-label="$t('contact.info.email') + ': ' + getRawTranslation('club.emails.secretaria')"
                 >
                   {{ getRawTranslation('club.emails.secretaria') }}
                 </a>
                 <a
                   :href="'mailto:' + getRawTranslation('club.emails.junta')"
-                  class="text-gray-300 hover:text-white underline transition-colors block"
+                  class="email-link text-gray-300 hover:text-white underline block"
                   :aria-label="$t('contact.info.email') + ': ' + getRawTranslation('club.emails.junta')"
                 >
                   {{ getRawTranslation('club.emails.junta') }}
