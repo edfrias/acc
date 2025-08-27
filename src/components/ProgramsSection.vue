@@ -108,7 +108,7 @@
           </svg>
         </div>
         <h3 class="text-2xl font-bold text-gray-900 mb-4">{{ $t('programs.freeClass.title') }}</h3>
-        <p class="text-lg text-gray-600 mb-6 max-w-2xl mx-auto">
+        <p class="text-lg text-gray-800 mb-6 max-w-2xl mx-auto">
           {{ $t('programs.freeClass.description') }}
         </p>
       </div>
