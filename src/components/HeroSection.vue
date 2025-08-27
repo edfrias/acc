@@ -1,19 +1,21 @@
 <template>
-  <section class="relative bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 min-h-screen flex items-center justify-center">
-    <div class="absolute inset-0 bg-black opacity-20"></div>
+  <section class="hero-section relative bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 min-h-screen flex items-center justify-center">
+    <div class="hero-overlay absolute inset-0 bg-black opacity-20"></div>
+    <!-- Background pattern with smooth transition -->
     <div
-      class="absolute inset-0 bg-repeat"
+      class="absolute inset-0 bg-repeat transition-opacity duration-500"
+      :class="{ 'opacity-100': showPattern, 'opacity-0': !showPattern }"
       style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.1&quot;%3E%3Ccircle cx=&quot;30&quot; cy=&quot;30&quot; r=&quot;2&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')"
     ></div>
 
-    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <div class="hero-content relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <div class="max-w-4xl mx-auto mt-16 md-h-750:mt-0 lg-h-750:mt-0">
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-white mb-6 leading-tight">
+        <h1 class="hero-title text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-white mb-6 leading-tight">
           {{ $t('hero.title') }}
-          <span class="block text-yellow-500">{{ $t('hero.subtitle') }}</span>
+          <span class="hero-subtitle block text-yellow-500">{{ $t('hero.subtitle') }}</span>
         </h1>
 
-        <p class="text-xl sm:text-2xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
+        <p class="hero-description text-xl sm:text-2xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
           {{ $t('hero.description') }}
         </p>
 
@@ -21,7 +23,8 @@
           {{ $t('hero.detailedDescription') }}
         </p>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+        <!-- Feature grid always visible but with progressive enhancement -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16" :class="{ 'opacity-90': !showFeatures }">
           <div class="text-center">
             <div class="inline-flex items-center justify-center w-12 h-12 bg-yellow-500 rounded-full mb-4">
               <svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -71,10 +74,29 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue';
+
+// Performance optimization: progressive enhancement
+const showPattern = ref(false);
+const showFeatures = ref(true); // Start visible for better UX
+
 const scrollToSection = (sectionId: string) => {
   const element = document.getElementById(sectionId);
   if (element) {
     element.scrollIntoView({ behavior: 'smooth' });
   }
 };
+
+// Load background pattern after initial render for better LCP
+onMounted(() => {
+  // Small delay to ensure hero content renders first
+  setTimeout(() => {
+    showPattern.value = true;
+  }, 500);
+
+  // Add subtle animation to features
+  setTimeout(() => {
+    showFeatures.value = true;
+  }, 800);
+});
 </script>

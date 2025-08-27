@@ -2,6 +2,10 @@ import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
 import i18n from './i18n'
+import { initPerformance } from './utils/performance'
+
+// Initialize performance optimizations
+initPerformance()
 
 const app = createApp(App)
 app.use(i18n)
