@@ -20,7 +20,7 @@
               <div class="text-sm text-gray-600 font-medium">{{ $t('about.stats.members') }}</div>
             </div>
             <div class="text-center">
-              <div class="text-3xl font-bold text-blue-600 mb-2">26</div>
+              <div class="text-3xl font-bold text-blue-600 mb-2">26+</div>
               <div class="text-sm text-gray-600 font-medium">{{ $t('about.stats.years') }}</div>
             </div>
             <div class="text-center">
@@ -78,9 +78,6 @@
               class="w-full h-full object-cover rounded-lg"
             />
           </div>
-
-          <div class="absolute -top-4 -right-4 w-24 h-24 bg-yellow-500 rounded-full opacity-20"></div>
-          <div class="absolute -bottom-4 -left-4 w-16 h-16 bg-blue-500 rounded-full opacity-30"></div>
         </div>
       </div>
     </div>
