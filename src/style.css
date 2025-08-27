@@ -10,12 +10,10 @@
     color: #111827;
   }
 
-  /* Performance optimization: reduce layout shifts */
   * {
     box-sizing: border-box;
   }
 
-  /* Optimize font loading */
   .font-display {
     font-family: 'Montserrat', system-ui, sans-serif;
     font-display: swap;
@@ -67,7 +65,6 @@
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.5);
   }
 
-  /* Accessible touch targets for email links */
   .email-link {
     display: inline-block;
     min-height: 24px;
@@ -82,7 +79,6 @@
     box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.5);
   }
 
-  /* Performance optimization: will-change for animations */
   .animate-bounce {
     will-change: transform;
   }
@@ -92,7 +88,6 @@
   }
 }
 
-/* Preload classes for performance */
 @layer utilities {
   .content-visibility-auto {
     content-visibility: auto;

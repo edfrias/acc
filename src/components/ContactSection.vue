@@ -4,10 +4,10 @@
       <div class="text-center">
         <div class="mb-12">
           <h2 class="text-3xl lg:text-4xl font-display font-bold text-club-black mb-6">
-            {{ $t('contact.title') }}
+            {{ t('contact.title') }}
           </h2>
           <p class="text-lg text-gray-600 mb-12 leading-relaxed max-w-3xl mx-auto">
-            {{ $t('contact.subtitle') }}
+            {{ t('contact.subtitle') }}
           </p>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -18,10 +18,10 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                 </svg>
               </div>
-              <h2 class="font-semibold text-gray-900 mb-2">{{ $t('contact.info.location') }}</h2>
+              <h2 class="font-semibold text-gray-900 mb-2">{{ t('contact.info.location') }}</h2>
               <div class="text-gray-600">
-                <p class="mb-2"><strong>{{ $t('club.name') }}</strong></p>
-                <p class="mb-2" v-html="$t('contact.info.address', { br: '<br>' })"></p>
+                <p class="mb-2"><strong>{{ t('club.name') }}</strong></p>
+                <p class="mb-2" v-html="t('contact.info.address', { br: '<br>' })"></p>
                 <div class="flex flex-col sm:flex-row gap-2 justify-center mt-3">
                   <a
                     href="https://maps.app.goo.gl/iM693niyT1RCcPyU9"
@@ -32,7 +32,7 @@
                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                     </svg>
-                    {{ $t('contact.info.viewMaps') }}
+                    {{ t('contact.info.viewMaps') }}
                   </a>
                   <a
                     href="https://www.canalolimpic.cat/"
@@ -43,7 +43,7 @@
                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
                     </svg>
-                    {{ $t('contact.info.olympicCanal') }}
+                    {{ t('contact.info.olympicCanal') }}
                   </a>
                 </div>
               </div>
@@ -55,19 +55,19 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                 </svg>
               </div>
-              <h2 class="font-semibold text-gray-900 mb-2">{{ $t('contact.info.email') }}</h2>
+              <h2 class="font-semibold text-gray-900 mb-2">{{ t('contact.info.email') }}</h2>
               <div class="text-gray-600" style="display: flex; flex-direction: column; gap: 16px;">
                 <a
                   :href="'mailto:' + getRawTranslation('club.emails.secretaria')"
                   class="email-link text-blue-800 hover:text-blue-900 underline break-words"
-                  :aria-label="$t('contact.info.email') + ': ' + getRawTranslation('club.emails.secretaria')"
+                  :aria-label="t('contact.info.email') + ': ' + getRawTranslation('club.emails.secretaria')"
                 >
                   {{ getRawTranslation('club.emails.secretaria') }}
                 </a>
                 <a
                   :href="'mailto:' + getRawTranslation('club.emails.junta')"
                   class="email-link text-blue-800 hover:text-blue-900 underline break-words"
-                  :aria-label="$t('contact.info.email') + ': ' + getRawTranslation('club.emails.junta')"
+                  :aria-label="t('contact.info.email') + ': ' + getRawTranslation('club.emails.junta')"
                 >
                   {{ getRawTranslation('club.emails.junta') }}
                 </a>
@@ -81,16 +81,16 @@
                   <circle cx="12" cy="12" r="3"/>
                 </svg>
               </div>
-              <h2 class="font-semibold text-gray-900 mb-2">{{ $t('contact.info.whatsapp') }}</h2>
+              <h2 class="font-semibold text-gray-900 mb-2">{{ t('contact.info.whatsapp') }}</h2>
               <div class="text-gray-600">
-                {{ $t('contact.info.whatsappMessage') }}<br />
+                {{ t('contact.info.whatsappMessage') }}<br />
                 <strong>+34 606 75 06 39</strong> / <strong>+34 666 94 18 45</strong>
               </div>
             </div>
           </div>
 
           <div class="mt-16 text-center">
-            <h2 class="font-semibold text-gray-900 mb-6 text-xl">{{ $t('footer.social') }}</h2>
+            <h2 class="font-semibold text-gray-900 mb-6 text-xl">{{ t('footer.social') }}</h2>
             <div class="flex justify-center">
               <a
                 href="https://instagram.com/arquersclubc"
@@ -116,7 +116,8 @@
 </template>
 
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n';
 import { getRawTranslation } from '../i18n'
 
-// Form functionality temporarily commented out - can be reactivated when needed
+const { t } = useI18n()
 </script>

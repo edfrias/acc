@@ -1,6 +1,4 @@
-// Performance monitoring utilities
 export const performanceUtils = {
-  // Measure and report Web Vitals
   measureLCP: () => {
     if ('PerformanceObserver' in window) {
       try {
@@ -18,9 +16,7 @@ export const performanceUtils = {
     }
   },
 
-  // Preload critical resources
   preloadCriticalResources: () => {
-    // Preload hero section images if any
     const criticalImages = [
       '/assets/images/logo_acc.jpg'
     ];
@@ -34,9 +30,7 @@ export const performanceUtils = {
     });
   },
 
-  // Optimize font loading
   optimizeFontLoading: () => {
-    // Use font-display: swap for better performance
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(() => {
         document.body.classList.add('fonts-loaded');
@@ -45,9 +39,7 @@ export const performanceUtils = {
   }
 };
 
-// Initialize performance optimizations
 export const initPerformance = () => {
-  // Wait for DOM to be ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
       performanceUtils.measureLCP();

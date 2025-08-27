@@ -6,18 +6,18 @@
           <div class="flex items-center space-x-2 mb-4">
             <img
               :src="logoACC"
-              :alt="$t('club.name') + ' Logo'"
+              :alt="t('club.name') + ' Logo'"
               class="w-8 h-8 rounded-lg object-cover"
             />
-            <span class="font-display font-bold text-xl">{{ $t('club.name') }}</span>
+            <span class="font-display font-bold text-xl">{{ t('club.name') }}</span>
           </div>
           <p class="text-gray-300 mb-6 max-w-md">
-            {{ $t('footer.description') }}
+            {{ t('footer.description') }}
           </p>
         </div>
 
         <div>
-          <h2 class="font-semibold text-lg mb-4">{{ $t('footer.contact') }}</h2>
+          <h2 class="font-semibold text-lg mb-4">{{ t('footer.contact') }}</h2>
           <ul class="space-y-3">
             <li class="flex items-start">
               <svg class="w-5 h-5 text-gray-400 mt-0.5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -25,8 +25,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
               </svg>
               <span class="text-gray-300 text-sm">
-                {{ $t('club.fullName') }}<br>
-                {{ $t('club.location') }}
+                {{ t('club.fullName') }}<br>
+                {{ t('club.location') }}
               </span>
             </li>
             <li class="flex items-start">
@@ -37,14 +37,14 @@
                 <a
                   :href="'mailto:' + getRawTranslation('club.emails.secretaria')"
                   class="email-link text-gray-300 hover:text-white underline block"
-                  :aria-label="$t('contact.info.email') + ': ' + getRawTranslation('club.emails.secretaria')"
+                  :aria-label="t('contact.info.email') + ': ' + getRawTranslation('club.emails.secretaria')"
                 >
                   {{ getRawTranslation('club.emails.secretaria') }}
                 </a>
                 <a
                   :href="'mailto:' + getRawTranslation('club.emails.junta')"
                   class="email-link text-gray-300 hover:text-white underline block"
-                  :aria-label="$t('contact.info.email') + ': ' + getRawTranslation('club.emails.junta')"
+                  :aria-label="t('contact.info.email') + ': ' + getRawTranslation('club.emails.junta')"
                 >
                   {{ getRawTranslation('club.emails.junta') }}
                 </a>
@@ -56,7 +56,7 @@
                 <circle cx="12" cy="12" r="3"/>
               </svg>
               <div class="text-gray-300 text-sm">
-                <div class="mb-1">{{ $t('contact.info.whatsapp') }}</div>
+                <div class="mb-1">{{ t('contact.info.whatsapp') }}</div>
                 <div class="font-semibold">+34 606 75 06 39</div>
                 <div class="font-semibold">+34 666 94 18 45</div>
               </div>
@@ -68,7 +68,7 @@
       <div class="border-t border-gray-800 mt-12 pt-8">
         <div class="text-center">
           <p class="text-white text-sm">
-            &copy; {{ currentYear }} {{ $t('club.name') }}. {{ $t('footer.rights') }}.
+            &copy; {{ currentYear }} {{ t('club.name') }}. {{ t('footer.rights') }}.
           </p>
         </div>
       </div>
@@ -79,7 +79,9 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { getRawTranslation } from '../i18n';
+import { useI18n } from 'vue-i18n';
 
 const logoACC = '/assets/images/logo_acc.jpg';
 const currentYear = computed(() => new Date().getFullYear());
+const { t } = useI18n()
 </script>

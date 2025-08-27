@@ -6,8 +6,6 @@
     class="w-full h-full object-cover"
     loading="lazy"
   />
-
-  <!-- Fallback para códigos no reconocidos -->
   <div
     v-else
     class="w-full h-full bg-gray-200 flex items-center justify-center text-xs text-gray-500 font-medium rounded"

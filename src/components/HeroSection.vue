@@ -1,7 +1,6 @@
 <template>
   <section class="hero-section relative bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 min-h-screen flex items-center justify-center">
     <div class="hero-overlay absolute inset-0 bg-black opacity-20"></div>
-    <!-- Background pattern with smooth transition -->
     <div
       class="absolute inset-0 bg-repeat transition-opacity duration-500"
       :class="{ 'opacity-100': showPattern, 'opacity-0': !showPattern }"
@@ -11,19 +10,18 @@
     <div class="hero-content relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <div class="max-w-4xl mx-auto mt-16 md-h-750:mt-0 lg-h-750:mt-0">
         <h1 class="hero-title text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-white mb-6 leading-tight">
-          {{ $t('hero.title') }}
-          <span class="hero-subtitle block text-yellow-500">{{ $t('hero.subtitle') }}</span>
+          {{ t('hero.title') }}
+          <span class="hero-subtitle block text-yellow-500">{{ t('hero.subtitle') }}</span>
         </h1>
 
         <p class="hero-description text-xl sm:text-2xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
-          {{ $t('hero.description') }}
+          {{ t('hero.description') }}
         </p>
 
         <p class="text-lg text-white/80 mb-12 max-w-2xl mx-auto">
-          {{ $t('hero.detailedDescription') }}
+          {{ t('hero.detailedDescription') }}
         </p>
 
-        <!-- Feature grid always visible but with progressive enhancement -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16" :class="{ 'opacity-90': !showFeatures }">
           <div class="text-center">
             <div class="inline-flex items-center justify-center w-12 h-12 bg-yellow-500 rounded-full mb-4">
@@ -31,8 +29,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-4m-5 0H3m2 0h4M9 7h6m-6 4h6m-2 8h.01"/>
               </svg>
             </div>
-            <h2 class="text-lg font-semibold text-white mb-2">{{ $t('hero.features.courses.title') }}</h2>
-            <p class="text-white/80">{{ $t('hero.features.courses.description') }}</p>
+            <h2 class="text-lg font-semibold text-white mb-2">{{ t('hero.features.courses.title') }}</h2>
+            <p class="text-white/80">{{ t('hero.features.courses.description') }}</p>
           </div>
 
           <div class="text-center">
@@ -42,8 +40,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
               </svg>
             </div>
-            <h2 class="text-lg font-semibold text-white mb-2">{{ $t('hero.features.location.title') }}</h2>
-            <p class="text-white/80">{{ $t('hero.features.location.description') }}</p>
+            <h2 class="text-lg font-semibold text-white mb-2">{{ t('hero.features.location.title') }}</h2>
+            <p class="text-white/80">{{ t('hero.features.location.description') }}</p>
           </div>
 
           <div class="text-center">
@@ -52,8 +50,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"/>
               </svg>
             </div>
-            <h2 class="text-lg font-semibold text-white mb-2">{{ $t('hero.features.community.title') }}</h2>
-            <p class="text-white/80">{{ $t('hero.features.community.description') }}</p>
+            <h2 class="text-lg font-semibold text-white mb-2">{{ t('hero.features.community.title') }}</h2>
+            <p class="text-white/80">{{ t('hero.features.community.description') }}</p>
           </div>
         </div>
       </div>
@@ -63,7 +61,7 @@
       <button
         @click="scrollToSection('sobre-nosotros')"
         class="animate-bounce text-white hover:text-yellow-500 transition-colors duration-200"
-        :aria-label="$t('accessibility.scrollDown')"
+        :aria-label="t('accessibility.scrollDown')"
       >
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
@@ -75,10 +73,11 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import { useI18n } from 'vue-i18n';
 
-// Performance optimization: progressive enhancement
 const showPattern = ref(false);
-const showFeatures = ref(true); // Start visible for better UX
+const showFeatures = ref(true);
+const { t } = useI18n()
 
 const scrollToSection = (sectionId: string) => {
   const element = document.getElementById(sectionId);
@@ -87,14 +86,11 @@ const scrollToSection = (sectionId: string) => {
   }
 };
 
-// Load background pattern after initial render for better LCP
 onMounted(() => {
-  // Small delay to ensure hero content renders first
   setTimeout(() => {
     showPattern.value = true;
   }, 500);
 
-  // Add subtle animation to features
   setTimeout(() => {
     showFeatures.value = true;
   }, 800);

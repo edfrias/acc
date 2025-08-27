@@ -7,7 +7,7 @@
       @keydown.arrow-down.prevent="focusNext"
       @keydown.arrow-up.prevent="focusPrevious"
       class="flex items-center space-x-2 px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-      :aria-label="$t('accessibility.languageSelector')"
+      :aria-label="t('accessibility.languageSelector')"
       aria-haspopup="true"
       :aria-expanded="isOpen"
       id="language-selector-button"
@@ -52,7 +52,7 @@
           }"
           role="menuitem"
           :tabindex="isOpen ? 0 : -1"
-          :aria-label="`${$t('accessibility.changeLanguageTo')} ${language.name}`"
+          :aria-label="`${t('accessibility.changeLanguageTo')} ${language.name}`"
         >
           <div class="w-5 h-4 rounded-sm overflow-hidden shadow-sm flex-shrink-0">
             <FlagIcon :country="language.code" />
@@ -86,23 +86,19 @@ import { useI18n } from 'vue-i18n'
 import { setLocale, getCurrentLocale, availableLocales } from '../i18n'
 import FlagIcon from './FlagIcon.vue'
 
-// Composables
-const { } = useI18n()
+const { t } = useI18n()
 
-// Estado reactivo
 const isOpen = ref(false)
 const languageSelectorButton = ref<HTMLButtonElement>()
 const languageDropdown = ref<HTMLDivElement>()
 const languageOptions = ref<HTMLButtonElement[]>([])
 const currentFocusIndex = ref(-1)
 
-// Computed
 const currentLocale = computed(() => getCurrentLocale())
 const currentLanguage = computed(() => {
   return availableLocales.find(lang => lang.code === currentLocale.value) || availableLocales[0]
 })
 
-// Métodos
 const toggleDropdown = () => {
   isOpen.value = !isOpen.value
   if (isOpen.value) {
@@ -125,7 +121,6 @@ const changeLanguage = (languageCode: string) => {
   setLocale(languageCode)
   closeDropdown()
 
-  // Anunciar el cambio para lectores de pantalla
   announceLanguageChange(languageCode)
 }
 
@@ -148,7 +143,6 @@ const focusPrevious = () => {
 const announceLanguageChange = (languageCode: string) => {
   const language = availableLocales.find(lang => lang.code === languageCode)
   if (language) {
-    // Crear anuncio para lectores de pantalla
     const announcement = document.createElement('div')
     announcement.setAttribute('aria-live', 'polite')
     announcement.setAttribute('aria-atomic', 'true')
@@ -157,7 +151,6 @@ const announceLanguageChange = (languageCode: string) => {
 
     document.body.appendChild(announcement)
 
-    // Remover el anuncio después de un momento
     setTimeout(() => {
       document.body.removeChild(announcement)
     }, 1000)
@@ -178,7 +171,6 @@ const handleKeydown = (event: KeyboardEvent) => {
   }
 }
 
-// Lifecycle hooks
 onMounted(() => {
   document.addEventListener('click', handleClickOutside)
   document.addEventListener('keydown', handleKeydown)
@@ -191,7 +183,6 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-/* Clases utilitarias para accesibilidad */
 .sr-only {
   position: absolute;
   width: 1px;

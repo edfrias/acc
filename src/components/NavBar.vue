@@ -6,16 +6,16 @@
           <a
             href="#"
             class="flex items-center space-x-2"
-            :aria-label="$t('nav.home')"
+            :aria-label="t('nav.home')"
           >
             <img
               :src="logoACC"
-              :alt="$t('club.name') + ' Logo'"
+              :alt="t('club.name') + ' Logo'"
               class="w-8 h-8 rounded-lg object-cover"
             />
             <span class="font-display font-bold text-xl text-gray-900">
-              <span class="sr-only">{{ $t('nav.clubName') }} - </span>{{ $t('nav.clubName') }}
-              <span class="hidden lg:inline ml-1 text-sm font-normal text-gray-600">{{ $t('nav.clubTagline') }}</span>
+              <span class="sr-only">{{ t('nav.clubName') }} - </span>{{ t('nav.clubName') }}
+              <span class="hidden lg:inline ml-1 text-sm font-normal text-gray-600">{{ t('nav.clubTagline') }}</span>
             </span>
           </a>
         </div>
@@ -27,21 +27,21 @@
               @click="scrollToSection('sobre-nosotros')"
               class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors duration-200"
             >
-              {{ $t('nav.about') }}
+              {{ t('nav.about') }}
             </a>
             <a
               href="#programas"
               @click="scrollToSection('programas')"
               class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors duration-200"
             >
-              {{ $t('nav.programs') }}
+              {{ t('nav.programs') }}
             </a>
             <a
               href="#inscripcion"
               @click="scrollToSection('inscripcion')"
               class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors duration-200"
             >
-              {{ $t('nav.contact') }}
+              {{ t('nav.contact') }}
             </a>
 
             <LanguageSelector />
@@ -53,7 +53,7 @@
             @click="toggleMobileMenu"
             class="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
             aria-expanded="false"
-            :aria-label="$t('accessibility.openMenu')"
+            :aria-label="t('accessibility.openMenu')"
           >
             <svg
               v-if="!isMobileMenuOpen"
@@ -90,21 +90,21 @@
           @click="handleMobileMenuClick('sobre-nosotros')"
           class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors duration-200"
         >
-          {{ $t('nav.about') }}
+          {{ t('nav.about') }}
         </a>
         <a
           href="#programas"
           @click="handleMobileMenuClick('programas')"
           class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors duration-200"
         >
-          {{ $t('nav.programs') }}
+          {{ t('nav.programs') }}
         </a>
         <a
           href="#inscripcion"
           @click="handleMobileMenuClick('inscripcion')"
           class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors duration-200"
         >
-          {{ $t('nav.contact') }}
+          {{ t('nav.contact') }}
         </a>
 
         <div class="px-3 py-2">
@@ -118,9 +118,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import LanguageSelector from './LanguageSelector.vue'
+import { useI18n } from 'vue-i18n';
 
 const logoACC = '/assets/images/logo_acc.jpg';
 const isMobileMenuOpen = ref(false);
+const { t } = useI18n()
 
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value;
