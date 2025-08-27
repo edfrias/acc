@@ -27,7 +27,7 @@
     "title": "Arquers Club Castelldefels",
     "subtitle": "Precisió i Tradició",
     "description": "Club de tir amb arc a Castelldefels amb més de 25 anys d'experiència. Uneix-te a la nostra comunitat d'arquers catalans i descobreix l'art mil·lenari del tir amb arc esportiu.",
-    "detailedDescription": "Oferim cursos de formació d'arquers, entrenaments especialitzats en arc recorbat, arc compost, arc tradicional i arc nu, i activitats per a totes les edats. Des de principiants fins a competidors olímpics, desenvolupem la teva tècnica en l'esport de l'arqueria.",
+    "detailedDescription": "Oferim cursos de formació d'arquers, entrenaments especialitzats en arc recorbat, arc compost, arc tradicional, arc instintiu, i arc nu, i activitats per a totes les edats. Des de principiants fins a competidors olímpics, desenvolupem la teva tècnica en l'esport de l'arqueria.",
     "cta": {
       "primary": "Uneix-te Ara",
       "secondary": "Més Informació"
@@ -35,7 +35,7 @@
     "features": {
       "courses": {
         "title": "Cursos de Formació",
-  "description": "Aprèn tir amb arc des de zero amb instructors homologats oficial de la ROPE"
+        "description": "Aprèn tir amb arc des de zero amb instructors homologats oficial de la ROPE"
       },
       "location": {
         "title": "Ubicació Castelldefels",
@@ -51,7 +51,7 @@
     "title": "Arquers Club Castelldefels",
     "subtitle": "Club de Tir amb Arc a Catalunya des de 1998",
     "description1": "L'Arquers Club Castelldefels és un club de tir amb arc esportiu ubicat a Castelldefels, Barcelona, amb més de 25 anys d'experiència en la formació d'arquers i la pràctica de l'arqueria a Catalunya.",
-    "description2": "Oferim cursos de tir amb arc per a principiants i entrenaments especialitzats en arc recorbat, arc compost, arc tradicional i arc nu. Els nostres instructors certificats per la Federació Catalana i la Reial Federació Espanyola de Tir amb Arc garanteixen una formació de qualitat en l'esport olímpic de l'arqueria.",
+    "description2": "Oferim cursos de tir amb arc per a principiants i entrenaments especialitzats en arc recorbat, arc compost, arc tradicional, arc instintiu, i arc nu. Els nostres instructors certificats per la Federació Catalana i la Reial Federació Espanyola de Tir amb Arc garanteixen una formació de qualitat en l'esport olímpic de l'arqueria.",
     "stats": {
       "members": "Membres Actius",
       "years": "Anys d'Història",
@@ -59,10 +59,10 @@
       "records": "Rècords Autonòmics i Plusmarques"
     },
     "features": {
-  "certified": "Instructors homologats oficial de la ROPE",
-  "certifiedDescription": "Entrenadors homologats oficial de la ROPE i anys d'experiència",
+      "certified": "Instructors homologats oficial de la ROPE",
+      "certifiedDescription": "Entrenadors homologats oficial de la ROPE i anys d'experiència",
       "facilities": "Instal·lacions Modernes",
-      "facilitiesDescription": "Arc recorbat, compost, tradicional i tir de camp",
+      "facilitiesDescription": "Arc recorbat, compost, tradicional i tir instintiu",
       "community": "Comunitat Activa",
       "competition": "Preparació Competitiva",
       "competitionDescription": "Tornejos locals, regionals i internacionals"
@@ -70,7 +70,7 @@
   },
   "programs": {
     "title": "Curs d'Iniciació al Tir amb Arc",
-  "subtitle": "Esport federat per la Federació Catalana i la Reial Federació Espanyola de Tir amb Arc. Oferim formació certificada a les instal·lacions del Canal Olímpic de Catalunya. S'inclou tot el material i l'assegurança durant les classes.",
+    "subtitle": "Esport federat per la Federació Catalana i la Reial Federació Espanyola de Tir amb Arc. Oferim formació certificada a les instal·lacions del Canal Olímpic de Catalunya. S'inclou tot el material i l'assegurança durant les classes.",
     "courses": {
       "beginner": {
         "title": "Curs d'Iniciació - Adults",

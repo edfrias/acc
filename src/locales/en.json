@@ -37,7 +37,7 @@
     "title": "Arquers Club Castelldefels",
     "subtitle": "Precision and Tradition",
     "description": "Archery club in Castelldefels with over 25 years of experience. Join our community of Catalan archers and discover the ancient art of sport archery.",
-    "detailedDescription": "We offer archer training courses, specialized training in recurve bow, compound bow, traditional bow and barebow, and activities for all ages. From beginners to Olympic competitors, we develop your technique in the sport of archery.",
+    "detailedDescription": "We offer archer training courses, specialized training in recurve bow, compound bow, traditional bow, instinctive bow and barebow, and activities for all ages. From beginners to Olympic competitors, we develop your technique in the sport of archery.",
     "cta": {
       "primary": "Join Now",
       "secondary": "More Information"
@@ -45,7 +45,7 @@
     "features": {
       "courses": {
         "title": "Training Courses",
-  "description": "Learn archery from scratch with officially approved ROPE instructors"
+        "description": "Learn archery from scratch with officially approved ROPE instructors"
       },
       "location": {
         "title": "Castelldefels Location",
@@ -61,7 +61,7 @@
     "title": "Arquers Club Castelldefels",
     "subtitle": "Archery Club in Catalonia since 1998",
     "description1": "The Arquers Club Castelldefels is a sport archery club located in Castelldefels, Barcelona, with more than 25 years of experience in archer training and the practice of archery in Catalonia.",
-    "description2": "We offer archery courses for beginners and specialized training in recurve bow, compound bow, traditional bow and barebow. Our instructors certified by the Catalan Archery Federation and the Royal Spanish Archery Federation guarantee quality training in the Olympic sport of archery.",
+    "description2": "We offer archery courses for beginners and specialized training in recurve bow, compound bow, traditional bow, instinctive bow, and barebow. Our instructors certified by the Catalan Archery Federation and the Royal Spanish Archery Federation guarantee quality training in the Olympic sport of archery.",
     "stats": {
       "members": "Active Members",
       "years": "Years of History",
@@ -69,10 +69,10 @@
       "records": "Regional Records and National Marks"
     },
     "features": {
-  "certified": "Officially approved ROPE Instructors",
-  "certifiedDescription": "Trainers officially approved by ROPE and years of experience",
+      "certified": "Officially approved ROPE Instructors",
+      "certifiedDescription": "Trainers officially approved by ROPE and years of experience",
       "facilities": "Modern Facilities",
-      "facilitiesDescription": "Recurve bow, compound, traditional and field archery",
+      "facilitiesDescription": "Recurve bow, compound, traditional and instinctive archery",
       "community": "Active Community",
       "competition": "Competitive Preparation",
       "competitionDescription": "Local, regional and international tournaments"
@@ -80,11 +80,11 @@
   },
   "programs": {
     "title": "Archery Initiation Course",
-  "subtitle": "Federated sport by the Catalan Archery Federation and the Royal Spanish Archery Federation. We offer certified training at the Olympic Canal of Catalonia facilities. All equipment and insurance during classes are included.",
+    "subtitle": "Federated sport by the Catalan Archery Federation and the Royal Spanish Archery Federation. We offer certified training at the Olympic Canal of Catalonia facilities. All equipment and insurance during classes are included.",
     "courses": {
       "beginner": {
         "title": "Initiation Course - Adults",
-        "description": "Federated sport requiring aptitude certificate. Complete course for adults with training in barebow, instinctive, traditional and recurve/Olympic archery.",
+        "description": "Federated sport requiring aptitude certificate. Complete course for adults with training in barebow, instinctive, traditional, instinctive and recurve/Olympic archery.",
         "duration": "7 classes of 2 hours",
         "modalities": "Barebow, instinctive, traditional and recurve",
         "includes": "Material and license included",

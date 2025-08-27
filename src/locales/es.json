@@ -27,7 +27,7 @@
     "title": "Arquers Club Castelldefels",
     "subtitle": "Precisión y Tradición",
     "description": "Club de tiro con arco en Castelldefels con más de 25 años de experiencia. Únete a nuestra comunidad de arqueros catalanes y descubre el arte milenario del tiro con arco deportivo.",
-    "detailedDescription": "Ofrecemos cursos de formación de arqueros, entrenamientos especializados en arco recurvo, arco compuesto, arco tradicional y arco desnudo, y actividades para todas las edades. Desde principiantes hasta competidores olímpicos, desarrollamos tu técnica en el deporte de la arquería.",
+    "detailedDescription": "Ofrecemos cursos de formación de arqueros, entrenamientos especializados en arco recurvo, arco compuesto, arco tradicional, arco instintivo, y arco desnudo, y actividades para todas las edades. Desde principiantes hasta competidores olímpicos, desarrollamos tu técnica en el deporte de la arquería.",
     "cta": {
       "primary": "Únete Ahora",
       "secondary": "Más Información"
@@ -35,7 +35,7 @@
     "features": {
       "courses": {
         "title": "Cursos de Formación",
-  "description": "Aprende tiro con arco desde cero con instructores homologados oficial de la ROPE"
+        "description": "Aprende tiro con arco desde cero con instructores homologados oficial de la ROPE"
       },
       "location": {
         "title": "Ubicación Castelldefels",
@@ -51,7 +51,7 @@
     "title": "Arquers Club Castelldefels",
     "subtitle": "Club de Tiro con Arco en Catalunya desde 1998",
     "description1": "El Arquers Club Castelldefels es un club de tiro con arco deportivo ubicado en Castelldefels, Barcelona, con más de 25 años de experiencia en la formación de arqueros y la práctica de la arquería en Catalunya.",
-    "description2": "Ofrecemos cursos de tiro con arco para principiantes y entrenamientos especializados en arco recurvo, arco compuesto, arco tradicional y arco desnudo. Nuestros instructores certificados por la Federación Catalana y la Real Federación Española de Tiro con Arco garantizan una formación de calidad en el deporte olímpico de la arquería.",
+    "description2": "Ofrecemos cursos de tiro con arco para principiantes y entrenamientos especializados en arco recurvo, arco compuesto, arco tradicional, arco instintivo, y arco desnudo. Nuestros instructores certificados por la Federación Catalana y la Real Federación Española de Tiro con Arco garantizan una formación de calidad en el deporte olímpico de la arquería.",
     "stats": {
       "members": "Miembros Activos",
       "years": "Años de Historia",
@@ -59,10 +59,10 @@
       "records": "Records Autonómicos y Plusmarcas"
     },
     "features": {
-  "certified": "Instructores homologados oficial de la ROPE",
-  "certifiedDescription": "Entrenadores homologados oficial de la ROPE y años de experiencia",
+      "certified": "Instructores homologados oficial de la ROPE",
+      "certifiedDescription": "Entrenadores homologados oficial de la ROPE y años de experiencia",
       "facilities": "Instalaciones Modernas",
-      "facilitiesDescription": "Arco recurvo, compuesto, tradicional y tiro de campo",
+      "facilitiesDescription": "Arco recurvo, compuesto, tradicional y tiro instintivo",
       "community": "Comunidad Activa",
       "competition": "Preparación Competitiva",
       "competitionDescription": "Torneos locales, regionales e internacionales"
@@ -70,7 +70,7 @@
   },
   "programs": {
     "title": "Curso de Iniciación al Tiro con Arco",
-  "subtitle": "Deporte federado por la Federación Catalana y la Real Federación Española de Tiro con Arco. Ofrecemos formación certificada en las instalaciones del Canal Olímpico de Catalunya. Se incluye todo el material y el seguro durante las clases.",
+    "subtitle": "Deporte federado por la Federación Catalana y la Real Federación Española de Tiro con Arco. Ofrecemos formación certificada en las instalaciones del Canal Olímpico de Catalunya. Se incluye todo el material y el seguro durante las clases.",
     "courses": {
       "beginner": {
         "title": "Curso de Iniciación - Adultos",
