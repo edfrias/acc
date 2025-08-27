@@ -6,9 +6,13 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "npm run build && firebase deploy",
+    "firebase:login": "firebase login",
+    "firebase:init": "firebase init hosting"
   },
   "dependencies": {
+    "firebase": "^12.1.0",
     "vue": "^3.5.18",
     "vue-i18n": "^9.14.5"
   },

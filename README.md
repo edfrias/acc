@@ -65,6 +65,47 @@ src/
 - `npm run dev` - Inicia el servidor de desarrollo
 - `npm run build` - Construye la aplicación para producción
 - `npm run preview` - Previsualiza la build de producción
+- `npm run deploy` - Construye y despliega a Firebase Hosting
+- `npm run firebase:login` - Inicia sesión en Firebase CLI
+- `npm run firebase:init` - Inicializa Firebase Hosting (solo primera vez)
+
+## 🚀 Despliegue con Firebase Hosting
+
+### Configuración Inicial
+
+1. **Instalar Firebase CLI** (si no está instalado globalmente):
+   ```bash
+   npm install -g firebase-tools
+   ```
+
+2. **Iniciar sesión en Firebase**:
+   ```bash
+   npm run firebase:login
+   ```
+
+3. **El proyecto ya está configurado** con:
+   - `firebase.json` - Configuración de hosting
+   - `.firebaserc` - Configuración del proyecto
+   - Scripts de deploy en `package.json`
+
+### Desplegar
+
+Para desplegar la aplicación a Firebase Hosting:
+
+```bash
+npm run deploy
+```
+
+Esto hará:
+1. Build de producción (`npm run build`)
+2. Deploy a Firebase Hosting (`firebase deploy`)
+
+### Configurar Dominio Personalizado
+
+1. Ve a la consola de Firebase Hosting
+2. Añade tu dominio personalizado
+3. Sigue las instrucciones para configurar los DNS
+4. Firebase automáticamente proveerá certificado SSL
 
 ## 🎨 Características de Diseño
 
