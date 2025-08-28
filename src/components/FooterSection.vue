@@ -78,7 +78,7 @@ import { computed } from 'vue';
 import { getRawTranslation } from '../i18n';
 import { useI18n } from 'vue-i18n';
 
-const logoACC = '/assets/images/logo_acc.jpg';
+const logoACC = '/assets/svg/logotipo-acc.svg';
 const currentYear = computed(() => new Date().getFullYear());
 const { t } = useI18n()
 </script>

@@ -120,7 +120,7 @@ import { ref } from 'vue'
 import LanguageSelector from './LanguageSelector.vue'
 import { useI18n } from 'vue-i18n';
 
-const logoACC = '/assets/images/logo_acc.jpg';
+const logoACC = '/assets/svg/logotipo-acc.svg';
 const isMobileMenuOpen = ref(false);
 const { t } = useI18n()
 

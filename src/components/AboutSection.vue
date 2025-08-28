@@ -71,11 +71,11 @@
         </div>
 
         <div class="relative">
-          <div class="aspect-w-4 aspect-h-3 rounded-lg bg-gradient-to-br from-blue-100 to-blue-200 overflow-hidden">
+          <div class="aspect-w-4 aspect-h-3 overflow-hidden">
             <img
               :src="logoAcc"
               :alt="t('club.name') + ' Logo'"
-              class="w-full h-full object-cover rounded-lg"
+              class="w-full h-full object-cover"
             />
           </div>
         </div>
@@ -87,6 +87,6 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 
-const logoAcc = '/assets/images/logo_acc.jpg';
+const logoAcc = '/assets/svg/logotipo-acc.svg';
 const { t } = useI18n()
 </script>
