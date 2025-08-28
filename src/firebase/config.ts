@@ -4,12 +4,12 @@ import { getAnalytics, isSupported } from 'firebase/analytics'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAREKwPBP5uaHij7yhVFBd9ga7IcYXGSAM",
-  authDomain: "arquers-club-castelldefels.firebaseapp.com",
-  projectId: "arquers-club-castelldefels",
-  storageBucket: "arquers-club-castelldefels.firebasestorage.app",
-  messagingSenderId: "389388616126",
-  appId: "1:389388616126:web:2b2c13e5a3c7b4bc4cb9ef"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 }
 
 // Initialize Firebase
