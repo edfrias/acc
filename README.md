@@ -60,6 +60,15 @@ src/
 3. Inicia el servidor de desarrollo: `npm run dev`
 4. Abre tu navegador en `http://localhost:5173`
 
+### Widget de clima
+
+El proyecto incluye un widget meteorológico que muestra temperatura, humedad, estado del clima y radiación UV para Castelldefels. Utiliza la API gratuita de **Open-Meteo** que no requiere configuración adicional.
+
+El widget se muestra en el header con:
+- **Desktop**: Indicador compacto con tooltip al pasar el mouse
+- **Mobile**: Modal al hacer clic en el indicador
+- **Idiomas**: Soporte para español, inglés y catalán
+
 ### Scripts Disponibles
 
 - `npm run dev` - Inicia el servidor de desarrollo

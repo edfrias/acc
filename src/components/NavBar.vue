@@ -48,6 +48,11 @@
           </div>
         </div>
 
+        <!-- Weather Widget - Always visible -->
+        <div class="hidden md:block">
+          <WeatherWidget />
+        </div>
+
         <div class="md:hidden">
           <button
             @click="toggleMobileMenu"
@@ -110,6 +115,10 @@
         <div class="px-3 py-2">
           <LanguageSelector />
         </div>
+
+        <div class="px-3 py-2">
+          <WeatherWidget />
+        </div>
       </div>
     </div>
   </nav>
@@ -118,6 +127,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import LanguageSelector from './LanguageSelector.vue'
+import WeatherWidget from './WeatherWidget.vue'
 import { useI18n } from 'vue-i18n';
 
 const logoACC = '/assets/svg/logotipo-acc.svg';

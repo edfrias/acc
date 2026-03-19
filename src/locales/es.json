@@ -149,6 +149,19 @@
     "languageSelector": "Selector de idioma",
     "changeLanguageTo": "Cambiar idioma a"
   },
+  "weather": {
+    "title": "Clima en Castelldefels",
+    "loading": "Cargando clima...",
+    "noApiKey": "Configura VITE_WEATHER_API_KEY para ver el clima.",
+    "failed": "Error al obtener el clima",
+    "temperature": "Temperatura",
+    "humidity": "Humedad",
+    "condition": "Estado",
+    "uvIndex": "Radiación UV",
+    "refresh": "Actualizar",
+    "close": "Cerrar",
+    "compactLabel": "Ver información del clima"
+  },
   "seo": {
     "metaTitle": "Arquers Club Castelldefels - Club de Tiro con Arco en Catalunya | Cursos y Entrenamientos",
     "metaDescription": "Club de tiro con arco en Castelldefels con más de 25 años de experiencia. Cursos de formación, entrenamientos especializados y actividades para todas las edades. ¡Descubre la arquería en Catalunya!"

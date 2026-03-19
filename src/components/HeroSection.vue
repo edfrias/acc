@@ -9,7 +9,7 @@
 
     <div class="hero-content relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <div class="max-w-4xl mx-auto mt-16 md-h-750:mt-0 lg-h-750:mt-0">
-        <h1 class="hero-title text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-white mb-6 leading-tight">
+        <h1 class="hero-title mt-6 text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-white mb-6 leading-tight">
           {{ t('hero.title') }}
           <span class="hero-subtitle block text-yellow-500">{{ t('hero.subtitle') }}</span>
         </h1>
