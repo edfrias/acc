@@ -3,8 +3,8 @@
   <div
     v-if="!isMobile"
     class="relative inline-block"
-    @mouseenter="showTooltip = true"
-    @mouseleave="showTooltip = false"
+    @mouseenter="showTooltipWithDelay"
+    @mouseleave="hideTooltipWithDelay"
   >
     <button
       v-if="hasApiKey"
@@ -25,6 +25,8 @@
     <div
       v-if="showTooltip && weather"
       class="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 z-50"
+      @mouseenter="showTooltipWithDelay"
+      @mouseleave="hideTooltipWithDelay"
     >
       <div class="bg-white border border-gray-200 rounded-lg shadow-lg p-4 min-w-64">
         <div class="flex items-start justify-between gap-3 mb-3">
@@ -48,6 +50,16 @@
           <div class="flex flex-col">
             <span class="font-medium text-gray-700">{{ t('weather.humidity') }}</span>
             <span class="text-lg font-bold text-gray-900">{{ weather.humidity }}%</span>
+          </div>
+
+          <div class="flex flex-col">
+            <span class="font-medium text-gray-700">{{ t('weather.wind') }}</span>
+            <span class="text-lg font-bold text-gray-900">{{ Math.round(weather.windSpeed) }} km/h</span>
+          </div>
+
+          <div class="flex flex-col">
+            <span class="font-medium text-gray-700">{{ t('weather.windDirection') }}</span>
+            <span class="text-lg font-bold text-gray-900">{{ getWindCardinal(weather.windDirection) }} ({{ Math.round(weather.windDirection) }}°)</span>
           </div>
 
           <div class="flex flex-col col-span-2">
@@ -136,6 +148,16 @@
                 <span class="text-2xl font-bold text-gray-900">{{ weather.humidity }}%</span>
               </div>
 
+              <div class="flex flex-col">
+                <span class="font-medium text-gray-700">{{ t('weather.wind') }}</span>
+                <span class="text-2xl font-bold text-gray-900">{{ Math.round(weather.windSpeed) }} km/h</span>
+              </div>
+
+              <div class="flex flex-col">
+                <span class="font-medium text-gray-700">{{ t('weather.windDirection') }}</span>
+                <span class="text-2xl font-bold text-gray-900">{{ getWindCardinal(weather.windDirection) }} ({{ Math.round(weather.windDirection) }}°)</span>
+              </div>
+
               <div class="flex flex-col col-span-2">
                 <span class="font-medium text-gray-700">{{ t('weather.uvIndex') }}</span>
                 <span :class="['text-2xl font-bold', uvSeverityClass]">{{ weather.uvi }}</span>
@@ -177,6 +199,8 @@ type WeatherData = {
   icon: string;
   uvi: number;
   weatherCode: number;
+  windSpeed: number;
+  windDirection: number;
 };
 
 const { t, locale } = useI18n();
@@ -190,6 +214,7 @@ const error = ref<string | null>(null);
 const weather = ref<WeatherData | null>(null);
 const showTooltip = ref(false);
 const showModal = ref(false);
+let tooltipTimeout: ReturnType<typeof setTimeout> | null = null;
 
 const hasApiKey = true; // Open-Meteo no requiere API key
 
@@ -208,7 +233,20 @@ onMounted(() => {
 
 onUnmounted(() => {
   window.removeEventListener('resize', checkMobile);
+  if (tooltipTimeout) clearTimeout(tooltipTimeout);
 });
+
+const showTooltipWithDelay = () => {
+  if (tooltipTimeout) clearTimeout(tooltipTimeout);
+  showTooltip.value = true;
+};
+
+const hideTooltipWithDelay = () => {
+  if (tooltipTimeout) clearTimeout(tooltipTimeout);
+  tooltipTimeout = setTimeout(() => {
+    showTooltip.value = false;
+  }, 150);
+};
 
 const weatherIconUrl = computed(() => {
   if (!weather.value?.icon) return '';
@@ -217,8 +255,7 @@ const weatherIconUrl = computed(() => {
 
 const weatherDescription = computed(() => {
   if (!weather.value) return '';
-  const langCode = locale.value?.split('-')[0] ?? 'en';
-  return getWeatherDescription(weather.value.weatherCode, langCode);
+  return getWeatherDescription(weather.value.weatherCode);
 });
 
 const uvSeverityClass = computed(() => {
@@ -236,7 +273,7 @@ const fetchWeather = async () => {
 
   try {
     const langCode = locale.value?.split('-')[0] ?? 'en';
-    const url = `${API_BASE_URL}?latitude=${LAT}&longitude=${LON}&current=temperature_2m,relative_humidity_2m,weather_code,uv_index&timezone=auto&lang=${langCode}`;
+    const url = `${API_BASE_URL}?latitude=${LAT}&longitude=${LON}&current=temperature_2m,relative_humidity_2m,weather_code,uv_index,wind_speed_10m,wind_direction_10m&timezone=auto&lang=${langCode}`;
 
     const response = await fetch(url);
     if (!response.ok) {
@@ -247,15 +284,16 @@ const fetchWeather = async () => {
 
     // Map WMO weather codes to descriptions
     const weatherCode = data?.current?.weather_code ?? 0;
-    const weatherDescription = getWeatherDescription(weatherCode, langCode);
 
     weather.value = {
       temp: data?.current?.temperature_2m ?? 0,
       humidity: data?.current?.relative_humidity_2m ?? 0,
-      description: weatherDescription,
+      description: getWeatherDescription(weatherCode),
       icon: getWeatherIcon(weatherCode),
       uvi: data?.current?.uv_index ?? 0,
-      weatherCode: weatherCode
+      weatherCode: weatherCode,
+      windSpeed: data?.current?.wind_speed_10m ?? 0,
+      windDirection: data?.current?.wind_direction_10m ?? 0
     };
   } catch (err: any) {
     error.value = err?.message ?? t('weather.failed');
@@ -264,102 +302,21 @@ const fetchWeather = async () => {
   }
 };
 
-// WMO Weather Code mappings
-const getWeatherDescription = (code: number, lang: string): string => {
-  const descriptions: Record<string, Record<number, string>> = {
-    en: {
-      0: 'Clear sky',
-      1: 'Mainly clear',
-      2: 'Partly cloudy',
-      3: 'Overcast',
-      45: 'Fog',
-      48: 'Depositing rime fog',
-      51: 'Light drizzle',
-      53: 'Moderate drizzle',
-      55: 'Dense drizzle',
-      56: 'Light freezing drizzle',
-      57: 'Dense freezing drizzle',
-      61: 'Slight rain',
-      63: 'Moderate rain',
-      65: 'Heavy rain',
-      66: 'Light freezing rain',
-      67: 'Heavy freezing rain',
-      71: 'Slight snow fall',
-      73: 'Moderate snow fall',
-      75: 'Heavy snow fall',
-      77: 'Snow grains',
-      80: 'Slight rain showers',
-      81: 'Moderate rain showers',
-      82: 'Violent rain showers',
-      85: 'Slight snow showers',
-      86: 'Heavy snow showers',
-      95: 'Thunderstorm',
-      96: 'Thunderstorm with slight hail',
-      99: 'Thunderstorm with heavy hail'
-    },
-    es: {
-      0: 'Cielo despejado',
-      1: 'Mayormente despejado',
-      2: 'Parcialmente nublado',
-      3: 'Nublado',
-      45: 'Niebla',
-      48: 'Niebla con escarcha',
-      51: 'Llovizna ligera',
-      53: 'Llovizna moderada',
-      55: 'Llovizna densa',
-      56: 'Llovizna helada ligera',
-      57: 'Llovizna helada densa',
-      61: 'Lluvia ligera',
-      63: 'Lluvia moderada',
-      65: 'Lluvia intensa',
-      66: 'Lluvia helada ligera',
-      67: 'Lluvia helada intensa',
-      71: 'Nevada ligera',
-      73: 'Nevada moderada',
-      75: 'Nevada intensa',
-      77: 'Granos de nieve',
-      80: 'Chubascos ligeros',
-      81: 'Chubascos moderados',
-      82: 'Chubascos violentos',
-      85: 'Chubascos de nieve ligeros',
-      86: 'Chubascos de nieve intensos',
-      95: 'Tormenta',
-      96: 'Tormenta con granizo ligero',
-      99: 'Tormenta con granizo intenso'
-    },
-    ca: {
-      0: 'Cel clar',
-      1: 'Principalment clar',
-      2: 'Parcialment ennuvolat',
-      3: 'Ennuvolat',
-      45: 'Boira',
-      48: 'Boira amb gebre',
-      51: 'Plugim lleuger',
-      53: 'Plugim moderat',
-      55: 'Plugim dens',
-      56: 'Plugim gelat lleuger',
-      57: 'Plugim gelat dens',
-      61: 'Pluja lleugera',
-      63: 'Pluja moderada',
-      65: 'Pluja intensa',
-      66: 'Pluja gelada lleugera',
-      67: 'Pluja gelada intensa',
-      71: 'Nevada lleugera',
-      73: 'Nevada moderada',
-      75: 'Nevada intensa',
-      77: 'Grans de neu',
-      80: 'Ruixats lleugers',
-      81: 'Ruixats moderats',
-      82: 'Ruixats violents',
-      85: 'Ruixats de neu lleugers',
-      86: 'Ruixats de neu intensos',
-      95: 'Tempesta',
-      96: 'Tempesta amb calamarsa lleugera',
-      99: 'Tempesta amb calamarsa intensa'
-    }
-  };
+// WMO Weather Code mappings from i18n locale files
+const getWeatherDescription = (code: number): string => {
+  return t(`weather.conditions.${code}`, 'Unknown');
+};
 
-  return descriptions[lang]?.[code] ?? descriptions.en[code] ?? 'Unknown';
+const getWindCardinal = (degrees: number): string => {
+  const directions: Record<string, string[]> = {
+    'en': ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'],
+    'es': ['N', 'NE', 'E', 'SE', 'S', 'SO', 'O', 'NO'],
+    'ca': ['N', 'NE', 'E', 'SE', 'S', 'SO', 'O', 'NO']
+  };
+  const langCode = locale.value?.split('-')[0] ?? 'en';
+  const dirs = directions[langCode] ?? directions.en;
+  const index = Math.round(((degrees % 360) + 360) % 360 / 45) % 8;
+  return dirs[index];
 };
 
 const getWeatherIcon = (code: number): string => {
