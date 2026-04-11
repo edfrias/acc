@@ -81,6 +81,20 @@
         "certificate": "Certificat d'aptitud",
         "enrollAriaLabel": "Inscriure's al curs d'iniciació per adults"
       },
+      "intermediate": {
+        "title": "Curs Intermedi - Adults",
+        "description": "Consolidar i perfeccionar els fonaments. Apassionar-se en les fases del tir i en l'ús correcte del material. Preparació física específica i nocions de psicologia esportiva per millorar la tècnica, la coordinació, l'estabilitat i la constància en l'execució.",
+        "teacher": "Impartit per la Violeta",
+        "item1": "Anàlisi i revisió tècnica",
+        "item2": "Preparació física",
+        "item3": "Psicologia esportiva",
+        "item4": "Resistència i rendiment",
+        "item5": "Coordinació i estabilitat",
+        "item6": "Control mental",
+        "downloadLabel": "Descarregar el fullet del curs",
+        "downloadAriaLabel": "Descarregar el fullet del curs intermedi de la Violeta",
+        "photoAlt": "Foto de la Violeta, entrenadora del curs intermedi"
+      },
       "junior": {
         "title": "Curs d'Iniciació - Junior",
         "description": "Curs especialitzat per joves a partir de 15 anys. Formació completa amb tècnic homologat a les instal·lacions del Canal Olímpic.",

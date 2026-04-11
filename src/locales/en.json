@@ -91,6 +91,20 @@
         "certificate": "Aptitude certificate",
         "enrollAriaLabel": "Enroll in the adult initiation course"
       },
+      "intermediate": {
+        "title": "Intermediate Course - Adults",
+        "description": "Consolidate and refine fundamentals. Dive deeper into shooting phases and correct equipment use. Specific physical preparation and sports psychology tips help improve technique, coordination, stability, and consistency.",
+        "teacher": "Taught by Violeta",
+        "item1": "Technical analysis and review",
+        "item2": "Specific physical preparation",
+        "item3": "Sports psychology",
+        "item4": "Endurance and performance",
+        "item5": "Coordination and stability",
+        "item6": "Mental control",
+        "downloadLabel": "Download course brochure",
+        "downloadAriaLabel": "Download the intermediate course brochure by Violeta",
+        "photoAlt": "Photo of Violeta, intermediate course instructor"
+      },
       "junior": {
         "title": "Initiation Course - Junior",
         "description": "Specialized course for youth from 15 years old. Complete training with certified instructor at the Olympic Canal facilities.",

@@ -1,5 +1,5 @@
 <template>
-  <section class="hero-section relative bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 min-h-screen flex items-center justify-center">
+  <section class="py-8 lg:py-24 hero-section relative bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 min-h-screen flex items-center justify-center">
     <div class="hero-overlay absolute inset-0 bg-black opacity-20"></div>
     <div
       class="absolute inset-0 bg-repeat transition-opacity duration-500"
@@ -57,13 +57,13 @@
       </div>
     </div>
 
-    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+    <div class="hidden md:block absolute bottom-8 left-1/2 transform -translate-x-1/2">
       <button
         @click="scrollToSection('sobre-nosotros')"
-        class="animate-bounce text-white hover:text-yellow-500 transition-colors duration-200"
+        class="p-3 rounded-full text-white hover:text-yellow-500 transition-colors duration-200 animate-bounce hover:bg-white/10"
         :aria-label="t('accessibility.scrollDown')"
       >
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
         </svg>
       </button>

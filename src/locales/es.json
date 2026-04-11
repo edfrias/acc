@@ -81,6 +81,20 @@
         "certificate": "Certificado de aptitud",
         "enrollAriaLabel": "Inscribirse al curso de iniciación para adultos"
       },
+      "intermediate": {
+        "title": "Curso Intermedio - Adultos",
+        "description": "Consolidar y perfeccionar los fundamentos. Profundizando en las fases del tiro y en el uso correcto del material. Preparación física específica y nociones de psicología deportiva para mejorar la técnica, la coordinación, la estabilidad y la consistencia en la ejecución.",
+        "teacher": "Impartido por Violeta",
+        "item1": "Análisis y revisión técnica",
+        "item2": "Preparación física",
+        "item3": "Psicología deportiva",
+        "item4": "Resistencia y rendimiento",
+        "item5": "Coordinación y estabilidad",
+        "item6": "Control mental",
+        "downloadLabel": "Descargar folleto del curso",
+        "downloadAriaLabel": "Descargar el folleto del curso intermedio de Violeta",
+        "photoAlt": "Foto de Violeta, profesora del curso intermedio"
+      },
       "junior": {
         "title": "Curso de Iniciación - Junior",
         "description": "Curso especializado para jóvenes a partir de 15 años. Formación completa con técnico homologado en las instalaciones del Canal Olímpico.",
