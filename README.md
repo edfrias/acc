@@ -1,155 +1,155 @@
-# Arquers Club Castelldefels - Landing Page Oficial
+# Arquers Club Castelldefels - Official Landing Page
 
-Sitio web oficial del **Arquers Club Castelldefels**, club de **tiro con arco** en Castelldefels, Catalunya, construido con Vue.js 3 y optimizado para SEO.
+Official website of **Arquers Club Castelldefels**, an **archery** club in Castelldefels, Catalunya, built with Vue.js 3 and optimized for SEO.
 
-## 🏹 Sobre el Club
+## 🏹 About the Club
 
-El Arquers Club Castelldefels es un club deportivo especializado en **tiro con arco** ubicado en **Castelldefels, Barcelona**. Ofrecemos:
+Arquers Club Castelldefels is a sports club specialized in **archery** located in **Castelldefels, Barcelona**. We offer:
 
-- **Cursos de formación** para principiantes
-- Entrenamientos en **arco recurvo** y **arco compuesto**
-- Actividades para todas las edades
-- Participación en competiciones oficiales
-- Más de 25 años de experiencia en arquería
+- **Training courses** for beginners
+- Practice in **recurve bow** and **compound bow**
+- Activities for all ages
+- Participation in official competitions
+- Over 25 years of experience in archery
 
-## 🌐 Características SEO
+## 🌐 SEO Features
 
-- **SEO técnico completo**: Meta tags optimizados, sitemap.xml, robots.txt
-- **Structured Data**: Schema.org markup para SportsClub y LocalBusiness
-- **OpenGraph y Twitter Cards**: Optimizado para redes sociales
-- **Core Web Vitals**: Optimizado para velocidad y rendimiento
-- **Mobile-first**: Diseño responsivo y Progressive Web App
-- **Accesibilidad**: WCAG 2.1 AA compliance
-- **Keywords targeting**: Optimizado para "tiro con arco", "arquería", "Castelldefels", "Catalunya"
+- **Full technical SEO**: Optimized meta tags, sitemap.xml, robots.txt
+- **Structured Data**: Schema.org markup for SportsClub and LocalBusiness
+- **OpenGraph and Twitter Cards**: Optimized for social media
+- **Core Web Vitals**: Optimized for speed and performance
+- **Mobile-first**: Responsive design and Progressive Web App
+- **Accessibility**: WCAG 2.1 AA compliance
+- **Keywords targeting**: Optimized for "archery", "bow", "Castelldefels", "Catalunya"
 
-## 🛠️ Tecnologías Utilizadas
+## 🛠️ Technologies Used
 
-- **Vue.js 3** - Framework progressive para interfaces de usuario
-- **TypeScript** - Tipado estático para JavaScript
-- **Vite** - Build tool rápido y moderno
-- **Tailwind CSS** - Framework de utilidades CSS
-- **PostCSS** - Procesamiento de CSS
+- **Vue.js 3** - Progressive framework for user interfaces
+- **TypeScript** - Static typing for JavaScript
+- **Vite** - Fast and modern build tool
+- **Tailwind CSS** - Utility-first CSS framework
+- **PostCSS** - CSS processing
 
-## 📁 Estructura del Proyecto
+## 📁 Project Structure
 
 ```
 src/
 ├── components/
-│   ├── NavBar.vue          # Navegación principal
-│   ├── HeroSection.vue     # Sección hero con CTA
-│   ├── AboutSection.vue    # Información del club
-│   ├── ProgramsSection.vue # Programas y cursos
-│   ├── ContactSection.vue  # Formulario de contacto
-│   └── FooterSection.vue   # Pie de página
-├── App.vue                 # Componente principal
-├── main.ts                 # Punto de entrada
-└── style.css              # Estilos globales con Tailwind
+│   ├── NavBar.vue          # Main navigation
+│   ├── HeroSection.vue     # Hero section with CTA
+│   ├── AboutSection.vue    # Club information
+│   ├── ProgramsSection.vue # Programs and courses
+│   ├── ContactSection.vue  # Contact form
+│   └── FooterSection.vue   # Footer
+├── App.vue                 # Root component
+├── main.ts                 # Entry point
+└── style.css              # Global styles with Tailwind
 ```
 
-## 🚀 Instalación y Uso
+## 🚀 Installation and Usage
 
-### Prerrequisitos
+### Prerequisites
 
-- Node.js (versión 20.19+ o 22.12+)
-- npm o yarn
+- Node.js (version 20.19+ or 22.12+)
+- npm or yarn
 
-### Instalación
+### Installation
 
-1. Clona el repositorio
-2. Instala las dependencias: `npm install`
-3. Inicia el servidor de desarrollo: `npm run dev`
-4. Abre tu navegador en `http://localhost:5173`
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Start the development server: `npm run dev`
+4. Open your browser at `http://localhost:5173`
 
-### Widget de clima
+### Weather Widget
 
-El proyecto incluye un widget meteorológico que muestra temperatura, humedad, estado del clima y radiación UV para Castelldefels. Utiliza la API gratuita de **Open-Meteo** que no requiere configuración adicional.
+The project includes a weather widget that displays temperature, humidity, weather condition, and UV radiation for Castelldefels. It uses the free **Open-Meteo** API, which requires no additional configuration.
 
-El widget se muestra en el header con:
-- **Desktop**: Indicador compacto con tooltip al pasar el mouse
-- **Mobile**: Modal al hacer clic en el indicador
-- **Idiomas**: Soporte para español, inglés y catalán
+The widget is shown in the header with:
+- **Desktop**: Compact indicator with tooltip on hover
+- **Mobile**: Modal on click
+- **Languages**: Support for Spanish, English, and Catalan
 
-### Scripts Disponibles
+### Available Scripts
 
-- `npm run dev` - Inicia el servidor de desarrollo
-- `npm run build` - Construye la aplicación para producción
-- `npm run preview` - Previsualiza la build de producción
-- `npm run deploy` - Construye y despliega a Firebase Hosting
-- `npm run firebase:login` - Inicia sesión en Firebase CLI
-- `npm run firebase:init` - Inicializa Firebase Hosting (solo primera vez)
+- `npm run dev` - Start the development server
+- `npm run build` - Build the application for production
+- `npm run preview` - Preview the production build
+- `npm run deploy` - Build and deploy to Firebase Hosting
+- `npm run firebase:login` - Log in to Firebase CLI
+- `npm run firebase:init` - Initialize Firebase Hosting (first time only)
 
-## 🚀 Despliegue con Firebase Hosting
+## 🚀 Deployment with Firebase Hosting
 
-### Configuración Inicial
+### Initial Setup
 
-1. **Instalar Firebase CLI** (si no está instalado globalmente):
+1. **Install Firebase CLI** (if not installed globally):
    ```bash
    npm install -g firebase-tools
    ```
 
-2. **Iniciar sesión en Firebase**:
+2. **Log in to Firebase**:
    ```bash
    npm run firebase:login
    ```
 
-3. **El proyecto ya está configurado** con:
-   - `firebase.json` - Configuración de hosting
-   - `.firebaserc` - Configuración del proyecto
-   - Scripts de deploy en `package.json`
+3. **The project is already configured** with:
+   - `firebase.json` - Hosting configuration
+   - `.firebaserc` - Project configuration
+   - Deploy scripts in `package.json`
 
-### Desplegar
+### Deploy
 
-Para desplegar la aplicación a Firebase Hosting:
+To deploy the application to Firebase Hosting:
 
 ```bash
 npm run deploy
 ```
 
-Esto hará:
-1. Build de producción (`npm run build`)
-2. Deploy a Firebase Hosting (`firebase deploy`)
+This will:
+1. Production build (`npm run build`)
+2. Deploy to Firebase Hosting (`firebase deploy`)
 
-### Configurar Dominio Personalizado
+### Configure Custom Domain
 
-1. Ve a la consola de Firebase Hosting
-2. Añade tu dominio personalizado
-3. Sigue las instrucciones para configurar los DNS
-4. Firebase automáticamente proveerá certificado SSL
+1. Go to the Firebase Hosting console
+2. Add your custom domain
+3. Follow the instructions to configure DNS
+4. Firebase will automatically provision an SSL certificate
 
-## 🎨 Características de Diseño
+## 🎨 Design Features
 
-### Paleta de Colores
-- **Primary**: Azul (#2563eb)
-- **Accent**: Ámbar (#f59e0b)
-- **Neutral**: Escala de grises
+### Color Palette
+- **Primary**: Blue (#2563eb)
+- **Accent**: Amber (#f59e0b)
+- **Neutral**: Grayscale
 
-### Tipografía
-- **Títulos**: Montserrat (font-display)
-- **Cuerpo**: Inter (font-sans)
+### Typography
+- **Headings**: Montserrat (font-display)
+- **Body**: Inter (font-sans)
 
-## ♿ Accesibilidad
+## ♿ Accessibility
 
-El proyecto implementa las siguientes características de accesibilidad:
+The project implements the following accessibility features:
 
-- **Navegación por teclado**: Todos los elementos interactivos son accesibles via teclado
-- **ARIA labels**: Etiquetas descriptivas para lectores de pantalla
-- **Contraste de colores**: Cumple con WCAG 2.1 AA
-- **HTML semántico**: Estructura lógica del documento
-- **Focus visible**: Indicadores claros de foco
+- **Keyboard navigation**: All interactive elements are accessible via keyboard
+- **ARIA labels**: Descriptive labels for screen readers
+- **Color contrast**: Meets WCAG 2.1 AA
+- **Semantic HTML**: Logical document structure
+- **Visible focus**: Clear focus indicators
 
-## 📱 Secciones de la Landing Page
+## 📱 Landing Page Sections
 
-1. **Hero Section**: Presentación principal con call-to-action
-2. **About Section**: Información sobre el club, estadísticas e historia
-3. **Programs Section**: Cursos y programas de entrenamiento
-4. **Contact Section**: Formulario de inscripción e información de contacto
-5. **Footer**: Enlaces adicionales, redes sociales e información legal
+1. **Hero Section**: Main presentation with call-to-action
+2. **About Section**: Club information, statistics, and history
+3. **Programs Section**: Training courses and programs
+4. **Contact Section**: Registration form and contact information
+5. **Footer**: Additional links, social media, and legal information
 
-## 📞 Información de Contacto del Club
+## 📞 Club Contact Information
 
-- **Ubicación**: Castelldefels, Cataluña
-- **Email Secretaría**: secretaria@arquerscastelldefels.com
-- **Email Junta**: junta@arquerscastelldefels.com
+- **Location**: Castelldefels, Catalonia
+- **Secretary Email**: secretaria@arquerscastelldefels.com
+- **Board Email**: junta@arquerscastelldefels.com
 - **Instagram**: @arquersclubc
 
-Para recibir información sobre las actividades que realizamos en el club, y los cursos de formación en tiro con arco, puedes comunicarte con nosotros a través de los medios mencionados arriba.
+To receive information about the club's activities and archery training courses, you can reach us through the channels listed above.
