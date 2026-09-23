@@ -1,33 +1,13 @@
 // Pipeline de funciones puras. Ver CLAUDE.md § Pipeline.
 import type { PDFPage } from 'pdf-lib'
-import type {
-  CardData,
-  ParsedCsv,
-  PdfOptions,
-  RawRow,
-  RejectedRow,
-  Template,
-  ValidationConfig,
-  ValidationResult,
-} from './types'
+import type { CardData, PdfOptions, RejectedRow, Template } from './types'
 
-/** Lee el SVG, extrae los campos y elimina `#guides` y `<metadata>`. */
-export function parseTemplate(_svg: string): Template {
-  throw new Error('parseTemplate: sin implementar')
-}
-
-/** Detecta separador y codificación (UTF-8, con reintento en Windows-1252). */
-export async function parseCsv(_file: Blob): Promise<ParsedCsv> {
-  throw new Error('parseCsv: sin implementar')
-}
-
-export function validate(
-  _rows: RawRow[],
-  _template: Template,
-  _config: ValidationConfig,
-): ValidationResult {
-  throw new Error('validate: sin implementar')
-}
+export { parseTemplate, TemplateError, BLEED_MM } from './template'
+export { parseCsv, parseCsvBytes, CsvError } from './csv'
+export { validate, LICENSE_FIELD, REDUCTION_WARNING_RATIO } from './validate'
+export { loadFontSet } from './fonts'
+export type { FontSet } from './fonts'
+export type * from './types'
 
 /** Dibuja un carnet en `page` con su esquina superior izquierda (incluido el sangrado) en (x, y) pt. */
 export function renderCard(
@@ -51,5 +31,3 @@ export async function buildPdf(
 export function buildReport(_rejected: RejectedRow[]): string {
   throw new Error('buildReport: sin implementar')
 }
-
-export type * from './types'

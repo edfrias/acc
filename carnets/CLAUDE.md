@@ -29,18 +29,20 @@ Todos los comandos se ejecutan desde `carnets/`: `npm run dev` (puerto 3001), `n
 
 ## Estructura
 
-- `src/pipeline/types.ts`: tipos compartidos del pipeline
-- `src/pipeline/index.ts`: funciones del pipeline
+- `src/pipeline/`: `types.ts` (tipos), `template.ts`, `csv.ts`, `validate.ts`, `fonts.ts` (medición con fontkit);
+  `index.ts` reexporta todo y contiene lo que aún no está implementado
 - `templates/`: plantilla de referencia (fuera de `public/`, no se publica)
-- `fixtures/`: CSV de prueba
-- `tests/`: tests de Vitest (`*.test.ts`)
+- `fonts/`: Inter 4.1 en TTF estático (Medium, SemiBold, Bold, ExtraBold) + licencia OFL
+- `fixtures/`: CSV de prueba, generados con `npm run fixtures` (`scripts/make-fixtures.mjs`).
+  No se editan a mano: el de Latin-1 se corrompería al guardarlo en UTF-8.
+- `tests/`: tests de Vitest (`*.test.ts`), con su propio `tsconfig.test.json` (tipos de Node)
 
 ## Pipeline (funciones puras)
 
 ```ts
 parseTemplate(svg)                → Template                          // campos + SVG sin #guides ni <metadata>
 parseCsv(file)                    → ParsedCsv                         // detección de separador y codificación
-validate(rows, template, config)  → { valid, warnings, rejected }     // config: mapeo de columnas + campos estáticos
+validate(rows, template, config, fonts) → { valid, warnings, rejected } // config: mapeo de columnas + campos estáticos
 renderCard(page, card, template, origin) → dibuja un carnet en una página PDF
 buildPdf(valid, template, options) → Uint8Array                       // imposición, sangrado, marcas de corte
 buildReport(rejected)             → string (CSV)
@@ -70,7 +72,9 @@ Columnas: nombre completo y número de federado. Posibles cabeceras en catalán 
 así que hay mapeo de columnas en la UI.
 
 - Detectar separador (`;` o `,`).
-- Leer como UTF-8; si aparecen caracteres de reemplazo (`�`) o mojibake (`Ã©`), reintentar como Windows-1252 antes de rechazar.
+- Leer como UTF-8; si aparecen caracteres de reemplazo (`�`), reintentar como Windows-1252.
+  Lo que siga mal codificado (`�` o mojibake como `Ã©`) lo rechaza `validate` fila a fila.
+- Las filas vacías se ignoran; el número de fila de cada registro es el del fichero original.
 - Vista previa en tabla tras la carga.
 
 ## Validación
@@ -78,11 +82,15 @@ así que hay mapeo de columnas en la UI.
 **Errores (el carnet no se genera):**
 - Codificación irrecuperable
 - Caracteres sin glifo en la fuente incrustada (comprobar con fontkit)
-- Campos vacíos o número de federado con formato inválido
+- Campos vacíos o número de federado con formato inválido. Formato: dígitos, con o sin prefijo de texto
+  ("Licencia n.º 124692", "Llicència núm. 124692" o "124692"); en el carnet se imprimen solo los dígitos
 - Número de federado duplicado
 - Nombre que no cabe ni con el tamaño mínimo
 
-**Avisos (se genera, pero se señala):** p. ej. nombre reducido mucho respecto al tamaño original.
+**Avisos (se genera, pero se señala):** texto reducido por debajo del 80 % del tamaño original.
+
+El ancho se mide sumando los avances de los glifos sin kerning, igual que pdf-lib al dibujar.
+Si hay números de federado repetidos se rechazan todas las filas implicadas: no se sabe cuál es la buena.
 
 La UI muestra un resumen ("48 válidos, 2 con avisos, 3 excluidos") con la tabla de incidencias antes de generar.
 
@@ -128,8 +136,7 @@ La UI muestra un resumen ("48 válidos, 2 con avisos, 3 excluidos") con la tabla
 
 - Formato que prefiere la copistería (tamaño, imposición, marcas de corte)
 - Si el carnet tiene reverso
-- Formato válido del número de federado
-- Si el nombre llega en una columna o en dos ("Nom" + "Cognoms")
+- Si el nombre llega en una columna o en dos ("Nom" + "Cognoms"). De momento se asume una
 
 ## Casos de prueba obligatorios
 
@@ -139,6 +146,6 @@ números de federado duplicados; nombres muy largos
 
 ## Siguiente paso
 
-El esqueleto ya está montado; las funciones del pipeline todavía no están implementadas.
-Falta generar los CSV de prueba en `fixtures/` con un script (el de Latin-1 hay que escribirlo como bytes),
-implementar `parseTemplate`, `parseCsv` y `validate` y escribir sus tests.
+Hechos y con tests: `parseTemplate`, `parseCsv` y `validate`.
+Pendiente: `renderCard` (intérprete del subconjunto de SVG de la plantilla sobre pdf-lib), `buildPdf`,
+`buildReport` y la UI.

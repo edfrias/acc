@@ -30,6 +30,8 @@ export interface TemplateField {
   maxWidth: number
   anchor: TextAnchor
   fontWeight: number
+  /** Espacio extra entre caracteres, en mm (`letter-spacing`). */
+  letterSpacing: number
   /** `data-static="true"`: se configura una vez en la app, no viene del CSV. */
   isStatic: boolean
 }
