@@ -18,7 +18,9 @@ Usuarios: miembros de la junta del club. No necesariamente con perfil técnico.
 
 ## Stack
 
-- Vite + TypeScript + Vue 3 (igual que la web del club)
+- Vite + TypeScript + Vue 3 + Tailwind 4 (igual que la web del club)
+- vue-i18n: catalán (por defecto), castellano (idioma de reserva) e inglés, como la web
+- pdf.js (`pdfjs-dist`) para la previsualización
 - PapaParse para el CSV
 - pdf-lib + @pdf-lib/fontkit para generar el PDF e incrustar fuentes
 - Fuente de la plantilla: Inter (OFL), incrustada como TTF (un fichero estático por peso, en `fonts/`)
@@ -32,6 +34,11 @@ Todos los comandos se ejecutan desde `carnets/`: `npm run dev` (puerto 3001), `n
 - `src/pipeline/`: `types.ts` (tipos), `template.ts`, `csv.ts`, `validate.ts`, `fonts.ts` (medición con fontkit),
   `render.ts` (un carnet sobre pdf-lib), `pdf.ts` (imposición y marcas), `report.ts`; `index.ts` lo reexporta todo
 - `src/pipeline/svg/`: compilador de la plantilla (`compile.ts`), estilos y CSS (`style.ts`), trazados (`path.ts`)
+- `src/app/`: estado de la interfaz (`useCarnets.ts`) y lógica pura de la UI: temporada por defecto,
+  asignación automática de columnas, carnet de ejemplo, nombre más largo
+- `src/components/`: un componente por paso (plantilla, CSV, columnas, revisión, previsualización, descarga)
+- `src/i18n/`: configuración y `locales/{ca,es,en}.json`. Todo texto visible va en los tres idiomas
+- `public/favicon.ico`: el mismo que la web
 - `templates/`: plantilla de referencia (fuera de `public/`, no se publica)
 - `fonts/`: Inter 4.1 en TTF estático (Medium, SemiBold, Bold, ExtraBold) + licencia OFL
 - `fixtures/`: CSV de prueba, generados con `npm run fixtures` (`scripts/make-fixtures.mjs`).
@@ -54,6 +61,11 @@ buildReport(rejected, headers)            → string (CSV)
 La previsualización es `buildPdf([valid[i]], template, { imposition: { kind: 'single' }, cropMarks: false }, fontFiles)`.
 
 `fonts` es un `FontSet` de fontkit (para medir); `fontFiles` son los TTF en bytes (para incrustar).
+
+El pipeline no produce texto para el usuario: las incidencias (`ValidationIssue`), `CsvError` e `ImpositionError`
+llevan un código y sus parámetros, y la interfaz redacta el mensaje en el idioma elegido (`describeIssue`).
+`buildReport` recibe las etiquetas y esa misma función. Excepción: el detalle de `TemplateError` va en castellano
+(son más de veinte casos técnicos que solo ve quien diseña plantillas) bajo un título traducido.
 
 ## Plantilla SVG: contrato
 
@@ -167,5 +179,5 @@ números de federado duplicados; nombres muy largos
 
 ## Siguiente paso
 
-El pipeline está completo y con tests. Pendiente: la UI (carga de plantilla y CSV, mapeo de columnas,
-temporada, resumen de validación, previsualización con pdf.js y descargas) y la configuración de Firebase Hosting.
+Pipeline e interfaz del MVP hechos y probados en el navegador. Pendiente: configurar Firebase Hosting
+(segundo sitio, `X-Robots-Tag`, despliegue con `hosting:carnets`).

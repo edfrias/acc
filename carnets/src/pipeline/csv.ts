@@ -1,8 +1,15 @@
 import Papa from 'papaparse'
 import type { CsvDelimiter, CsvEncoding, ParsedCsv, RawRow } from './types'
 
+/** El fichero no se puede leer como CSV de socios. `code` permite traducir el mensaje en la interfaz. */
 export class CsvError extends Error {
   name = 'CsvError'
+  code: 'empty'
+
+  constructor(code: 'empty') {
+    super('El fichero está vacío.')
+    this.code = code
+  }
 }
 
 /** Detecta separador y codificación (UTF-8, con reintento en Windows-1252). */
@@ -16,7 +23,7 @@ export function parseCsvBytes(bytes: Uint8Array): ParsedCsv {
   const { data } = Papa.parse<string[]>(text, { delimiter, skipEmptyLines: false })
 
   const headerIndex = data.findIndex((cells) => !isEmptyRow(cells))
-  if (headerIndex === -1) throw new CsvError('El fichero está vacío.')
+  if (headerIndex === -1) throw new CsvError('empty')
   const headers = data[headerIndex].map((h) => h.trim())
 
   const rows: RawRow[] = []
@@ -39,7 +46,7 @@ export function parseCsvBytes(bytes: Uint8Array): ParsedCsv {
  */
 function decode(bytes: Uint8Array): { text: string; encoding: CsvEncoding } {
   const utf8 = new TextDecoder('utf-8').decode(bytes)
-  if (!utf8.includes('�')) return { text: utf8, encoding: 'utf-8' }
+  if (!utf8.includes('\uFFFD')) return { text: utf8, encoding: 'utf-8' }
   return { text: new TextDecoder('windows-1252').decode(bytes), encoding: 'windows-1252' }
 }
 

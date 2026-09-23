@@ -29,8 +29,19 @@ export interface Layout {
   marks: Line[]
 }
 
+/** La imposición pedida no es posible. `code` permite traducir el mensaje en la interfaz. */
 export class ImpositionError extends Error {
   name = 'ImpositionError'
+  code: 'invalid-grid' | 'does-not-fit'
+  cols: number
+  rows: number
+
+  constructor(code: 'invalid-grid' | 'does-not-fit', cols: number, rows: number, message: string) {
+    super(message)
+    this.code = code
+    this.cols = cols
+    this.rows = rows
+  }
 }
 
 /** Calcula dónde va cada carnet en la página y dónde van las marcas de corte. */
@@ -46,7 +57,9 @@ export function impose(template: Template, options: PdfOptions): Layout {
   }
 
   const { cols, rows } = options.imposition
-  if (cols < 1 || rows < 1) throw new ImpositionError('La rejilla necesita al menos una fila y una columna.')
+  if (cols < 1 || rows < 1) {
+    throw new ImpositionError('invalid-grid', cols, rows, 'La rejilla necesita al menos una fila y una columna.')
+  }
   // Los carnets se tocan por el sangrado: cada corte separa dos carnets vecinos sin dejar tira de papel.
   const blockWidth = cols * w
   const blockHeight = rows * h
@@ -55,6 +68,9 @@ export function impose(template: Template, options: PdfOptions): Layout {
   const needed = Math.max(MIN_MARGIN_MM, markSpace + 1)
   if (marginX < needed || marginY < needed) {
     throw new ImpositionError(
+      'does-not-fit',
+      cols,
+      rows,
       `No caben ${cols} × ${rows} carnets en un A4: ocupan ${blockWidth.toFixed(1)} × ${blockHeight.toFixed(1)} mm ` +
         `con el sangrado y hacen falta ${needed} mm de margen por lado.`,
     )

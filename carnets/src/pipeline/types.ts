@@ -135,21 +135,23 @@ export interface CardData {
   fontSizes: Record<string, number>
 }
 
-export type IssueCode =
-  | 'encoding'
-  | 'missing-glyph'
-  | 'empty-field'
-  | 'invalid-format'
-  | 'duplicate'
-  | 'does-not-fit'
-  | 'font-reduced'
+/**
+ * Incidencia de validación. No lleva texto: la interfaz redacta el mensaje en el idioma elegido
+ * a partir del código y sus parámetros.
+ */
+export type ValidationIssue = { rowNumber: number; field: string } & (
+  | { code: 'empty-field' }
+  /** Campo estático (p. ej. temporada) sin configurar. */
+  | { code: 'missing-static' }
+  | { code: 'encoding'; value: string }
+  | { code: 'invalid-format'; value: string }
+  | { code: 'missing-glyph'; value: string; chars: string[] }
+  | { code: 'does-not-fit'; value: string }
+  | { code: 'font-reduced'; value: string; percent: number }
+  | { code: 'duplicate'; value: string; otherRows: number[] }
+)
 
-export interface ValidationIssue {
-  rowNumber: number
-  field?: string
-  code: IssueCode
-  message: string
-}
+export type IssueCode = ValidationIssue['code']
 
 export interface RejectedRow {
   row: RawRow

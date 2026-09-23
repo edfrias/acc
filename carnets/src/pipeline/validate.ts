@@ -21,7 +21,7 @@ export const REDUCTION_WARNING_RATIO = 0.8
 const LICENSE_PATTERN = /^\D*?(\d+)$/
 
 /** UTF-8 leído como Windows-1252 ("Ã©" en lugar de "é"). */
-const MOJIBAKE_PATTERN = /Ã[\u0080-¿]|Â[ -¿]/
+const MOJIBAKE_PATTERN = /Ã[\u0080-\u00BF]|Â[\u00A0-\u00BF]/
 
 interface RowCheck {
   row: RawRow
@@ -62,54 +62,46 @@ export function validate(
 
 function checkRow(row: RawRow, template: Template, config: ValidationConfig, fonts: FontSet): RowCheck {
   const check: RowCheck = { row, values: {}, fontSizes: {}, errors: [], warnings: [] }
-  const issue = (field: string, code: ValidationIssue['code'], message: string): ValidationIssue => ({
-    rowNumber: row.rowNumber,
-    field,
-    code,
-    message,
-  })
+  const rowNumber = row.rowNumber
 
   for (const field of template.fields) {
     let value = field.isStatic
       ? (config.staticValues[field.name] ?? '').trim()
       : (row.data[config.mapping[field.name]] ?? '').trim()
 
+    const name = field.name
     if (value === '') {
-      check.errors.push(
-        issue(field.name, 'empty-field', field.isStatic ? `Falta configurar "${field.name}".` : `"${field.name}" está vacío.`),
-      )
+      check.errors.push({ rowNumber, field: name, code: field.isStatic ? 'missing-static' : 'empty-field' })
       continue
     }
-    if (value.includes('�') || MOJIBAKE_PATTERN.test(value)) {
-      check.errors.push(issue(field.name, 'encoding', `"${field.name}" tiene caracteres mal codificados: "${value}".`))
+    if (value.includes('\uFFFD') || MOJIBAKE_PATTERN.test(value)) {
+      check.errors.push({ rowNumber, field: name, code: 'encoding', value })
       continue
     }
-    if (field.name === LICENSE_FIELD) {
+    if (name === LICENSE_FIELD) {
       const match = LICENSE_PATTERN.exec(value)
       if (!match) {
-        check.errors.push(issue(field.name, 'invalid-format', `Número de federado no válido: "${value}".`))
+        check.errors.push({ rowNumber, field: name, code: 'invalid-format', value })
         continue
       }
       value = match[1]
     }
 
     const font = fontFor(fonts, field.fontWeight)
-    const missing = missingGlyphs(font, value)
-    if (missing.length > 0) {
-      check.errors.push(
-        issue(field.name, 'missing-glyph', `La fuente no tiene estos caracteres: ${missing.join(' ')} (en "${value}").`),
-      )
+    const chars = missingGlyphs(font, value)
+    if (chars.length > 0) {
+      check.errors.push({ rowNumber, field: name, code: 'missing-glyph', value, chars })
       continue
     }
 
     const size = fittedSize(field, unitWidth(font, value), [...value].length)
     if (size < field.minSize) {
-      check.errors.push(issue(field.name, 'does-not-fit', `"${value}" no cabe ni con el tamaño mínimo.`))
+      check.errors.push({ rowNumber, field: name, code: 'does-not-fit', value })
       continue
     }
     if (size < field.fontSize * REDUCTION_WARNING_RATIO) {
       const percent = Math.round((size / field.fontSize) * 100)
-      check.warnings.push(issue(field.name, 'font-reduced', `"${value}" se ha reducido al ${percent} % del tamaño original.`))
+      check.warnings.push({ rowNumber, field: name, code: 'font-reduced', value, percent })
     }
 
     check.values[field.name] = value
@@ -137,12 +129,12 @@ function markDuplicates(checks: RowCheck[]): void {
   for (const [license, group] of byLicense) {
     if (group.length < 2) continue
     for (const check of group) {
-      const others = group.filter((other) => other !== check).map((other) => other.row.rowNumber)
       check.errors.push({
         rowNumber: check.row.rowNumber,
         field: LICENSE_FIELD,
         code: 'duplicate',
-        message: `Número de federado ${license} repetido (también en la fila ${others.join(', ')}).`,
+        value: license,
+        otherRows: group.filter((other) => other !== check).map((other) => other.row.rowNumber),
       })
     }
   }

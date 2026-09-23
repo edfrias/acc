@@ -1,0 +1,95 @@
+{
+  "app": {
+    "title": "Membership card generator",
+    "club": "Arquers Club Castelldefels",
+    "privacy": "Member data never leaves this computer: everything is processed in the browser and discarded when you close the tab."
+  },
+  "language": {
+    "label": "Language"
+  },
+  "loading": "Loading…",
+  "template": {
+    "title": "Template",
+    "official": "Official club template",
+    "custom": "Loaded template: {name}",
+    "change": "Load another template (SVG)",
+    "restore": "Back to the official template",
+    "invalid": "The template is not valid",
+    "fields": "Fields: {list}"
+  },
+  "csv": {
+    "title": "Member list",
+    "drop": "Drop the CSV file here or click to choose it",
+    "replace": "Change file",
+    "loaded": "{name}: {count} rows",
+    "details": "Encoding {encoding} · separator “{delimiter}”",
+    "empty": "The file is empty.",
+    "unreadable": "The file could not be read.",
+    "preview": "First {shown} of {total} rows",
+    "row": "Row"
+  },
+  "mapping": {
+    "title": "Columns and season",
+    "help": "Tell us which column of the file holds each piece of card data.",
+    "choose": "Choose a column",
+    "season": "Season",
+    "seasonHelp": "Printed on every card."
+  },
+  "fields": {
+    "nombre": "Name",
+    "num_federado": "License number",
+    "temporada": "Season"
+  },
+  "validation": {
+    "title": "Review",
+    "waiting": "Load the member list and choose the columns to review it.",
+    "valid": "valid",
+    "warnings": "with warnings",
+    "rejected": "excluded",
+    "rejectedTitle": "Excluded: no card will be generated",
+    "warningsTitle": "Warnings: the card will be generated, but check it",
+    "row": "Row",
+    "field": "Data",
+    "issue": "Issue",
+    "show": "Show",
+    "allGood": "All rows are correct."
+  },
+  "issues": {
+    "empty-field": "{field}: empty",
+    "missing-static": "{field} is missing",
+    "encoding": "{field}: badly encoded characters (“{value}”)",
+    "invalid-format": "Invalid license number: “{value}”",
+    "missing-glyph": "{field}: the font lacks these characters: {chars}",
+    "does-not-fit": "{field}: “{value}” does not fit even at the minimum size",
+    "font-reduced": "{field}: “{value}” shrunk to {percent} % of its size",
+    "duplicate": "License number {value} repeated (also in row {rows})"
+  },
+  "preview": {
+    "title": "Preview",
+    "sample": "Sample with the template text",
+    "position": "Card {current} of {total} · row {row}",
+    "previous": "Previous",
+    "next": "Next",
+    "widest": "Show the longest name",
+    "alt": "Card preview"
+  },
+  "download": {
+    "title": "Download",
+    "layout": "Layout",
+    "grid": "8 cards per A4 sheet (2 × 4)",
+    "single": "One card per page",
+    "cropMarks": "Crop marks",
+    "pdf": "Download PDF ({count} cards)",
+    "generating": "Generating the PDF…",
+    "report": "Download CSV of excluded rows ({count})",
+    "reportHelp": "You can fix it and load it again to generate only those cards.",
+    "pdfFile": "cards-{season}.pdf",
+    "reportFile": "cards-excluded-{season}.csv",
+    "failed": "The PDF could not be generated: {error}",
+    "doesNotFit": "{cols} × {rows} cards do not fit on an A4 sheet."
+  },
+  "report": {
+    "row": "Row",
+    "reason": "Reason"
+  }
+}

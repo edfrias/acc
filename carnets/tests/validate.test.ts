@@ -53,17 +53,19 @@ describe('validate con el CSV de prueba', () => {
   })
 
   it('avisa si el nombre baja del 80 %', () => {
-    expect(result.warnings.map((w) => [w.rowNumber, w.code])).toEqual([[10, 'font-reduced']])
+    expect(result.warnings).toEqual([
+      { rowNumber: 10, field: 'nombre', code: 'font-reduced', value: 'Maria Montserrat Puigdomènech i Sabaté', percent: 79 },
+    ])
   })
 
-  it('indica en el duplicado la otra fila', () => {
+  it('indica en el duplicado el número y la otra fila', () => {
     const duplicate = result.rejected.find((r) => r.row.rowNumber === 12)!
-    expect(duplicate.reasons[0].message).toContain('fila 13')
+    expect(duplicate.reasons[0]).toMatchObject({ code: 'duplicate', value: '124700', otherRows: [13] })
   })
 
   it('nombra el carácter que falta en la fuente', () => {
     const missing = result.rejected.find((r) => r.row.rowNumber === 16)!
-    expect(missing.reasons[0].message).toContain('李')
+    expect(missing.reasons[0]).toMatchObject({ code: 'missing-glyph', chars: ['李'] })
   })
 })
 
@@ -77,7 +79,7 @@ describe('validate', () => {
   })
 
   it('rechaza caracteres mal codificados', () => {
-    const result = validate([row(2, 'JosÃ© Roca', '1'), row(3, 'Jos� Roca', '2')], template, config, fonts)
+    const result = validate([row(2, 'JosÃ© Roca', '1'), row(3, 'Jos\uFFFD Roca', '2')], template, config, fonts)
     expect(result.rejected.map((r) => r.reasons[0].code)).toEqual(['encoding', 'encoding'])
   })
 
@@ -89,7 +91,7 @@ describe('validate', () => {
   it('rechaza todas las filas si falta configurar la temporada', () => {
     const result = validate([row(2, 'Anna Roca', '1')], template, { ...config, staticValues: {} }, fonts)
     expect(result.valid).toEqual([])
-    expect(result.rejected[0].reasons[0]).toMatchObject({ field: 'temporada', code: 'empty-field' })
+    expect(result.rejected[0].reasons[0]).toMatchObject({ field: 'temporada', code: 'missing-static' })
   })
 
   it('exige asignar una columna a cada campo del CSV', () => {

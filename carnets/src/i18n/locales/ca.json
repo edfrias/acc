@@ -1,0 +1,95 @@
+{
+  "app": {
+    "title": "Generador de carnets",
+    "club": "Arquers Club Castelldefels",
+    "privacy": "Les dades dels socis no surten d'aquest ordinador: tot es processa al navegador i s'esborra en tancar la pestanya."
+  },
+  "language": {
+    "label": "Idioma"
+  },
+  "loading": "Carregant…",
+  "template": {
+    "title": "Plantilla",
+    "official": "Plantilla oficial del club",
+    "custom": "Plantilla carregada: {name}",
+    "change": "Carregar una altra plantilla (SVG)",
+    "restore": "Tornar a la plantilla oficial",
+    "invalid": "La plantilla no és vàlida",
+    "fields": "Camps: {list}"
+  },
+  "csv": {
+    "title": "Llista de socis",
+    "drop": "Arrossega aquí el fitxer CSV o fes clic per triar-lo",
+    "replace": "Canviar el fitxer",
+    "loaded": "{name}: {count} files",
+    "details": "Codificació {encoding} · separador «{delimiter}»",
+    "empty": "El fitxer és buit.",
+    "unreadable": "No s'ha pogut llegir el fitxer.",
+    "preview": "Primeres {shown} de {total} files",
+    "row": "Fila"
+  },
+  "mapping": {
+    "title": "Columnes i temporada",
+    "help": "Indica quina columna del fitxer correspon a cada dada del carnet.",
+    "choose": "Tria una columna",
+    "season": "Temporada",
+    "seasonHelp": "Surt a tots els carnets."
+  },
+  "fields": {
+    "nombre": "Nom",
+    "num_federado": "Número de federat",
+    "temporada": "Temporada"
+  },
+  "validation": {
+    "title": "Revisió",
+    "waiting": "Carrega la llista de socis i indica les columnes per revisar-la.",
+    "valid": "vàlids",
+    "warnings": "amb avisos",
+    "rejected": "exclosos",
+    "rejectedTitle": "Exclosos: no es generarà el carnet",
+    "warningsTitle": "Avisos: es generarà el carnet, però convé revisar-lo",
+    "row": "Fila",
+    "field": "Dada",
+    "issue": "Incidència",
+    "show": "Veure",
+    "allGood": "Totes les files són correctes."
+  },
+  "issues": {
+    "empty-field": "{field}: és buit",
+    "missing-static": "Falta indicar {field}",
+    "encoding": "{field}: caràcters mal codificats («{value}»)",
+    "invalid-format": "Número de federat no vàlid: «{value}»",
+    "missing-glyph": "{field}: la font no té aquests caràcters: {chars}",
+    "does-not-fit": "{field}: «{value}» no hi cap ni amb la mida mínima",
+    "font-reduced": "{field}: «{value}» s'ha reduït al {percent} % de la mida",
+    "duplicate": "Número de federat {value} repetit (també a la fila {rows})"
+  },
+  "preview": {
+    "title": "Previsualització",
+    "sample": "Exemple amb el text de la plantilla",
+    "position": "Carnet {current} de {total} · fila {row}",
+    "previous": "Anterior",
+    "next": "Següent",
+    "widest": "Veure el nom més llarg",
+    "alt": "Previsualització del carnet"
+  },
+  "download": {
+    "title": "Descàrrega",
+    "layout": "Disposició",
+    "grid": "8 carnets per full A4 (2 × 4)",
+    "single": "Un carnet per pàgina",
+    "cropMarks": "Marques de tall",
+    "pdf": "Descarregar PDF ({count} carnets)",
+    "generating": "Generant el PDF…",
+    "report": "Descarregar CSV d'exclosos ({count})",
+    "reportHelp": "Pots corregir-lo i tornar-lo a carregar per generar només aquests carnets.",
+    "pdfFile": "carnets-{season}.pdf",
+    "reportFile": "carnets-exclosos-{season}.csv",
+    "failed": "No s'ha pogut generar el PDF: {error}",
+    "doesNotFit": "No hi caben {cols} × {rows} carnets en un full A4."
+  },
+  "report": {
+    "row": "Fila",
+    "reason": "Motiu"
+  }
+}
