@@ -1,4 +1,6 @@
 @import 'tailwindcss';
+/* carnets/ es un proyecto aparte: que Tailwind no busque clases ahí */
+@source not "../carnets";
 
 @layer base {
   html {
