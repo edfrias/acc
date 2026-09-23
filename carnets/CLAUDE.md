@@ -181,5 +181,5 @@ números de federado duplicados; nombres muy largos
 
 ## Siguiente paso
 
-Pipeline e interfaz del MVP hechos y probados en el navegador. Pendiente: configurar Firebase Hosting
-(segundo sitio, `X-Robots-Tag`, despliegue con `hosting:carnets`).
+Pipeline e interfaz del MVP hechos y probados en el navegador. Lo que falta, las decisiones pendientes
+y cómo retomarlo están en [SIGUIENTES-PASOS.md](SIGUIENTES-PASOS.md).
