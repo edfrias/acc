@@ -1,0 +1,3 @@
+# Los fixtures prueban codificación y finales de línea: git no debe tocar sus bytes.
+fixtures/** -text
+fonts/*.ttf binary
