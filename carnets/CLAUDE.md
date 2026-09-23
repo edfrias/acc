@@ -29,26 +29,31 @@ Todos los comandos se ejecutan desde `carnets/`: `npm run dev` (puerto 3001), `n
 
 ## Estructura
 
-- `src/pipeline/`: `types.ts` (tipos), `template.ts`, `csv.ts`, `validate.ts`, `fonts.ts` (medición con fontkit);
-  `index.ts` reexporta todo y contiene lo que aún no está implementado
+- `src/pipeline/`: `types.ts` (tipos), `template.ts`, `csv.ts`, `validate.ts`, `fonts.ts` (medición con fontkit),
+  `render.ts` (un carnet sobre pdf-lib), `pdf.ts` (imposición y marcas), `report.ts`; `index.ts` lo reexporta todo
+- `src/pipeline/svg/`: compilador de la plantilla (`compile.ts`), estilos y CSS (`style.ts`), trazados (`path.ts`)
 - `templates/`: plantilla de referencia (fuera de `public/`, no se publica)
 - `fonts/`: Inter 4.1 en TTF estático (Medium, SemiBold, Bold, ExtraBold) + licencia OFL
 - `fixtures/`: CSV de prueba, generados con `npm run fixtures` (`scripts/make-fixtures.mjs`).
   No se editan a mano: el de Latin-1 se corrompería al guardarlo en UTF-8.
 - `tests/`: tests de Vitest (`*.test.ts`), con su propio `tsconfig.test.json` (tipos de Node)
+- `scripts/pdf-to-png.mjs`: rasteriza un PDF a PNG (`node scripts/pdf-to-png.mjs fichero.pdf 150`).
+  Úsalo para revisar a ojo cualquier cambio en la plantilla o en el render.
 
 ## Pipeline (funciones puras)
 
 ```ts
-parseTemplate(svg)                → Template                          // campos + SVG sin #guides ni <metadata>
-parseCsv(file)                    → ParsedCsv                         // detección de separador y codificación
-validate(rows, template, config, fonts) → { valid, warnings, rejected } // config: mapeo de columnas + campos estáticos
-renderCard(page, card, template, origin) → dibuja un carnet en una página PDF
-buildPdf(valid, template, options) → Uint8Array                       // imposición, sangrado, marcas de corte
-buildReport(rejected)             → string (CSV)
+parseTemplate(svg)                        → Template        // compila el SVG; campos; sin #guides ni <metadata>
+parseCsv(file)                            → ParsedCsv       // detección de separador y codificación
+validate(rows, template, config, fonts)   → { valid, warnings, rejected }  // config: mapeo + campos estáticos
+renderCard(page, card, template, fonts, origin) → dibuja un carnet en una página PDF
+buildPdf(valid, template, options, fontFiles)   → Uint8Array                // imposición, sangrado, marcas
+buildReport(rejected, headers)            → string (CSV)
 ```
 
-La previsualización es `buildPdf([valid[i]], template)` con imposición de un solo carnet.
+La previsualización es `buildPdf([valid[i]], template, { imposition: { kind: 'single' }, cropMarks: false }, fontFiles)`.
+
+`fonts` es un `FontSet` de fontkit (para medir); `fontFiles` son los TTF en bytes (para incrustar).
 
 ## Plantilla SVG: contrato
 
@@ -63,7 +68,21 @@ Fichero de referencia: `templates/plantilla-carnet-cr80.svg`.
   - `text-anchor`: alineación.
 - `data-static="true"`: campo que no viene del CSV; se configura una vez en la app (p. ej. `temporada`).
 - `#guides`: guías de corte y zona segura, ocultas. La app las elimina antes de generar.
-- `#logo`: actualmente un marcador genérico; se sustituirá por el logotipo oficial.
+- `#logo`: logotipo oficial, copiado de `public/assets/svg/logotipo-acc.svg` (el de la web) con los `id`
+  prefijados con `logo-` y escalado a 11 mm de alto. Si cambia el logo de la web, hay que volver a copiarlo aquí.
+
+**SVG soportado por el render** (lo demás se rechaza al cargar la plantilla, con un mensaje que dice qué falla):
+
+- Elementos: `g`, `rect` (con `rx`/`ry`), `circle`, `ellipse`, `line`, `polyline`, `polygon`, `path` (todos
+  los comandos, arcos incluidos), `text` (con `tspan` sin posición propia). Se ignoran `defs`, `title`, `desc`.
+- Estilo: atributos de presentación, `style=""` y `<style>` con selectores simples (`tag`, `#id`, `.clase`).
+  Colores `#rgb`, `#rrggbb`, `rgb()` y algunos nombres; `fill-rule`, trazos con discontinuas, `opacity`.
+- `transform` (todas las funciones) y `clip-path` a un `<clipPath>` de formas sin `transform`.
+- Longitudes sin unidades o en `px` (= unidades de usuario = mm).
+- No soportado: `<image>`, `<use>`, degradados, patrones, filtros, máscaras.
+  Los logos tienen que ir en trazados (`<path>`), con el texto convertido a trazados.
+- La `opacity` de un grupo se aplica a cada hijo por separado: si los hijos se solapan, el solape se ve más oscuro.
+- Solo Inter: `font-family` se ignora. Hace falta un TTF por cada `font-weight` que use la plantilla.
 - Formato alternativo futuro: fondo PNG/PDF + posiciones de campos en JSON, para quien diseñe en herramientas sin buen soporte SVG.
 
 ## CSV
@@ -97,9 +116,11 @@ La UI muestra un resumen ("48 válidos, 2 con avisos, 3 excluidos") con la tabla
 ## Salida
 
 - **PDF para la copistería**: solo carnets. Nunca incluye páginas de errores.
-  - Imposición: por defecto 10 carnets por A4 (2 × 5). Alternativa: un carnet por página.
-    Pendiente de confirmar con la copistería.
-  - Sangrado de 3 mm y marcas de corte.
+  - Imposición: por defecto 8 carnets por A4 (2 × 4). Alternativa: un carnet por página.
+    Pendiente de confirmar con la copistería. **2 × 5 no cabe en A4**: con el sangrado son 5 × 60 = 300 mm de alto.
+  - Los carnets se tocan por el sangrado; las marcas de corte van en el margen, fuera del bloque,
+    alineadas con cada línea de corte (dentro caerían sobre el sangrado del vecino).
+  - Color en RGB. Si la copistería pide CMYK, hay que convertir los colores en el render.
   - Doble cara (fase 2): hoja de reverso con columnas espejadas.
 - **CSV de rechazados**: número de fila, datos originales, motivo. Se puede corregir y volver a subir solo ese fichero.
 
@@ -146,6 +167,5 @@ números de federado duplicados; nombres muy largos
 
 ## Siguiente paso
 
-Hechos y con tests: `parseTemplate`, `parseCsv` y `validate`.
-Pendiente: `renderCard` (intérprete del subconjunto de SVG de la plantilla sobre pdf-lib), `buildPdf`,
-`buildReport` y la UI.
+El pipeline está completo y con tests. Pendiente: la UI (carga de plantilla y CSV, mapeo de columnas,
+temporada, resumen de validación, previsualización con pdf.js y descargas) y la configuración de Firebase Hosting.

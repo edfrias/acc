@@ -11,3 +11,13 @@ export function readBytes(path: string): Uint8Array {
 export function readText(path: string): string {
   return readFileSync(resolve(projectRoot, path), 'utf-8')
 }
+
+/** Los cuatro pesos de Inter que usa la plantilla de referencia. */
+export function fontFiles(): Record<number, Uint8Array> {
+  return {
+    500: readBytes('fonts/Inter-Medium.ttf'),
+    600: readBytes('fonts/Inter-SemiBold.ttf'),
+    700: readBytes('fonts/Inter-Bold.ttf'),
+    800: readBytes('fonts/Inter-ExtraBold.ttf'),
+  }
+}
