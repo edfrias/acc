@@ -43,6 +43,8 @@ Todos los comandos se ejecutan desde `carnets/`: `npm run dev` (puerto 3001), `n
 - `fonts/`: Inter 4.1 en TTF estático (Medium, SemiBold, Bold, ExtraBold) + licencia OFL
 - `fixtures/`: CSV de prueba, generados con `npm run fixtures` (`scripts/make-fixtures.mjs`).
   No se editan a mano: el de Latin-1 se corrompería al guardarlo en UTF-8.
+  `socios.csv` y `socios-latin1.csv` cubren los casos límite de los tests; `socios-ejemplo.csv` es una lista
+  normal de 30 socios inventados para probar la app en local (`npm run dev` y cargarlo en el paso 2).
 - `tests/`: tests de Vitest (`*.test.ts`), con su propio `tsconfig.test.json` (tipos de Node)
 - `scripts/pdf-to-png.mjs`: rasteriza un PDF a PNG (`node scripts/pdf-to-png.mjs fichero.pdf 150`).
   Úsalo para revisar a ojo cualquier cambio en la plantilla o en el render.

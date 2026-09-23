@@ -70,6 +70,14 @@ describe('validate con el CSV de prueba', () => {
 })
 
 describe('validate', () => {
+  it('la lista de ejemplo para probar en local es válida entera', () => {
+    const { rows } = parseCsvBytes(readBytes('fixtures/socios-ejemplo.csv'))
+    const result = validate(rows, template, config, fonts)
+    expect(result.rejected).toEqual([])
+    expect(result.valid).toHaveLength(30)
+    expect(result.warnings.map((w) => w.value)).toEqual(['Maria Montserrat Vallverdú i Casademunt'])
+  })
+
   it('acepta el CSV en Latin-1', () => {
     const { rows } = parseCsvBytes(readBytes('fixtures/socios-latin1.csv'))
     const mapping = { nombre: 'nombre', num_federado: 'num_federado' }
