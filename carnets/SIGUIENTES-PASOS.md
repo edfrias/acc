@@ -14,19 +14,16 @@ Contexto completo del proyecto en [CLAUDE.md](CLAUDE.md).
 - Para probar en local: `pnpm dev:all` desde la raíz, abrir http://localhost:3000/carnets/ y cargar
   `fixtures/socios-ejemplo.csv` (30 socios válidos) o `fixtures/socios.csv` (casos límite con errores).
 
-## 1. Lo que falta para cerrar el MVP: Firebase Hosting
+## 1. MVP publicado
 
-Objetivo (CLAUDE.md § Alojamiento): publicar en `arquerscastelldefels.com/carnets/`, dentro del sitio de la web.
-Se descartó el subdominio para no depender del proveedor del dominio (DNS).
+Desde el 2026-10-13 en https://www.arquerscastelldefels.com/carnets/, dentro del sitio de Firebase Hosting de la web
+(CLAUDE.md § Alojamiento). Se descartó el subdominio para no depender del proveedor del dominio (DNS).
+Comprobado en producción: cabeceras (`noindex, nofollow` en `/carnets/**`), redirección de `/carnets` y el flujo
+completo en Chrome con `socios-ejemplo.csv`.
 
-Hecho: `base: '/carnets/'`, `pnpm build:site` monta el sitio completo, `firebase.json` sirve `/carnets/**` con `noindex`
-y caché por tipo de fichero, y `pnpm run deploy` publica las dos apps. Probado con el emulador de Firebase Hosting.
-
-Pendiente:
-
-1. Desplegar (pedir confirmación antes: es publicar), abrir `https://www.arquerscastelldefels.com/carnets/`
-   y repetir la prueba con `socios-ejemplo.csv`. Comprobar las cabeceras con `curl -I`
-   (el emulador local no las aplica).
+Se despliega junto con la web con `pnpm run deploy` (pedir confirmación antes: es publicar). Para probar antes
+sin tocar producción: `pnpm build:site` y `firebase hosting:channel:deploy preview --expires 7d`
+(los canales de preview ponen `noindex` en todo el sitio, así que esa cabecera solo se puede comprobar en producción).
 
 ## 2. Decisiones pendientes (no son de código)
 
