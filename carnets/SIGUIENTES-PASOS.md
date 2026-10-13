@@ -70,11 +70,6 @@ en `carnets.arquerscastelldefels.com`, con despliegue independiente de la web.
 - Login con Firebase Auth (Google) y lista de correos de la junta; plantilla oficial servida desde Storage
   con reglas de acceso en lugar de ir en el bundle (`officialTemplateSvg` en `src/app/useCarnets.ts`).
 
-## Fuera de carnets, visto de paso
-
-- `public/_headers` de la web tiene formato Netlify/Cloudflare: Firebase Hosting lo ignora.
-  Esas cabeceras habría que moverlas a `firebase.json` si se quieren de verdad.
-
 ## Cómo verificar antes de dar algo por hecho
 
 `pnpm test:carnets` y `pnpm build:carnets` sin errores (desde la raíz). Si el cambio afecta al render o a la plantilla,
