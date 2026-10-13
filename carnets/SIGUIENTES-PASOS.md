@@ -74,7 +74,6 @@ en `carnets.arquerscastelldefels.com`, con despliegue independiente de la web.
 
 - `public/_headers` de la web tiene formato Netlify/Cloudflare: Firebase Hosting lo ignora.
   Esas cabeceras habría que moverlas a `firebase.json` si se quieren de verdad.
-- `tailwind.config.js` de la web es un resto de Tailwind 3 y no se carga (ver AGENTS.md).
 
 ## Cómo verificar antes de dar algo por hecho
 

@@ -22,8 +22,8 @@ También puedes ejecutar `pnpm <script>` dentro de `carnets/`.
 
 ## Web del club
 
-- Vue 3 + TypeScript + Vite 7 + Tailwind CSS 4, cargado en `src/style.css` con `@import 'tailwindcss'`.
-  `tailwind.config.js` es un resto de la v3: no se carga (no hay `@config`), así que cambiarlo no tiene efecto.
+- Vue 3 + TypeScript + Vite 8 + Tailwind CSS 4 (plugin `@tailwindcss/vite`), cargado en `src/style.css`
+  con `@import 'tailwindcss'`. No hay `tailwind.config.js`: en Tailwind 4 la personalización va en el propio CSS (`@theme`, `@custom-variant`).
 - vue-i18n con catalán, castellano e inglés: `src/locales/{ca,es,en}.json`.
   Todo texto visible va en los tres idiomas.
 - Componentes en `src/components/`; configuración de Firebase en `src/firebase/config.ts`, leída de `.env`
