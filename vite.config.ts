@@ -4,14 +4,16 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [vue()],
   build: {
-    rollupOptions: {
+    rolldownOptions: {
       output: {
         chunkFileNames: 'assets/js/[name]-[hash].js',
         entryFileNames: 'assets/js/[name]-[hash].js',
         assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
-        manualChunks: {
-          vendor: ['vue'],
-          i18n: ['vue-i18n']
+        codeSplitting: {
+          groups: [
+            { name: 'vendor', test: /\/node_modules\/(vue|@vue\/[^/]+)\// },
+            { name: 'i18n', test: /\/node_modules\/(vue-i18n|@intlify\/[^/]+)\// }
+          ]
         }
       }
     },
