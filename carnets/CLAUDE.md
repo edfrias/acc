@@ -146,10 +146,11 @@ La UI muestra un resumen ("48 válidos, 2 con avisos, 3 excluidos") con la tabla
 
 ## Alojamiento
 
-- Firebase Hosting, como segundo sitio dentro del proyecto Firebase de la web del club,
-  en subdominio (p. ej. `carnets.arquerscastelldefels.com`). Despliegue independiente:
-  `firebase deploy --only hosting:carnets`.
-- Cabecera `X-Robots-Tag: noindex, nofollow`.
+- Firebase Hosting, como segundo sitio (`arquers-carnets`) dentro del proyecto Firebase de la web del club.
+  Configurado en el `firebase.json` de la raíz, que tiene un sitio por app. Despliegue independiente:
+  `pnpm deploy:carnets` desde la raíz (o `pnpm run deploy` desde `carnets/`). Pide confirmación antes: es publicar.
+- Más adelante, en subdominio (p. ej. `carnets.arquerscastelldefels.com`).
+- Cabecera `X-Robots-Tag: noindex, nofollow` y `public/robots.txt` con `Disallow: /`.
 - Fase posterior: Firebase Auth (Google) con lista de correos de la junta, y la plantilla oficial
   servida desde Firebase Storage con reglas de acceso (no en el bundle). Dejar la arquitectura preparada.
 

@@ -40,7 +40,8 @@ Comandos (desde la raíz):
 
 - **Verifica antes de dar algo por terminado.** En la web, `pnpm build` sin errores.
   En carnets, `pnpm test:carnets` y `pnpm build:carnets` sin errores.
-- **No despliegues sin permiso explícito.** `pnpm run deploy` publica la web en producción.
+- **No despliegues sin permiso explícito.** `pnpm run deploy` publica la web en producción y `pnpm deploy:carnets`
+  el generador de carnets (cada uno es un sitio distinto en `firebase.json`).
   Ojo: con `run`. `pnpm deploy` a secas es un comando de pnpm que no tiene nada que ver.
 - **Datos de socios:** nunca subas CSV reales ni datos personales al repo ni a servicios externos.
   Los ficheros de prueba de `carnets/fixtures/` usan datos inventados.

@@ -1,11 +1,12 @@
 # Siguientes pasos · Generador de carnets
 
-Punto de partida para retomar el trabajo. Actualizado el 2026-09-23.
+Punto de partida para retomar el trabajo. Actualizado el 2026-10-13.
 Contexto completo del proyecto en [CLAUDE.md](CLAUDE.md).
 
 ## Dónde estamos
 
-- Rama `feat/carnets-skeleton`. Se fusiona con `main` solo cuando el MVP esté completo.
+- `feat/carnets-skeleton` se fusionó en `main` el 2026-10-13 para poder probar el generador publicado
+  (accesible solo para quien conozca la URL). El desarrollo sigue en la rama `feat/carnets`.
 - Hecho y con tests (70): el pipeline entero (plantilla, CSV, validación, render, PDF impuesto, informe de rechazados)
   y la interfaz en catalán, castellano e inglés.
 - Probado en Chrome de principio a fin con `fixtures/socios.csv`: validación, previsualización,
@@ -16,29 +17,19 @@ Contexto completo del proyecto en [CLAUDE.md](CLAUDE.md).
 ## 1. Lo que falta para cerrar el MVP: Firebase Hosting
 
 Objetivo (CLAUDE.md § Alojamiento): segundo sitio en el proyecto `arquers-club-castelldefels`,
-en `carnets.arquerscastelldefels.com`, con despliegue independiente de la web.
+con despliegue independiente de la web.
 
-1. **Crear el sitio** (requiere acceso a la consola de Firebase):
-   `firebase hosting:sites:create <id-del-sitio>`. El id es global en Firebase: probar `arquers-carnets` o similar.
-2. **Asignar targets** desde la raíz del repo:
-   ```bash
-   firebase target:apply hosting web arquers-club-castelldefels
-   firebase target:apply hosting carnets <id-del-sitio>
-   ```
-   Esto escribe en `.firebaserc`, que **está en `.gitignore`**. Decidir si sacarlo de ahí: no tiene secretos
-   (solo el id del proyecto y de los sitios) y así la configuración de despliegue queda en el repo.
-3. **`firebase.json`**: pasar `hosting` de objeto a array con dos entradas:
-   - `target: "web"`: la configuración actual, sin cambios.
-   - `target: "carnets"`: `public: "carnets/dist"`, cabecera `X-Robots-Tag: noindex, nofollow` para todo,
-     caché larga para `assets/**` (los nombres llevan hash) y `no-cache` para `index.html`.
-4. **Cuidado con `pnpm run deploy` de la web**: hoy ejecuta `firebase deploy`, que con dos sitios desplegaría
-   también carnets. Cambiarlo a `firebase deploy --only hosting:web`.
-5. **Script de despliegue en `carnets/package.json`**: `"deploy": "pnpm build && firebase deploy --only hosting:carnets"`.
-   La CLI busca `firebase.json` en los directorios superiores, así que funciona desde `carnets/`.
-6. **`carnets/public/robots.txt`** con `Disallow: /`, además de la cabecera.
-7. **Dominio**: añadir `carnets.arquerscastelldefels.com` al sitio en la consola y crear los registros DNS que indique.
-8. Desplegar (pedir confirmación antes: es publicar), abrir la URL y repetir la prueba con `socios-ejemplo.csv`.
-9. Fusionar `feat/carnets-skeleton` en `main`.
+Hecho: `firebase.json` tiene un sitio por app (la web y `arquers-carnets`, con `noindex` y caché por tipo de fichero),
+`pnpm run deploy` despliega solo la web, `pnpm deploy:carnets` solo carnets, y `carnets/public/robots.txt`
+bloquea a los buscadores.
+
+Pendiente:
+
+1. **Crear el sitio** (requiere `firebase login`): `firebase hosting:sites:create arquers-carnets`.
+   El id es global en Firebase: si está cogido, elegir otro y cambiarlo en `firebase.json` y en `carnets/package.json`.
+2. Desplegar (pedir confirmación antes: es publicar), abrir la URL y repetir la prueba con `socios-ejemplo.csv`.
+   Comprobar las cabeceras con `curl -I`.
+3. **Dominio**: añadir `carnets.arquerscastelldefels.com` al sitio en la consola y crear los registros DNS que indique.
 
 ## 2. Decisiones pendientes (no son de código)
 
