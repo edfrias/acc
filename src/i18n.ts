@@ -4,26 +4,26 @@ import es from './locales/es.json'
 import ca from './locales/ca.json'
 import en from './locales/en.json'
 
-const getDefaultLocale = (): string => {
+type Locale = 'es' | 'ca' | 'en'
+
+const isLocale = (value: string | null): value is Locale =>
+  value !== null && ['es', 'ca', 'en'].includes(value)
+
+// ?lang= manda: es la URL que anuncian los hreflang de index.html para cada idioma
+const getDefaultLocale = (): Locale => {
+  const urlLocale = new URLSearchParams(window.location.search).get('lang')
+  if (isLocale(urlLocale)) {
+    return urlLocale
+  }
+
   const savedLocale = localStorage.getItem('locale')
-  if (savedLocale && ['es', 'ca', 'en'].includes(savedLocale)) {
+  if (isLocale(savedLocale)) {
     return savedLocale
   }
 
   const browserLocale = navigator.language.split('-')[0]
-
-  const localeMap: { [key: string]: string } = {
-    'es': 'es',
-    'ca': 'ca',
-    'en': 'en',
-    'es-ES': 'es',
-    'ca-ES': 'ca',
-    'en-US': 'en',
-    'en-GB': 'en'
-  }
-
-  if (localeMap[browserLocale]) {
-    return localeMap[browserLocale]
+  if (isLocale(browserLocale)) {
+    return browserLocale
   }
 
   return 'ca'
@@ -47,20 +47,24 @@ const i18n = createI18n({
 })
 
 export const setLocale = (locale: string) => {
-  if (['es', 'ca', 'en'].includes(locale)) {
-    i18n.global.locale.value = locale as 'es' | 'ca' | 'en'
+  if (isLocale(locale)) {
+    i18n.global.locale.value = locale
     localStorage.setItem('locale', locale)
 
-    document.documentElement.setAttribute('lang', locale)
+    const url = new URL(window.location.href)
+    url.searchParams.set('lang', locale)
+    history.replaceState(history.state, '', url)
 
-    updateSEOMetaTags(locale)
+    updateDocumentLocale()
   }
 }
 
-const updateSEOMetaTags = (locale: string) => {
+// index.html trae el título y las meta etiquetas en catalán; se cambian al idioma activo
+const updateDocumentLocale = () => {
   const title = i18n.global.t('seo.metaTitle')
   const description = i18n.global.t('seo.metaDescription')
 
+  document.documentElement.setAttribute('lang', i18n.global.locale.value)
   document.title = title
 
   const metaDescription = document.querySelector('meta[name="description"]')
@@ -87,36 +91,9 @@ const updateSEOMetaTags = (locale: string) => {
   if (twitterDescription) {
     twitterDescription.setAttribute('content', description)
   }
-
-  updateHrefLangTags(locale)
 }
 
-
-const updateHrefLangTags = (_currentLocale: string) => {
-  const existingHrefLangs = document.querySelectorAll('link[hreflang]')
-  existingHrefLangs.forEach(link => link.remove())
-
-  const baseUrl = window.location.origin
-  const languages = [
-    { code: 'es', region: 'es-ES' },
-    { code: 'ca', region: 'ca-ES' },
-    { code: 'en', region: 'en' }
-  ]
-
-  languages.forEach(lang => {
-    const link = document.createElement('link')
-    link.rel = 'alternate'
-    link.hreflang = lang.region
-    link.href = `${baseUrl}/?lang=${lang.code}`
-    document.head.appendChild(link)
-  })
-
-  const defaultLink = document.createElement('link')
-  defaultLink.rel = 'alternate'
-  defaultLink.hreflang = 'x-default'
-  defaultLink.href = baseUrl
-  document.head.appendChild(defaultLink)
-}
+updateDocumentLocale()
 
 export const getCurrentLocale = () => {
   return i18n.global.locale.value
