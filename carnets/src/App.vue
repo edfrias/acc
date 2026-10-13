@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-slate-50 text-slate-900">
     <!-- Misma cabecera que la web del club (NavBar.vue), para que no parezcan dos webs distintas -->
     <header class="border-b border-gray-200 bg-white">
-      <div class="mx-auto flex min-h-16 max-w-6xl items-center justify-between gap-4 px-4 py-2">
+      <div class="mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-4 px-4 py-2 sm:px-6 lg:px-8">
         <h1 class="flex min-w-0 items-center gap-2">
           <img :src="logo" alt="" class="h-8 w-8 shrink-0 rounded-lg object-cover" />
           <span class="min-w-0">
@@ -14,7 +14,7 @@
       </div>
     </header>
 
-    <p class="mx-auto flex max-w-6xl items-start gap-2 px-4 pt-4 text-sm text-slate-600">
+    <p class="mx-auto flex max-w-7xl items-start gap-2 px-4 pt-4 sm:px-6 lg:px-8 text-sm text-slate-600">
       <svg class="mt-0.5 h-4 w-4 shrink-0 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path
           stroke-linecap="round"
@@ -26,7 +26,7 @@
       {{ t('app.privacy') }}
     </p>
 
-    <main class="mx-auto grid max-w-6xl gap-6 px-4 py-6 lg:grid-cols-[minmax(0,1fr)_26rem]">
+    <main class="mx-auto grid max-w-7xl gap-6 px-4 py-6 sm:px-6 lg:px-8 lg:grid-cols-[minmax(0,1fr)_26rem]">
       <div class="min-w-0 space-y-6">
         <TemplateStep />
         <CsvStep />
