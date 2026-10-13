@@ -14,8 +14,7 @@
               class="w-8 h-8 rounded-lg object-cover"
             />
             <span class="font-display font-bold text-xl text-gray-900">
-              <span class="sr-only">{{ t('nav.clubName') }} - </span>{{ t('nav.clubName') }}
-              <span class="hidden lg:inline ml-1 text-sm font-normal text-gray-600">{{ t('nav.clubTagline') }}</span>
+              <span class="sr-only">{{ t('nav.clubName') }} - </span>{{ t('nav.clubName') }}<span class="hidden lg:inline ml-2 text-sm font-normal text-gray-600">{{ t('nav.clubTagline') }}</span>
             </span>
           </a>
         </div>

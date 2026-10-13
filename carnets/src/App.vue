@@ -7,7 +7,7 @@
           <img :src="logo" alt="" class="h-8 w-8 shrink-0 rounded-lg object-cover" />
           <span class="min-w-0">
             <span class="font-display text-base font-bold text-gray-900 sm:text-xl">{{ t('app.club') }}</span>
-            <span class="block font-display text-sm font-semibold text-gray-600 sm:ml-1 sm:inline">{{ t('app.title') }}</span>
+            <span class="block font-display text-sm font-semibold text-gray-600 sm:ml-2 sm:inline">{{ t('app.title') }}</span>
           </span>
         </h1>
         <LanguageSelect />
