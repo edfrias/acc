@@ -1,11 +1,15 @@
 <template>
   <div class="min-h-screen bg-slate-50 text-slate-900">
-    <header class="border-b-4 border-yellow-400 bg-blue-600 text-white">
-      <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4">
-        <div>
-          <p class="text-sm text-blue-100">{{ t('app.club') }}</p>
-          <h1 class="text-xl font-bold sm:text-2xl">{{ t('app.title') }}</h1>
-        </div>
+    <!-- Misma cabecera que la web del club (NavBar.vue), para que no parezcan dos webs distintas -->
+    <header class="border-b border-gray-200 bg-white">
+      <div class="mx-auto flex min-h-16 max-w-6xl items-center justify-between gap-4 px-4 py-2">
+        <h1 class="flex min-w-0 items-center gap-2">
+          <img :src="logo" alt="" class="h-8 w-8 shrink-0 rounded-lg object-cover" />
+          <span class="min-w-0">
+            <span class="font-display text-base font-bold text-gray-900 sm:text-xl">{{ t('app.club') }}</span>
+            <span class="block font-display text-sm font-semibold text-gray-600 sm:ml-1 sm:inline">{{ t('app.title') }}</span>
+          </span>
+        </h1>
         <LanguageSelect />
       </div>
     </header>
@@ -41,6 +45,7 @@
 import { onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useCarnets } from './app/useCarnets'
+import logo from './assets/logotipo-acc.svg'
 import CardPreview from './components/CardPreview.vue'
 import CsvStep from './components/CsvStep.vue'
 import DownloadStep from './components/DownloadStep.vue'

@@ -1,5 +1,11 @@
 @import 'tailwindcss';
 
+@theme {
+  --font-sans: 'Inter', system-ui, sans-serif;
+  /* Títulos con la tipografía de la web del club */
+  --font-display: 'Montserrat', 'Inter', system-ui, sans-serif;
+}
+
 @layer base {
   html {
     font-family: 'Inter', system-ui, sans-serif;

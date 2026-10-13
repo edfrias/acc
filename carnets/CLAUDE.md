@@ -24,6 +24,8 @@ Usuarios: miembros de la junta del club. No necesariamente con perfil técnico.
 - PapaParse para el CSV
 - pdf-lib + @pdf-lib/fontkit para generar el PDF e incrustar fuentes
 - Fuente de la plantilla: Inter (OFL), incrustada como TTF (un fichero estático por peso, en `fonts/`)
+- Interfaz con el aspecto de la web del club: misma cabecera que su `NavBar.vue` (logo, nombre en Montserrat),
+  Inter y Montserrat servidas desde el bundle con `@fontsource` (nada de Google Fonts: la app no pide nada a terceros)
 - Tests: Vitest con entorno jsdom
 
 Subproyecto independiente dentro del repo de la web: miembro del workspace de pnpm de la raíz, con su propio
@@ -41,6 +43,8 @@ Desde la raíz: `pnpm dev:carnets`, `pnpm test:carnets`, `pnpm build:carnets`, o
 - `src/components/`: un componente por paso (plantilla, CSV, columnas, revisión, previsualización, descarga)
 - `src/i18n/`: configuración y `locales/{ca,es,en}.json`. Todo texto visible va en los tres idiomas
 - `public/favicon.ico`: el mismo que la web
+- `src/assets/logotipo-acc.svg`: copia de `public/assets/svg/logotipo-acc.svg` de la web, para la cabecera.
+  Si cambia el logo de la web, hay que volver a copiarlo (y el de la plantilla, ver más abajo)
 - `templates/`: plantilla de referencia (fuera de `public/`, no se publica)
 - `fonts/`: Inter 4.1 en TTF estático (Medium, SemiBold, Bold, ExtraBold) + licencia OFL
 - `fixtures/`: CSV de prueba, generados con `pnpm fixtures` (`scripts/make-fixtures.mjs`).
