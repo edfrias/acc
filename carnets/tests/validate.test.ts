@@ -75,7 +75,7 @@ describe('validate', () => {
     const result = validate(rows, template, config, fonts)
     expect(result.rejected).toEqual([])
     expect(result.valid).toHaveLength(30)
-    expect(result.warnings.map((w) => w.value)).toEqual(['Maria Montserrat Vallverdú i Casademunt'])
+    expect(result.warnings).toMatchObject([{ code: 'font-reduced', value: 'Maria Montserrat Vallverdú i Casademunt' }])
   })
 
   it('acepta el CSV en Latin-1', () => {
