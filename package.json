@@ -17,7 +17,6 @@
     "firebase:init": "firebase init hosting"
   },
   "dependencies": {
-    "firebase": "^12.19.0",
     "vue": "^3.5.44",
     "vue-i18n": "^11.4.14"
   },

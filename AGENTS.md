@@ -26,9 +26,9 @@ También puedes ejecutar `pnpm <script>` dentro de `carnets/`.
   con `@import 'tailwindcss'`. No hay `tailwind.config.js`: en Tailwind 4 la personalización va en el propio CSS (`@theme`, `@custom-variant`).
 - vue-i18n con catalán, castellano e inglés: `src/locales/{ca,es,en}.json`.
   Todo texto visible va en los tres idiomas.
-- Componentes en `src/components/`; configuración de Firebase en `src/firebase/config.ts`, leída de `.env`
-  (plantilla en `.env.example`, nunca subas `.env`).
-- Alojada en Firebase Hosting (proyecto `arquers-club-castelldefels`).
+- Componentes en `src/components/`.
+- Alojada en Firebase Hosting (proyecto `arquers-club-castelldefels`). Se despliega con la CLI (`firebase-tools`,
+  instalada aparte); la web no usa el SDK de Firebase. Cabeceras HTTP y caché en `firebase.json`.
 
 Comandos (desde la raíz):
 
