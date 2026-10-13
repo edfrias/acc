@@ -14,13 +14,13 @@
       "schedule": "Training Schedule"
     },
     "emails": {
-      "secretaria": "secretaria@arquerscastelldefels.com",
-      "junta": "junta@arquerscastelldefels.com"
+      "secretaria": "secretaria{'@'}arquerscastelldefels.com",
+      "junta": "junta{'@'}arquerscastelldefels.com"
     },
     "social": {
       "instagram": {
         "url": "https://instagram.com/arquersclubc",
-        "handle": "@arquersclubc"
+        "handle": "{'@'}arquersclubc"
       }
     }
   },
@@ -152,7 +152,7 @@
       "schedule": "Training Schedule"
     },
     "social": {
-      "instagram": "Follow on Instagram @arquersclubc",
+      "instagram": "Follow on Instagram {'@'}arquersclubc",
       "facebook": "Follow on Facebook"
     }
   },

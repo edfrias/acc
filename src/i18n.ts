@@ -43,12 +43,7 @@ const i18n = createI18n({
   silentFallbackWarn: true,
   missingWarn: false,
   fallbackWarn: false,
-  warnHtmlMessage: false,
-  modifiers: {
-    '@': () => '',
-    '|': () => '',
-    '%': () => ''
-  }
+  warnHtmlMessage: false
 })
 
 export const setLocale = (locale: string) => {
@@ -134,21 +129,3 @@ export const availableLocales = [
 ]
 
 export default i18n
-
-export const getRawTranslation = (key: string): string => {
-  const currentLocale = i18n.global.locale.value
-  const messages = i18n.global.messages.value[currentLocale] as any
-
-  const keys = key.split('.')
-  let value = messages
-
-  for (const k of keys) {
-    if (value && typeof value === 'object' && k in value) {
-      value = value[k]
-    } else {
-      return key
-    }
-  }
-
-  return typeof value === 'string' ? value : key
-}

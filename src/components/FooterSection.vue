@@ -35,18 +35,18 @@
               </svg>
               <div class="text-gray-300 text-sm" style="display: flex; flex-direction: column; gap: 16px;">
                 <a
-                  :href="'mailto:' + getRawTranslation('club.emails.secretaria')"
+                  :href="'mailto:' + t('club.emails.secretaria')"
                   class="email-link text-gray-300 hover:text-white underline block"
-                  :aria-label="t('contact.info.email') + ': ' + getRawTranslation('club.emails.secretaria')"
+                  :aria-label="t('contact.info.email') + ': ' + t('club.emails.secretaria')"
                 >
-                  {{ getRawTranslation('club.emails.secretaria') }}
+                  {{ t('club.emails.secretaria') }}
                 </a>
                 <a
-                  :href="'mailto:' + getRawTranslation('club.emails.junta')"
+                  :href="'mailto:' + t('club.emails.junta')"
                   class="email-link text-gray-300 hover:text-white underline block"
-                  :aria-label="t('contact.info.email') + ': ' + getRawTranslation('club.emails.junta')"
+                  :aria-label="t('contact.info.email') + ': ' + t('club.emails.junta')"
                 >
-                  {{ getRawTranslation('club.emails.junta') }}
+                  {{ t('club.emails.junta') }}
                 </a>
               </div>
             </li>
@@ -75,7 +75,6 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { getRawTranslation } from '../i18n';
 import { useI18n } from 'vue-i18n';
 
 const logoACC = '/assets/svg/logotipo-acc.svg';

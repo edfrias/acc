@@ -4,13 +4,13 @@
     "fullName": "Arquers Club Castelldefels",
     "location": "Castelldefels, Cataluña",
     "emails": {
-      "secretaria": "secretaria@arquerscastelldefels.com",
-      "junta": "junta@arquerscastelldefels.com"
+      "secretaria": "secretaria{'@'}arquerscastelldefels.com",
+      "junta": "junta{'@'}arquerscastelldefels.com"
     },
     "social": {
       "instagram": {
         "url": "https://instagram.com/arquersclubc",
-        "handle": "@arquersclubc"
+        "handle": "{'@'}arquersclubc"
       }
     }
   },
@@ -142,7 +142,7 @@
       "schedule": "Horarios de Entrenamiento"
     },
     "social": {
-      "instagram": "Seguir en Instagram @arquersclubc",
+      "instagram": "Seguir en Instagram {'@'}arquersclubc",
       "facebook": "Seguir en Facebook"
     }
   },
