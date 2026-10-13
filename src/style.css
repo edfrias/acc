@@ -18,6 +18,9 @@
 @layer base {
   html {
     font-family: 'Inter', system-ui, sans-serif;
+    /* Reserva siempre el hueco de la barra de scroll: el contenido no se mueve si la página
+       cabe en pantalla, y la web y carnets quedan alineadas igual */
+    scrollbar-gutter: stable;
   }
 
   body {
