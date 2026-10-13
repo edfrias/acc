@@ -31,7 +31,11 @@ export default defineConfig({
   },
   server: {
     host: true,
-    port: 3000
+    port: 3000,
+    // Carnets se sirve en /carnets/ igual que en producción: lo atiende su propio servidor (pnpm dev:all)
+    proxy: {
+      '/carnets': { target: 'http://localhost:3001', ws: true }
+    }
   },
   optimizeDeps: {
     include: ['vue', 'vue-i18n']

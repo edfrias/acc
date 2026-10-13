@@ -9,11 +9,11 @@
     "dev:carnets": "pnpm --filter acc-carnets dev",
     "dev:all": "pnpm --recursive --include-workspace-root --parallel dev",
     "build": "vue-tsc -b && vite build",
+    "build:site": "pnpm build && pnpm build:carnets && node scripts/copy-carnets.mjs",
     "build:carnets": "pnpm --filter acc-carnets build",
     "test:carnets": "pnpm --filter acc-carnets test",
     "preview": "vite preview",
-    "deploy": "pnpm build && firebase deploy --only hosting:arquers-club-castelldefels",
-    "deploy:carnets": "pnpm --filter acc-carnets run deploy",
+    "deploy": "pnpm build:site && firebase deploy --only hosting",
     "firebase:login": "firebase login",
     "firebase:init": "firebase init hosting"
   },

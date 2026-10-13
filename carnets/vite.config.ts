@@ -4,6 +4,8 @@ import vue from '@vitejs/plugin-vue'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
+  // Se publica en arquerscastelldefels.com/carnets/, dentro del sitio de la web (ver firebase.json)
+  base: '/carnets/',
   plugins: [vue(), tailwindcss()],
   server: {
     host: true,

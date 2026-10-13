@@ -11,25 +11,22 @@ Contexto completo del proyecto en [CLAUDE.md](CLAUDE.md).
   y la interfaz en catalán, castellano e inglés.
 - Probado en Chrome de principio a fin con `fixtures/socios.csv`: validación, previsualización,
   cambio de idioma y descargas de PDF y CSV, sin errores en consola.
-- Para probar en local: `pnpm dev:carnets` desde la raíz, abrir http://localhost:3001 y cargar
+- Para probar en local: `pnpm dev:all` desde la raíz, abrir http://localhost:3000/carnets/ y cargar
   `fixtures/socios-ejemplo.csv` (30 socios válidos) o `fixtures/socios.csv` (casos límite con errores).
 
 ## 1. Lo que falta para cerrar el MVP: Firebase Hosting
 
-Objetivo (CLAUDE.md § Alojamiento): segundo sitio en el proyecto `arquers-club-castelldefels`,
-con despliegue independiente de la web.
+Objetivo (CLAUDE.md § Alojamiento): publicar en `arquerscastelldefels.com/carnets/`, dentro del sitio de la web.
+Se descartó el subdominio para no depender del proveedor del dominio (DNS).
 
-Hecho: `firebase.json` tiene un sitio por app (la web y `arquers-carnets`, con `noindex` y caché por tipo de fichero),
-`pnpm run deploy` despliega solo la web, `pnpm deploy:carnets` solo carnets, y `carnets/public/robots.txt`
-bloquea a los buscadores.
+Hecho: `base: '/carnets/'`, `pnpm build:site` monta el sitio completo, `firebase.json` sirve `/carnets/**` con `noindex`
+y caché por tipo de fichero, y `pnpm run deploy` publica las dos apps. Probado con el emulador de Firebase Hosting.
 
 Pendiente:
 
-1. **Crear el sitio** (requiere `firebase login`): `firebase hosting:sites:create arquers-carnets`.
-   El id es global en Firebase: si está cogido, elegir otro y cambiarlo en `firebase.json` y en `carnets/package.json`.
-2. Desplegar (pedir confirmación antes: es publicar), abrir la URL y repetir la prueba con `socios-ejemplo.csv`.
-   Comprobar las cabeceras con `curl -I`.
-3. **Dominio**: añadir `carnets.arquerscastelldefels.com` al sitio en la consola y crear los registros DNS que indique.
+1. Desplegar (pedir confirmación antes: es publicar), abrir `https://www.arquerscastelldefels.com/carnets/`
+   y repetir la prueba con `socios-ejemplo.csv`. Comprobar las cabeceras con `curl -I`
+   (el emulador local no las aplica).
 
 ## 2. Decisiones pendientes (no son de código)
 

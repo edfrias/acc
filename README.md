@@ -60,7 +60,7 @@ src/
 4. Open your browser at `http://localhost:3000`
 
 The repository is a pnpm workspace: besides the website it contains `carnets/`, the membership card generator.
-`pnpm dev:all` starts both apps at once (website on port 3000, carnets on 3001).
+`pnpm dev:all` starts both apps at once; the generator opens at `http://localhost:3000/carnets/`, as in production.
 
 ### Weather Widget
 
@@ -77,8 +77,8 @@ The widget is shown in the header with:
 - `pnpm dev:all` - Start the website and the card generator at once
 - `pnpm build` - Build the application for production
 - `pnpm preview` - Preview the production build
-- `pnpm run deploy` - Build and deploy the website to Firebase Hosting
-- `pnpm deploy:carnets` - Build and deploy the card generator to its own Firebase Hosting site
+- `pnpm build:site` - Build both apps into `dist/` as they are published (the generator in `dist/carnets/`)
+- `pnpm run deploy` - Build and deploy the website and the card generator (`/carnets/`) to Firebase Hosting
 - `pnpm firebase:login` - Log in to Firebase CLI
 - `pnpm firebase:init` - Initialize Firebase Hosting (first time only)
 - `pnpm dev:carnets`, `pnpm build:carnets`, `pnpm test:carnets` - Card generator scripts
@@ -100,8 +100,8 @@ Use `pnpm run deploy`, with `run`: a bare `pnpm deploy` is an unrelated pnpm bui
    ```
 
 3. **The project is already configured** with:
-   - `firebase.json` - Hosting configuration: one site for the website and one for the card generator,
-     with HTTP security and cache headers
+   - `firebase.json` - Hosting configuration: the website, the card generator under `/carnets/`,
+     and HTTP security and cache headers
    - `.firebaserc` - Project configuration
    - Deploy scripts in `package.json`
 
@@ -114,8 +114,8 @@ pnpm run deploy
 ```
 
 This will:
-1. Production build (`pnpm build`)
-2. Deploy the website site only (`firebase deploy --only hosting:arquers-club-castelldefels`)
+1. Production build of both apps (`pnpm build:site`)
+2. Deploy to Firebase Hosting (`firebase deploy --only hosting`)
 
 ### Configure Custom Domain
 

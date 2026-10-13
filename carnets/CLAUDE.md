@@ -30,7 +30,7 @@ Usuarios: miembros de la junta del club. No necesariamente con perfil técnico.
 
 Subproyecto independiente dentro del repo de la web: miembro del workspace de pnpm de la raíz, con su propio
 `package.json`. Se usa `pnpm` (nunca `npm`); las dependencias se instalan con `pnpm install` desde la raíz.
-Desde `carnets/`: `pnpm dev` (puerto 3001), `pnpm test`, `pnpm build`.
+Desde `carnets/`: `pnpm dev` (http://localhost:3001/carnets/), `pnpm test`, `pnpm build`.
 Desde la raíz: `pnpm dev:carnets`, `pnpm test:carnets`, `pnpm build:carnets`, o `pnpm dev:all` para levantar también la web.
 
 ## Estructura
@@ -146,11 +146,15 @@ La UI muestra un resumen ("48 válidos, 2 con avisos, 3 excluidos") con la tabla
 
 ## Alojamiento
 
-- Firebase Hosting, como segundo sitio (`arquers-carnets`) dentro del proyecto Firebase de la web del club.
-  Configurado en el `firebase.json` de la raíz, que tiene un sitio por app. Despliegue independiente:
-  `pnpm deploy:carnets` desde la raíz (o `pnpm run deploy` desde `carnets/`). Pide confirmación antes: es publicar.
-- Más adelante, en subdominio (p. ej. `carnets.arquerscastelldefels.com`).
-- Cabecera `X-Robots-Tag: noindex, nofollow` y `public/robots.txt` con `Disallow: /`.
+- En `arquerscastelldefels.com/carnets/`, dentro del mismo sitio de Firebase Hosting que la web: así no hace falta
+  tocar el DNS del dominio. Por eso `base: '/carnets/'` en `vite.config.ts`.
+- El build de carnets sigue en `carnets/dist`; `pnpm build:site` (raíz) lo copia en `dist/carnets/` con
+  `scripts/copy-carnets.mjs`. `firebase.json` envía `/carnets/**` a su `index.html` antes que el resto a la web.
+- Se despliega con la web (`pnpm run deploy` desde la raíz): Firebase sustituye el sitio entero en cada despliegue,
+  así que la web y carnets siempre se publican juntos. Pide confirmación antes: es publicar.
+- Mismo origen que la web: comparten `localStorage`, incluida la clave `locale` (el idioma elegido en una vale para la otra).
+- Cabecera `X-Robots-Tag: noindex, nofollow` para `/carnets/**` y meta `robots` en `index.html`.
+  No hay `robots.txt` propio: los buscadores solo leen el de la raíz del dominio.
 - Fase posterior: Firebase Auth (Google) con lista de correos de la junta, y la plantilla oficial
   servida desde Firebase Storage con reglas de acceso (no en el bundle). Dejar la arquitectura preparada.
 

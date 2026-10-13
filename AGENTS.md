@@ -15,7 +15,9 @@ instala los dos proyectos. Cada uno conserva su propio `package.json` y sus depe
 
 Desde la raíz:
 
-- `pnpm dev:all`: levanta la web (puerto 3000) y los carnets (puerto 3001) a la vez
+- `pnpm dev:all`: levanta la web (puerto 3000) y los carnets (puerto 3001) a la vez. Como en producción,
+  carnets se abre en http://localhost:3000/carnets/ (el servidor de la web lo redirige al de carnets)
+- `pnpm build:site`: los dos builds y el sitio completo en `dist/` (carnets en `dist/carnets/`), tal como se publica
 - `pnpm dev:carnets`, `pnpm build:carnets`, `pnpm test:carnets`: atajos a los scripts de `carnets/`
 
 También puedes ejecutar `pnpm <script>` dentro de `carnets/`.
@@ -40,8 +42,8 @@ Comandos (desde la raíz):
 
 - **Verifica antes de dar algo por terminado.** En la web, `pnpm build` sin errores.
   En carnets, `pnpm test:carnets` y `pnpm build:carnets` sin errores.
-- **No despliegues sin permiso explícito.** `pnpm run deploy` publica la web en producción y `pnpm deploy:carnets`
-  el generador de carnets (cada uno es un sitio distinto en `firebase.json`).
+- **No despliegues sin permiso explícito.** `pnpm run deploy` publica en producción la web y el generador de carnets
+  (`arquerscastelldefels.com/carnets/`): es un único sitio de Firebase, así que siempre van juntos.
   Ojo: con `run`. `pnpm deploy` a secas es un comando de pnpm que no tiene nada que ver.
 - **Datos de socios:** nunca subas CSV reales ni datos personales al repo ni a servicios externos.
   Los ficheros de prueba de `carnets/fixtures/` usan datos inventados.
