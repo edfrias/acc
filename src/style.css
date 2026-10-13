@@ -2,6 +2,19 @@
 /* carnets/ es un proyecto aparte: que Tailwind no busque clases ahí */
 @source not "../carnets";
 
+@theme {
+  /* Colores corporativos del club */
+  --color-club-white: #fffefe;
+  --color-club-black: #000101;
+  --color-club-red: #db121a;
+  --color-club-yellow: #fcdd09;
+  --color-club-blue: #0198ff;
+}
+
+/* Pantallas de escritorio con altura suficiente para que el hero no necesite margen superior */
+@custom-variant md-h-750 (@media (min-width: 768px) and (min-height: 750px));
+@custom-variant lg-h-750 (@media (min-width: 1024px) and (min-height: 750px));
+
 @layer base {
   html {
     font-family: 'Inter', system-ui, sans-serif;
