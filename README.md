@@ -51,14 +51,17 @@ src/
 ### Prerrequisitos
 
 - Node.js (versión 20.19+ o 22.12+)
-- npm o yarn
+- pnpm 10 (`corepack enable` activa la versión fijada en `package.json`)
 
 ### Instalación
 
 1. Clona el repositorio
-2. Instala las dependencias: `npm install`
-3. Inicia el servidor de desarrollo: `npm run dev`
-4. Abre tu navegador en `http://localhost:5173`
+2. Instala las dependencias (web y carnets): `pnpm install`
+3. Inicia el servidor de desarrollo: `pnpm dev`
+4. Abre tu navegador en `http://localhost:3000`
+
+El repositorio es un workspace de pnpm: además de la web contiene `carnets/`, el generador de carnets de soci.
+`pnpm dev:all` levanta las dos apps a la vez (web en el puerto 3000, carnets en el 3001).
 
 ### Widget de clima
 
@@ -71,12 +74,14 @@ El widget se muestra en el header con:
 
 ### Scripts Disponibles
 
-- `npm run dev` - Inicia el servidor de desarrollo
-- `npm run build` - Construye la aplicación para producción
-- `npm run preview` - Previsualiza la build de producción
-- `npm run deploy` - Construye y despliega a Firebase Hosting
-- `npm run firebase:login` - Inicia sesión en Firebase CLI
-- `npm run firebase:init` - Inicializa Firebase Hosting (solo primera vez)
+- `pnpm dev` - Inicia el servidor de desarrollo
+- `pnpm dev:all` - Inicia la web y el generador de carnets a la vez
+- `pnpm build` - Construye la aplicación para producción
+- `pnpm preview` - Previsualiza la build de producción
+- `pnpm run deploy` - Construye y despliega a Firebase Hosting
+- `pnpm firebase:login` - Inicia sesión en Firebase CLI
+- `pnpm firebase:init` - Inicializa Firebase Hosting (solo primera vez)
+- `pnpm dev:carnets`, `pnpm build:carnets`, `pnpm test:carnets` - Scripts del generador de carnets
 
 ## 🚀 Despliegue con Firebase Hosting
 
@@ -89,7 +94,7 @@ El widget se muestra en el header con:
 
 2. **Iniciar sesión en Firebase**:
    ```bash
-   npm run firebase:login
+   pnpm firebase:login
    ```
 
 3. **El proyecto ya está configurado** con:
@@ -102,11 +107,11 @@ El widget se muestra en el header con:
 Para desplegar la aplicación a Firebase Hosting:
 
 ```bash
-npm run deploy
+pnpm run deploy
 ```
 
 Esto hará:
-1. Build de producción (`npm run build`)
+1. Build de producción (`pnpm build`)
 2. Deploy a Firebase Hosting (`firebase deploy`)
 
 ### Configurar Dominio Personalizado

@@ -10,7 +10,7 @@ Contexto completo del proyecto en [CLAUDE.md](CLAUDE.md).
   y la interfaz en catalán, castellano e inglés.
 - Probado en Chrome de principio a fin con `fixtures/socios.csv`: validación, previsualización,
   cambio de idioma y descargas de PDF y CSV, sin errores en consola.
-- Para probar en local: `cd carnets && npm run dev`, abrir http://localhost:3001 y cargar
+- Para probar en local: `pnpm dev:carnets` desde la raíz, abrir http://localhost:3001 y cargar
   `fixtures/socios-ejemplo.csv` (30 socios válidos) o `fixtures/socios.csv` (casos límite con errores).
 
 ## 1. Lo que falta para cerrar el MVP: Firebase Hosting
@@ -31,9 +31,9 @@ en `carnets.arquerscastelldefels.com`, con despliegue independiente de la web.
    - `target: "web"`: la configuración actual, sin cambios.
    - `target: "carnets"`: `public: "carnets/dist"`, cabecera `X-Robots-Tag: noindex, nofollow` para todo,
      caché larga para `assets/**` (los nombres llevan hash) y `no-cache` para `index.html`.
-4. **Cuidado con `npm run deploy` de la web**: hoy ejecuta `firebase deploy`, que con dos sitios desplegaría
+4. **Cuidado con `pnpm run deploy` de la web**: hoy ejecuta `firebase deploy`, que con dos sitios desplegaría
    también carnets. Cambiarlo a `firebase deploy --only hosting:web`.
-5. **Script de despliegue en `carnets/package.json`**: `"deploy": "npm run build && firebase deploy --only hosting:carnets"`.
+5. **Script de despliegue en `carnets/package.json`**: `"deploy": "pnpm build && firebase deploy --only hosting:carnets"`.
    La CLI busca `firebase.json` en los directorios superiores, así que funciona desde `carnets/`.
 6. **`carnets/public/robots.txt`** con `Disallow: /`, además de la cabecera.
 7. **Dominio**: añadir `carnets.arquerscastelldefels.com` al sitio en la consola y crear los registros DNS que indique.
@@ -78,5 +78,5 @@ en `carnets.arquerscastelldefels.com`, con despliegue independiente de la web.
 
 ## Cómo verificar antes de dar algo por hecho
 
-Desde `carnets/`: `npm test` y `npm run build` sin errores. Si el cambio afecta al render o a la plantilla,
+`pnpm test:carnets` y `pnpm build:carnets` sin errores (desde la raíz). Si el cambio afecta al render o a la plantilla,
 generar un PDF y revisarlo a ojo con `node scripts/pdf-to-png.mjs fichero.pdf 150`.

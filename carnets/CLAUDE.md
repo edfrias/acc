@@ -26,8 +26,10 @@ Usuarios: miembros de la junta del club. No necesariamente con perfil técnico.
 - Fuente de la plantilla: Inter (OFL), incrustada como TTF (un fichero estático por peso, en `fonts/`)
 - Tests: Vitest con entorno jsdom
 
-Subproyecto independiente dentro del repo de la web: tiene su propio `package.json`.
-Todos los comandos se ejecutan desde `carnets/`: `npm run dev` (puerto 3001), `npm test`, `npm run build`.
+Subproyecto independiente dentro del repo de la web: miembro del workspace de pnpm de la raíz, con su propio
+`package.json`. Se usa `pnpm` (nunca `npm`); las dependencias se instalan con `pnpm install` desde la raíz.
+Desde `carnets/`: `pnpm dev` (puerto 3001), `pnpm test`, `pnpm build`.
+Desde la raíz: `pnpm dev:carnets`, `pnpm test:carnets`, `pnpm build:carnets`, o `pnpm dev:all` para levantar también la web.
 
 ## Estructura
 
@@ -41,10 +43,10 @@ Todos los comandos se ejecutan desde `carnets/`: `npm run dev` (puerto 3001), `n
 - `public/favicon.ico`: el mismo que la web
 - `templates/`: plantilla de referencia (fuera de `public/`, no se publica)
 - `fonts/`: Inter 4.1 en TTF estático (Medium, SemiBold, Bold, ExtraBold) + licencia OFL
-- `fixtures/`: CSV de prueba, generados con `npm run fixtures` (`scripts/make-fixtures.mjs`).
+- `fixtures/`: CSV de prueba, generados con `pnpm fixtures` (`scripts/make-fixtures.mjs`).
   No se editan a mano: el de Latin-1 se corrompería al guardarlo en UTF-8.
   `socios.csv` y `socios-latin1.csv` cubren los casos límite de los tests; `socios-ejemplo.csv` es una lista
-  normal de 30 socios inventados para probar la app en local (`npm run dev` y cargarlo en el paso 2).
+  normal de 30 socios inventados para probar la app en local (`pnpm dev` y cargarlo en el paso 2).
 - `tests/`: tests de Vitest (`*.test.ts`), con su propio `tsconfig.test.json` (tipos de Node)
 - `scripts/pdf-to-png.mjs`: rasteriza un PDF a PNG (`node scripts/pdf-to-png.mjs fichero.pdf 150`).
   Úsalo para revisar a ojo cualquier cambio en la plantilla o en el render.

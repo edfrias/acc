@@ -9,8 +9,16 @@ Instrucciones para agentes que trabajen en este repositorio. El repo contiene do
 | raíz (`src/`) | Web pública del club | Este fichero |
 | `carnets/` | Generador de carnets de soci | [`carnets/CLAUDE.md`](carnets/CLAUDE.md), léelo antes de tocar nada ahí |
 
-Cada proyecto tiene su propio `package.json` y `node_modules`. Ejecuta los comandos desde la carpeta
-del proyecto en el que trabajes.
+Es un workspace de pnpm (`pnpm-workspace.yaml`): la web es el paquete raíz y `carnets/` un miembro más.
+Usa siempre `pnpm`, nunca `npm`: hay un único `pnpm-lock.yaml` en la raíz y un `pnpm install` desde la raíz
+instala los dos proyectos. Cada uno conserva su propio `package.json` y sus dependencias, y se despliega por separado.
+
+Desde la raíz:
+
+- `pnpm dev:all`: levanta la web (puerto 3000) y los carnets (puerto 3001) a la vez
+- `pnpm dev:carnets`, `pnpm build:carnets`, `pnpm test:carnets`: atajos a los scripts de `carnets/`
+
+También puedes ejecutar `pnpm <script>` dentro de `carnets/`.
 
 ## Web del club
 
@@ -24,15 +32,16 @@ del proyecto en el que trabajes.
 
 Comandos (desde la raíz):
 
-- `npm run dev`: servidor de desarrollo en el puerto 3000
-- `npm run build`: comprobación de tipos (`vue-tsc`) + build de producción. Es la verificación de la web:
+- `pnpm dev`: servidor de desarrollo en el puerto 3000
+- `pnpm build`: comprobación de tipos (`vue-tsc`) + build de producción. Es la verificación de la web:
   no tiene tests.
 
 ## Reglas
 
-- **Verifica antes de dar algo por terminado.** En la web, `npm run build` sin errores.
-  En `carnets/`, `npm test` y `npm run build` sin errores.
-- **No despliegues sin permiso explícito.** `npm run deploy` publica la web en producción.
+- **Verifica antes de dar algo por terminado.** En la web, `pnpm build` sin errores.
+  En carnets, `pnpm test:carnets` y `pnpm build:carnets` sin errores.
+- **No despliegues sin permiso explícito.** `pnpm run deploy` publica la web en producción.
+  Ojo: con `run`. `pnpm deploy` a secas es un comando de pnpm que no tiene nada que ver.
 - **Datos de socios:** nunca subas CSV reales ni datos personales al repo ni a servicios externos.
   Los ficheros de prueba de `carnets/fixtures/` usan datos inventados.
 - **Commits** con Conventional Commits (`feat:`, `fix:`, `chore:`…), como el historial existente.

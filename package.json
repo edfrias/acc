@@ -3,11 +3,16 @@
   "private": true,
   "version": "2.0.0",
   "type": "module",
+  "packageManager": "pnpm@10.34.5",
   "scripts": {
     "dev": "vite",
+    "dev:carnets": "pnpm --filter acc-carnets dev",
+    "dev:all": "pnpm --recursive --include-workspace-root --parallel dev",
     "build": "vue-tsc -b && vite build",
+    "build:carnets": "pnpm --filter acc-carnets build",
+    "test:carnets": "pnpm --filter acc-carnets test",
     "preview": "vite preview",
-    "deploy": "npm run build && firebase deploy",
+    "deploy": "pnpm build && firebase deploy",
     "firebase:login": "firebase login",
     "firebase:init": "firebase init hosting"
   },
