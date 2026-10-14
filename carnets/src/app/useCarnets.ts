@@ -3,8 +3,8 @@ import { CsvError, loadFontSet, parseCsv, parseTemplate } from '../pipeline'
 import type { ColumnMapping, FontFiles, ParsedCsv, Template, ValidationResult } from '../pipeline'
 import { validate } from '../pipeline'
 import { guessMapping } from './mapping'
-import { listOfficialTemplates, publishOfficialTemplate } from './officialTemplates'
-import type { OfficialTemplate } from './officialTemplates'
+import * as store from './templateLibrary'
+import type { HistoryEntry, LibraryTemplate, SeasonAssignment } from './templateLibrary'
 import { currentSeason, defaultSeason, seasonLabel } from './season'
 import interMedium from '../../fonts/Inter-Medium.ttf?url'
 import interSemiBold from '../../fonts/Inter-SemiBold.ttf?url'
@@ -23,20 +23,28 @@ const FONT_URLS: Record<number, string> = {
 const fontFiles = shallowRef<FontFiles | null>(null)
 const fonts = computed(() => (fontFiles.value ? loadFontSet(fontFiles.value) : null))
 
-// Plantillas oficiales: una por temporada, en Firestore (ver officialTemplates.ts). Se cargan tras iniciar sesión.
-const officialTemplates = shallowRef<OfficialTemplate[]>([])
-const officialStatus = ref<'idle' | 'loading' | 'ready' | 'error'>('idle')
-/** Temporada de la plantilla oficial elegida. */
+// Biblioteca de plantillas y plantilla oficial de cada temporada, en Firestore (templateLibrary.ts).
+// Se cargan tras iniciar sesión.
+const library = shallowRef<LibraryTemplate[]>([])
+const assignments = shallowRef<SeasonAssignment[]>([])
+const libraryStatus = ref<'idle' | 'loading' | 'ready' | 'error'>('idle')
+/** Temporada elegida en el paso 1. */
 const season = ref<string | null>(null)
-/** Temporada cuya plantilla se acaba de publicar, para confirmarlo en la interfaz. */
-const justPublished = ref<string | null>(null)
+/** Temporada y plantilla que se acaban de aprobar, para confirmarlo en la interfaz. */
+const justApproved = ref<{ season: string; name: string } | null>(null)
+
+/** De dónde sale la plantilla en uso: la oficial de `season`, una de la biblioteca que se está mirando o un fichero. */
+export type TemplateOrigin = { kind: 'season' } | { kind: 'library'; id: string; name: string } | { kind: 'file'; name: string }
 
 const template = shallowRef<Template | null>(null)
 /** SVG de la plantilla en uso, para poder publicarla si es una cargada desde fichero. */
 const templateSvg = ref('')
-/** `null` es la plantilla oficial de `season`; si no, el nombre del fichero cargado. */
-const templateName = ref<string | null>(null)
+const origin = ref<TemplateOrigin | null>(null)
 const templateError = ref<string | null>(null)
+
+/** Asignación de la temporada elegida y su plantilla (`undefined` si se eliminó de la biblioteca). */
+const assignment = computed(() => assignments.value.find((a) => a.season === season.value))
+const assigned = computed(() => library.value.find((t) => t.id === assignment.value?.template))
 
 const csv = shallowRef<ParsedCsv | null>(null)
 const csvName = ref('')
@@ -66,7 +74,9 @@ watch(result, (r) => {
   if (!r || selected.value >= r.valid.length) selected.value = 0
 })
 
-function useTemplate(svg: string, name: string | null): void {
+function useTemplate(svg: string, from: TemplateOrigin): void {
+  // Cualquier cambio de plantilla deja atrás el aviso de la última aprobación
+  justApproved.value = null
   try {
     const parsed = parseTemplate(svg)
     const missing = parsed.fontWeights.filter((weight) => !(weight in FONT_URLS))
@@ -78,7 +88,7 @@ function useTemplate(svg: string, name: string | null): void {
     }
     template.value = parsed
     templateSvg.value = svg
-    templateName.value = name
+    origin.value = from
     templateError.value = null
     for (const field of parsed.fields.filter((f) => f.isStatic)) {
       staticValues.value[field.name] ??= ''
@@ -88,28 +98,40 @@ function useTemplate(svg: string, name: string | null): void {
   }
 }
 
-function useOfficialTemplate(chosen: string): void {
-  const official = officialTemplates.value.find((t) => t.season === chosen)
-  if (!official) return
+/** Pasa a la plantilla oficial de `chosen`. Si la temporada no tiene, o su plantilla ya no existe, no cambia nada. */
+function useSeason(chosen: string): void {
   season.value = chosen
-  useTemplate(official.svg, null)
+  const official = library.value.find((t) => t.id === assignments.value.find((a) => a.season === chosen)?.template)
+  if (!official) return
+  useTemplate(official.svg, { kind: 'season' })
   // La temporada del carnet es la de su plantilla, escrita entera: "2026-2027"
   staticValues.value['temporada'] = seasonLabel(chosen)
 }
 
-async function loadOfficialTemplates(select?: string): Promise<void> {
-  officialStatus.value = 'loading'
+/** Vuelve a leer la biblioteca. Con `select`, pasa a la plantilla oficial de esa temporada. */
+async function loadLibrary(select?: string): Promise<void> {
+  libraryStatus.value = 'loading'
   try {
-    officialTemplates.value = await listOfficialTemplates()
-    officialStatus.value = 'ready'
+    const loaded = await store.loadLibrary()
+    library.value = loaded.templates
+    assignments.value = loaded.assignments
+    libraryStatus.value = 'ready'
   } catch {
-    officialStatus.value = 'error'
+    libraryStatus.value = 'error'
     return
   }
-  // Si se está probando una plantilla cargada desde fichero, no se le cambia
-  if (templateName.value !== null && template.value) return
-  const chosen = select ?? defaultSeason(officialTemplates.value.map((t) => t.season), currentSeason(new Date()))
-  if (chosen) useOfficialTemplate(chosen)
+  // Si se está mirando una plantilla de la biblioteca o probando un fichero, no se le cambia
+  if (!select && origin.value && origin.value.kind !== 'season') return
+  const chosen =
+    select ?? defaultSeason(assignments.value.map((a) => a.season), season.value ?? currentSeason(new Date()))
+  if (chosen) {
+    useSeason(chosen)
+  } else {
+    // Ninguna temporada tiene plantilla (p. ej. se quitó la última asignación): no hay plantilla oficial que usar
+    season.value = null
+    template.value = null
+    origin.value = null
+  }
 }
 
 async function loadFonts(): Promise<void> {
@@ -126,12 +148,15 @@ export function useCarnets() {
   return {
     fontFiles,
     fonts,
-    officialTemplates,
-    officialStatus,
+    library,
+    assignments,
+    libraryStatus,
     season,
-    justPublished,
+    assignment,
+    assigned,
+    justApproved,
     template,
-    templateName,
+    origin,
     templateError,
     csv,
     csvName,
@@ -145,25 +170,63 @@ export function useCarnets() {
     result,
 
     async init() {
-      await Promise.all([loadFonts(), loadOfficialTemplates()])
+      await Promise.all([loadFonts(), loadLibrary()])
     },
 
-    loadOfficialTemplates,
-    useOfficialTemplate,
+    loadLibrary,
+    useSeason,
 
-    /** Publica como oficial de `target` la plantilla cargada desde fichero, y pasa a usarla. */
-    async publishTemplate(target: string, email: string) {
-      await publishOfficialTemplate(target, templateSvg.value, email)
-      // La plantilla en uso ya es la oficial publicada, aunque falle la recarga de la lista
-      templateName.value = null
-      season.value = target
-      staticValues.value['temporada'] = seasonLabel(target)
-      justPublished.value = target
-      await loadOfficialTemplates(target)
+    /** Muestra una plantilla de la biblioteca (para revisarla antes de aprobarla), sin cambiar ninguna temporada. */
+    previewTemplate(id: string) {
+      const found = library.value.find((t) => t.id === id)
+      if (found) useTemplate(found.svg, { kind: 'library', id, name: found.name })
     },
+
+    /** Guarda en la biblioteca la plantilla cargada desde fichero, la aprueba para `target` y pasa a usarla. */
+    async publishTemplate(name: string, target: string, email: string) {
+      await store.publishTemplate(name, templateSvg.value, target, email)
+      origin.value = { kind: 'season' }
+      await loadLibrary(target)
+      justApproved.value = { season: target, name }
+    },
+
+    /** Aprueba para `target` una plantilla de la biblioteca y pasa a usarla. */
+    async approveTemplate(id: string, target: string, email: string) {
+      const found = library.value.find((t) => t.id === id)
+      if (!found) return
+      await store.assignTemplate(id, found.name, target, email)
+      origin.value = { kind: 'season' }
+      await loadLibrary(target)
+      justApproved.value = { season: target, name: found.name }
+    },
+
+    async renameTemplate(id: string, name: string) {
+      justApproved.value = null
+      await store.renameTemplate(id, name)
+      if (origin.value?.kind === 'library' && origin.value.id === id) origin.value = { ...origin.value, name }
+      await loadLibrary()
+    },
+
+    /** Elimina una plantilla de la biblioteca. Las asignadas a alguna temporada no se pueden eliminar. */
+    async deleteTemplate(id: string) {
+      if (store.seasonsOf(id, assignments.value).length > 0) return
+      justApproved.value = null
+      await store.deleteTemplate(id)
+      if (origin.value?.kind === 'library' && origin.value.id === id) origin.value = { kind: 'season' }
+      await loadLibrary(season.value ?? undefined)
+    },
+
+    /** Deja la temporada sin plantilla oficial; su historial se conserva. */
+    async unassignSeason(target: string) {
+      justApproved.value = null
+      await store.unassignSeason(target)
+      await loadLibrary()
+    },
+
+    loadHistory: (target: string): Promise<HistoryEntry[]> => store.loadHistory(target),
 
     async loadTemplateFile(file: File) {
-      useTemplate(await file.text(), file.name)
+      useTemplate(await file.text(), { kind: 'file', name: file.name })
     },
 
     async loadCsvFile(file: File) {

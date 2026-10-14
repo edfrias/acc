@@ -1,7 +1,7 @@
 rules_version = '2';
 
-// Generador de carnets (carnets/): plantillas oficiales, una por temporada.
-// Solo las cuentas de Google del club (@arquerscastelldefels.com, todas de la junta) pueden leerlas y publicarlas.
+// Generador de carnets (carnets/): biblioteca de plantillas y la plantilla oficial de cada temporada.
+// Solo las cuentas de Google del club (@arquerscastelldefels.com, todas de la junta) pueden leer y escribir.
 // Los datos de los socios nunca llegan aquí: se procesan en el navegador.
 service cloud.firestore {
   match /databases/{database}/documents {
@@ -18,18 +18,59 @@ service cloud.firestore {
         && int(id.split('-')[1]) == (int(id.split('-')[0]) + 1) % 100;
     }
 
-    match /plantilles/{season} {
+    // Nombre de una plantilla: de 1 a 80 caracteres (NAME_MAX_LENGTH en templateLibrary.ts)
+    function isName(name) {
+      return name is string && name.size() > 0 && name.size() <= 80;
+    }
+
+    // Biblioteca: cada plantilla publicada, que nunca se sobrescribe. Solo se le puede cambiar el nombre.
+    // Las publicadas antes de la biblioteca no tienen nombre (su id era la temporada); se les puede poner.
+    match /plantilles/{template} {
       allow read: if isClub();
 
-      // Publicar o sustituir la plantilla de una temporada. Borrar, nunca desde la app.
-      allow create, update: if isClub()
-        && isSeason(season)
-        && request.resource.data.keys().hasOnly(['svg', 'uploadedBy', 'uploadedAt'])
+      allow create: if isClub()
+        && request.resource.data.keys().hasOnly(['name', 'svg', 'uploadedBy', 'uploadedAt'])
+        && isName(request.resource.data.name)
         && request.resource.data.svg is string
         && request.resource.data.svg.size() > 0
         && request.resource.data.svg.size() <= 500000
         && request.resource.data.uploadedBy == request.auth.token.email
         && request.resource.data.uploadedAt == request.time;
+
+      allow update: if isClub()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['name'])
+        && isName(request.resource.data.name);
+
+      // La interfaz solo deja eliminar las que no están asignadas a ninguna temporada
+      allow delete: if isClub();
+    }
+
+    // Plantilla oficial de cada temporada: apunta a una de la biblioteca. Se puede reasignar y quitar.
+    match /temporades/{season} {
+      allow read: if isClub();
+
+      allow create, update: if isClub()
+        && isSeason(season)
+        && request.resource.data.keys().hasOnly(['template', 'assignedBy', 'assignedAt'])
+        && request.resource.data.template is string
+        && existsAfter(/databases/$(database)/documents/plantilles/$(request.resource.data.template))
+        && request.resource.data.assignedBy == request.auth.token.email
+        && request.resource.data.assignedAt == request.time;
+
+      allow delete: if isClub();
+
+      // Historial de aprobaciones: solo se añade, y siempre en la misma escritura que la asignación
+      match /historial/{entry} {
+        allow read: if isClub();
+
+        allow create: if isClub()
+          && request.resource.data.keys().hasOnly(['template', 'name', 'assignedBy', 'assignedAt'])
+          && isName(request.resource.data.name)
+          && request.resource.data.template == getAfter(/databases/$(database)/documents/temporades/$(season)).data.template
+          && request.resource.data.assignedBy == request.auth.token.email
+          && request.resource.data.assignedAt == request.time
+          && getAfter(/databases/$(database)/documents/temporades/$(season)).data.assignedAt == request.time;
+      }
     }
   }
 }

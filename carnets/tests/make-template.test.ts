@@ -12,7 +12,8 @@ const out = mkdtempSync(join(tmpdir(), 'carnets-template-'))
 /** Ejecuta el script como lo haría alguien de la junta y lee el SVG que deja. */
 function make(design: string, season: string): string {
   const file = join(out, `${design}-${season}.svg`)
-  execFileSync(process.execPath, [script, design, season, file])
+  // stdio 'pipe': los errores esperados del script no salen por la consola de los tests
+  execFileSync(process.execPath, [script, design, season, file], { stdio: 'pipe' })
   return readFileSync(file, 'utf-8')
 }
 

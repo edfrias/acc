@@ -42,10 +42,11 @@ Desde la raíz: `pnpm dev:carnets`, `pnpm test:carnets`, `pnpm build:carnets`, o
   `render.ts` (un carnet sobre pdf-lib), `pdf.ts` (imposición y marcas), `report.ts`; `index.ts` lo reexporta todo
 - `src/pipeline/svg/`: compilador de la plantilla (`compile.ts`), estilos y CSS (`style.ts`), trazados (`path.ts`)
 - `src/app/`: estado de la interfaz (`useCarnets.ts`), sesión (`useSession.ts`), acceso a Firestore
-  (`officialTemplates.ts`) y lógica pura de la UI: temporadas (`season.ts`), cuentas del club (`club.ts`),
+  (`templateLibrary.ts`) y lógica pura de la UI: temporadas (`season.ts`), cuentas del club (`club.ts`),
   asignación automática de columnas, carnet de ejemplo, nombre más largo
 - `src/firebase.ts`: configuración de Firebase; en desarrollo se conecta siempre a los emuladores
-- `src/components/`: un componente por paso (plantilla, CSV, columnas, revisión, previsualización, descarga)
+- `src/components/`: un componente por paso (plantilla, CSV, columnas, revisión, previsualización, descarga);
+  en el paso 1, además, `PublishTemplate.vue` (publicar una desde fichero) y `TemplateLibrary.vue` (gestión)
 - `src/i18n/`: configuración y `locales/{ca,es,en}.json`. Todo texto visible va en los tres idiomas
 - `public/favicon.ico`: el mismo que la web
 - `src/assets/logotipo-acc.svg`: copia de `public/assets/svg/logotipo-acc.svg` de la web, para la cabecera.
@@ -185,13 +186,24 @@ La UI muestra un resumen ("48 válidos, 2 con avisos, 3 excluidos") con la tabla
   Tres capas: la pantalla de consentimiento de OAuth en "Interna" (el proyecto cuelga de la organización de
   Workspace del club, así que Google no deja entrar a cuentas de fuera), la app cierra la sesión de cualquier otra
   cuenta (`isClubAccount`) y, la que cuenta de verdad, las reglas de Firestore.
-- **Una plantilla oficial por temporada** en Firestore: colección `plantilles`, id = temporada (`2026-27`),
-  campos `svg`, `uploadedBy`, `uploadedAt`. La junta prepara cada año una plantilla nueva: la prueba en la app
-  desde fichero y la publica desde el mismo paso 1 (se propone la temporada en curso o, si ya tiene, la siguiente).
-  Al entrar se abre la de la temporada en curso (o la más reciente) y su temporada rellena el campo `temporada`.
-- **`firestore.rules`** (raíz): leer y publicar solo con cuenta de Google del club verificada; temporada con formato
-  válido; autor = quien publica; fecha del servidor; solo esos tres campos; SVG de hasta 500 000 caracteres.
-  Borrar, nunca desde la app (desde la consola de Firebase). El resto de la base de datos, cerrado.
+- **Biblioteca de plantillas y plantilla oficial de cada temporada** en Firestore (`src/app/templateLibrary.ts`):
+  - `plantilles/{id}`: cada plantilla publicada (`name`, `svg`, `uploadedBy`, `uploadedAt`). Nunca se sobrescribe:
+    corregir una plantilla es publicar otra. Las publicadas antes de la biblioteca no tienen `name` (su id era la
+    temporada) y la app las muestra con el id como nombre.
+  - `temporades/{temporada}` (`2026-27`): la oficial de esa temporada (`template` = id en la biblioteca,
+    `assignedBy`, `assignedAt`). Reasignarla es volver a una plantilla anterior sin subir nada.
+  - `temporades/{temporada}/historial/*`: cada aprobación (`template`, `name` en ese momento, quién y cuándo).
+    Solo se añade, en la misma escritura que la asignación.
+- **Flujo**: la junta prepara cada año una plantilla; la prueba en la app desde fichero y desde el paso 1 la guarda
+  en la biblioteca con un nombre y la aprueba para una temporada (se propone la en curso o, si ya tiene, la siguiente;
+  si la temporada ya tiene, se avisa de cuál sustituye). En "Gestionar plantillas": ver, aprobar para una temporada,
+  renombrar y eliminar (solo las que no están asignadas a ninguna temporada), el historial de la temporada elegida
+  y quitar su asignación. Al entrar se abre la de la temporada en curso (o la más reciente) y su temporada rellena
+  el campo `temporada`.
+- **`firestore.rules`** (raíz): todo solo con cuenta de Google del club verificada. Biblioteca: crear con nombre de
+  1 a 80 caracteres, autor = quien publica, fecha del servidor, SVG de hasta 500 000 caracteres; después solo
+  cambiar el nombre o eliminar. Temporadas: formato válido y plantilla existente; se pueden reasignar y quitar.
+  Historial: solo crear, junto con la asignación. El resto de la base de datos, cerrado.
 - **Local**: `pnpm emulators` (raíz; necesita Java 21, instalado con Temurin) levanta los emuladores de Auth y
   Firestore, y `pnpm dev` se conecta a ellos: nunca toca producción. El emulador tiene su propio selector de
   cuentas falsas. La base de datos del emulador empieza vacía: hay que publicar una plantilla.

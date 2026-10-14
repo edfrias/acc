@@ -59,14 +59,15 @@ sin tocar producción: `pnpm build:site` y `firebase hosting:channel:deploy prev
   Antes de la tirada, una prueba impresa: el escudo de fondo está al 9 % de blanco sobre el azul y en papel puede
   quedar más apagado que en pantalla (subirlo al 11-12 % si casi no se ve).
 - Guardar y cargar la configuración (mapeo, temporada, imposición) como JSON.
-- ~~Login y plantilla fuera del bundle~~: hecho en `feat/carnets` el 2026-10-14 (CLAUDE.md § Acceso y plantillas
-  oficiales). Probado en local con los emuladores: cuenta de fuera rechazada, publicar, recargar y flujo completo.
-  **Falta para producción**, en este orden y con permiso:
-  1. Pantalla de consentimiento de OAuth en "Interna" (Google Cloud → Google Auth Platform → Público).
-  2. `pnpm deploy:rules`: sin las reglas, la base de datos de producción está cerrada (modo producción).
-  3. `pnpm run deploy` y publicar desde la app la plantilla de la temporada 2026-27
-     (`templates/plantilla-carnet-2026-27.svg`): hasta entonces la app no tiene ninguna.
-  4. Probar el login real con una cuenta del club y con una de fuera.
+- ~~Login y plantilla fuera del bundle~~: en producción desde el 2026-10-14 (CLAUDE.md § Acceso y plantillas
+  oficiales). Pantalla de OAuth en "Interna", reglas y app desplegadas; la junta confirmó que una cuenta de fuera
+  no puede entrar y publicó la plantilla de 2026-27.
+- ~~Biblioteca de plantillas~~: hecha el 2026-10-14, probada en local con los emuladores (publicar, sustituir,
+  volver a una anterior, renombrar, eliminar, quitar la asignación e historial). **Falta para producción**, con permiso:
+  1. `pnpm deploy:rules` y `pnpm run deploy` a la vez: las reglas nuevas no aceptan la app anterior y al revés.
+  2. En la app, "Gestionar plantillas": la plantilla publicada antes de la biblioteca sale con el nombre "2026-27".
+     Renombrarla (p. ej. "Escut") y aprobarla para 2026-27. Hasta entonces ninguna temporada tiene plantilla oficial.
+     No hay que volver a subirla ni borrar nada: el documento antiguo ya es esa entrada de la biblioteca.
 
 ## Cómo verificar antes de dar algo por hecho
 
