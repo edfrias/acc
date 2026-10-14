@@ -17,23 +17,77 @@
     "failed": "No se ha podido iniciar la sesión. Vuelve a intentarlo.",
     "notClub": "La cuenta {email} no es del club. Entra con tu cuenta {'@'}{domain}."
   },
+  "wizard": {
+    "label": "Pasos",
+    "templates": "Plantilla",
+    "members": "Socios",
+    "card": "Carnet y descarga",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "noTemplate": "Elige una plantilla",
+    "templateChosen": "Plantilla elegida",
+    "noMembers": "Carga el CSV de socios",
+    "membersLoaded": "{count} filas",
+    "membersSummary": "{valid} válidos · {rejected} excluidos",
+    "cardHint": "Revisa y descarga el PDF",
+    "ready": "{count} carnets listos para descargar"
+  },
+  "gallery": {
+    "title": "Plantillas",
+    "help": "Elige la plantilla con la que generar los carnets. Desde aquí también puedes añadir una nueva (pruébala antes de guardarla), aprobarla para una temporada, renombrarla o eliminarla.",
+    "use": "Usar",
+    "useNamed": "Usar la plantilla {name}",
+    "inUse": "En uso",
+    "unsaved": "Sin guardar",
+    "duplex": "Dos caras",
+    "add": "Añadir una plantilla: arrastra aquí el SVG o haz clic para elegirlo",
+    "unreadable": "No se puede mostrar esta plantilla",
+    "current": "Plantilla en uso",
+    "noneSelected": "Todavía no has elegido ninguna plantilla."
+  },
+  "seasons": {
+    "title": "Temporadas",
+    "official": "Plantilla oficial: {name}"
+  },
+  "members": {
+    "title": "Socios",
+    "columns": "Columnas",
+    "needTemplate": "Elige una plantilla en el paso 1 para revisar los socios.",
+    "goTemplates": "Ir a las plantillas",
+    "filterLabel": "Filtrar la lista",
+    "all": "todos",
+    "validPlural": "correctos",
+    "status": "Estado",
+    "valid": "Correcto",
+    "warning": "Aviso",
+    "rejected": "Excluido",
+    "seeCard": "Ver el carnet",
+    "noneInFilter": "Ningún socio en esta categoría."
+  },
+  "card": {
+    "title": "Campos del carnet",
+    "needTemplate": "Elige una plantilla en el paso 1.",
+    "needMembers": "Carga la lista de socios en el paso 2 para generar los carnets. Mientras, la previsualización muestra el texto de ejemplo.",
+    "needColumns": "Falta indicar alguna columna del CSV en el paso 2.",
+    "goMembers": "Ir a los socios",
+    "fromColumn": "Columna «{column}»",
+    "noColumn": "Sin columna",
+    "change": "Cambiar",
+    "summary": "Se generarán {valid} carnets ({rejected} excluidos).",
+    "review": "Revisar la lista"
+  },
   "template": {
-    "title": "Plantilla",
     "official": "Plantilla oficial de la temporada {season}: {name}",
     "custom": "Plantilla cargada: {name}",
-    "change": "Probar una plantilla desde fichero (SVG)",
-    "restore": "Volver a la plantilla oficial",
     "invalid": "La plantilla no es válida",
     "fields": "Campos: {list}",
     "season": "Temporada",
     "none": "Ninguna temporada tiene plantilla oficial: carga el SVG de una plantilla nueva o aprueba una de la biblioteca.",
     "loadFailed": "No se han podido cargar las plantillas oficiales.",
     "retry": "Reintentar",
-    "duplex": "Dos caras: anverso y reverso.",
     "approved": "Aprobada por {email} el {date}",
     "fromLibrary": "Plantilla de la biblioteca: {name}",
-    "notSeason": "—",
-    "missing": "La plantilla asignada a {season} ya no está en la biblioteca. Aprueba otra desde «Gestionar plantillas»."
+    "missing": "La plantilla asignada a {season} ya no está en la biblioteca. Aprueba otra para esa temporada."
   },
   "publish": {
     "title": "Guardar en la biblioteca y aprobar",
@@ -50,13 +104,8 @@
     "badName": "Ponle un nombre (como máximo 80 caracteres)."
   },
   "library": {
-    "open": "Gestionar plantillas",
-    "close": "Cerrar la gestión",
-    "title": "Biblioteca de plantillas",
-    "help": "Todas las plantillas aprobadas. Puedes volver a aprobar cualquiera para una temporada.",
     "uploaded": "Subida por {email} el {date}",
     "officialFor": "Oficial {season}",
-    "preview": "Ver",
     "approve": "Aprobar…",
     "approveFor": "Aprobar para {season}",
     "rename": "Renombrar",
@@ -74,21 +123,17 @@
     "failed": "No se ha podido completar la acción. Vuelve a intentarlo."
   },
   "csv": {
-    "title": "Lista de socios",
     "drop": "Arrastra aquí el fichero CSV o haz clic para elegirlo",
     "replace": "Cambiar el fichero",
     "loaded": "{name}: {count} filas",
     "details": "Codificación {encoding} · separador «{delimiter}»",
     "empty": "El fichero está vacío.",
     "unreadable": "No se ha podido leer el fichero.",
-    "preview": "Primeras {shown} de {total} filas",
     "row": "Fila"
   },
   "mapping": {
-    "title": "Columnas y temporada",
     "help": "Indica qué columna del fichero corresponde a cada dato del carnet.",
     "choose": "Elige una columna",
-    "season": "Temporada",
     "seasonHelp": "Aparece en todos los carnets."
   },
   "fields": {
@@ -97,17 +142,10 @@
     "temporada": "Temporada"
   },
   "validation": {
-    "title": "Revisión",
     "waiting": "Carga la lista de socios e indica las columnas para revisarla.",
-    "valid": "válidos",
     "warnings": "con avisos",
     "rejected": "excluidos",
-    "rejectedTitle": "Excluidos: no se generará el carnet",
-    "warningsTitle": "Avisos: se generará el carnet, pero conviene revisarlo",
-    "row": "Fila",
-    "field": "Dato",
     "issue": "Incidencia",
-    "show": "Ver",
     "allGood": "Todas las filas son correctas."
   },
   "issues": {

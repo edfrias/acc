@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { sampleCard, widestCard } from '../src/app/cards'
-import { guessMapping, normalizeHeader } from '../src/app/mapping'
+import { guessMapping, keepMapping, normalizeHeader } from '../src/app/mapping'
+import { listMembers } from '../src/app/members'
 import { currentSeason } from '../src/app/season'
 import { loadFontSet, parseCsvBytes, parseTemplate, validate } from '../src/pipeline'
 import { fontFiles, readBytes, readText } from './helpers'
@@ -39,6 +40,53 @@ describe('guessMapping', () => {
 
   it('no asigna los campos estáticos ni lo que no reconoce', () => {
     expect(guessMapping(template.fields, ['Temporada', 'Columna A'])).toEqual({})
+  })
+})
+
+describe('keepMapping', () => {
+  it('conserva las columnas elegidas a mano al cambiar de plantilla', () => {
+    // "Nom del club" no es lo que propondría guessMapping: es una elección del usuario
+    const previous = { nombre: 'Nom del club', num_federado: 'Llicència' }
+    expect(keepMapping(previous, template.fields, ['Nom', 'Nom del club', 'Llicència'])).toEqual(previous)
+  })
+
+  it('propone los campos que faltan sin repetir columnas ya usadas', () => {
+    expect(keepMapping({ nombre: 'Nom' }, template.fields, ['Nom', 'Llicència'])).toEqual({
+      nombre: 'Nom',
+      num_federado: 'Llicència',
+    })
+  })
+
+  it('descarta campos que ya no están en la plantilla y columnas que ya no están en el CSV', () => {
+    expect(keepMapping({ foto: 'Foto', nombre: 'Name' }, template.fields, ['Nom', 'Llicència'])).toEqual({
+      nombre: 'Nom',
+      num_federado: 'Llicència',
+    })
+  })
+})
+
+describe('listMembers', () => {
+  it('da a cada fila del CSV su estado, en el orden del fichero', () => {
+    const fonts = loadFontSet(fontFiles())
+    const { rows } = parseCsvBytes(readBytes('fixtures/socios.csv'))
+    const result = validate(
+      rows,
+      template,
+      { mapping: { nombre: 'Nom', num_federado: 'Llicència' }, staticValues: { temporada: '2026-27' } },
+      fonts,
+    )
+    const members = listMembers(rows, result)
+
+    expect(members.map((m) => m.row.rowNumber)).toEqual(rows.map((r) => r.rowNumber))
+    expect(members.filter((m) => m.status === 'rejected')).toHaveLength(result.rejected.length)
+    expect(members.filter((m) => m.status !== 'rejected')).toHaveLength(result.valid.length)
+    expect(new Set(members.filter((m) => m.status === 'warning').map((m) => m.row.rowNumber))).toEqual(
+      new Set(result.warnings.map((w) => w.rowNumber)),
+    )
+    for (const member of members) {
+      if (member.card === null) expect(member.status).toBe('rejected')
+      else expect(result.valid[member.card].rowNumber).toBe(member.row.rowNumber)
+    }
   })
 })
 

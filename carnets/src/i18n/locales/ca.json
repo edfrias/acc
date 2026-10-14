@@ -17,23 +17,77 @@
     "failed": "No s'ha pogut iniciar la sessió. Torna-ho a provar.",
     "notClub": "El compte {email} no és del club. Entra amb el teu compte {'@'}{domain}."
   },
+  "wizard": {
+    "label": "Passos",
+    "templates": "Plantilla",
+    "members": "Socis",
+    "card": "Carnet i descàrrega",
+    "previous": "Anterior",
+    "next": "Següent",
+    "noTemplate": "Tria una plantilla",
+    "templateChosen": "Plantilla triada",
+    "noMembers": "Carrega el CSV de socis",
+    "membersLoaded": "{count} files",
+    "membersSummary": "{valid} vàlids · {rejected} exclosos",
+    "cardHint": "Revisa i descarrega el PDF",
+    "ready": "{count} carnets a punt per descarregar"
+  },
+  "gallery": {
+    "title": "Plantilles",
+    "help": "Tria la plantilla amb què generar els carnets. Des d'aquí també en pots afegir una de nova (prova-la abans de guardar-la), aprovar-la per a una temporada, canviar-li el nom o eliminar-la.",
+    "use": "Fer servir",
+    "useNamed": "Fer servir la plantilla {name}",
+    "inUse": "En ús",
+    "unsaved": "Sense guardar",
+    "duplex": "Dues cares",
+    "add": "Afegir una plantilla: arrossega aquí l'SVG o fes-hi clic per triar-lo",
+    "unreadable": "No es pot mostrar aquesta plantilla",
+    "current": "Plantilla en ús",
+    "noneSelected": "Encara no has triat cap plantilla."
+  },
+  "seasons": {
+    "title": "Temporades",
+    "official": "Plantilla oficial: {name}"
+  },
+  "members": {
+    "title": "Socis",
+    "columns": "Columnes",
+    "needTemplate": "Tria una plantilla al pas 1 per revisar els socis.",
+    "goTemplates": "Anar a les plantilles",
+    "filterLabel": "Filtrar la llista",
+    "all": "tots",
+    "validPlural": "correctes",
+    "status": "Estat",
+    "valid": "Correcte",
+    "warning": "Avís",
+    "rejected": "Exclòs",
+    "seeCard": "Veure el carnet",
+    "noneInFilter": "Cap soci en aquesta categoria."
+  },
+  "card": {
+    "title": "Camps del carnet",
+    "needTemplate": "Tria una plantilla al pas 1.",
+    "needMembers": "Carrega la llista de socis al pas 2 per generar els carnets. Mentrestant, la previsualització mostra el text d'exemple.",
+    "needColumns": "Falta indicar alguna columna del CSV al pas 2.",
+    "goMembers": "Anar als socis",
+    "fromColumn": "Columna «{column}»",
+    "noColumn": "Sense columna",
+    "change": "Canviar",
+    "summary": "Es generaran {valid} carnets ({rejected} exclosos).",
+    "review": "Revisar la llista"
+  },
   "template": {
-    "title": "Plantilla",
     "official": "Plantilla oficial de la temporada {season}: {name}",
     "custom": "Plantilla carregada: {name}",
-    "change": "Provar una plantilla des de fitxer (SVG)",
-    "restore": "Tornar a la plantilla oficial",
     "invalid": "La plantilla no és vàlida",
     "fields": "Camps: {list}",
     "season": "Temporada",
     "none": "Cap temporada no té plantilla oficial: carrega l'SVG d'una plantilla nova o aprova'n una de la biblioteca.",
     "loadFailed": "No s'han pogut carregar les plantilles oficials.",
     "retry": "Tornar-ho a provar",
-    "duplex": "Dues cares: anvers i revers.",
     "approved": "Aprovada per {email} el {date}",
     "fromLibrary": "Plantilla de la biblioteca: {name}",
-    "notSeason": "—",
-    "missing": "La plantilla assignada a {season} ja no és a la biblioteca. Aprova'n una altra des de «Gestionar plantilles»."
+    "missing": "La plantilla assignada a {season} ja no és a la biblioteca. Aprova'n una altra per a aquesta temporada."
   },
   "publish": {
     "title": "Guardar a la biblioteca i aprovar",
@@ -50,13 +104,8 @@
     "badName": "Posa-li un nom (com a màxim 80 caràcters)."
   },
   "library": {
-    "open": "Gestionar plantilles",
-    "close": "Tancar la gestió",
-    "title": "Biblioteca de plantilles",
-    "help": "Totes les plantilles aprovades. Pots tornar a aprovar qualsevol per a una temporada.",
     "uploaded": "Pujada per {email} el {date}",
     "officialFor": "Oficial {season}",
-    "preview": "Veure",
     "approve": "Aprovar…",
     "approveFor": "Aprovar per a {season}",
     "rename": "Canviar el nom",
@@ -74,21 +123,17 @@
     "failed": "No s'ha pogut completar l'acció. Torna-ho a provar."
   },
   "csv": {
-    "title": "Llista de socis",
     "drop": "Arrossega aquí el fitxer CSV o fes clic per triar-lo",
     "replace": "Canviar el fitxer",
     "loaded": "{name}: {count} files",
     "details": "Codificació {encoding} · separador «{delimiter}»",
     "empty": "El fitxer és buit.",
     "unreadable": "No s'ha pogut llegir el fitxer.",
-    "preview": "Primeres {shown} de {total} files",
     "row": "Fila"
   },
   "mapping": {
-    "title": "Columnes i temporada",
     "help": "Indica quina columna del fitxer correspon a cada dada del carnet.",
     "choose": "Tria una columna",
-    "season": "Temporada",
     "seasonHelp": "Surt a tots els carnets."
   },
   "fields": {
@@ -97,17 +142,10 @@
     "temporada": "Temporada"
   },
   "validation": {
-    "title": "Revisió",
     "waiting": "Carrega la llista de socis i indica les columnes per revisar-la.",
-    "valid": "vàlids",
     "warnings": "amb avisos",
     "rejected": "exclosos",
-    "rejectedTitle": "Exclosos: no es generarà el carnet",
-    "warningsTitle": "Avisos: es generarà el carnet, però convé revisar-lo",
-    "row": "Fila",
-    "field": "Dada",
     "issue": "Incidència",
-    "show": "Veure",
     "allGood": "Totes les files són correctes."
   },
   "issues": {

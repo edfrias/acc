@@ -43,10 +43,18 @@ Desde la raíz: `pnpm dev:carnets`, `pnpm test:carnets`, `pnpm build:carnets`, o
 - `src/pipeline/svg/`: compilador de la plantilla (`compile.ts`), estilos y CSS (`style.ts`), trazados (`path.ts`)
 - `src/app/`: estado de la interfaz (`useCarnets.ts`), sesión (`useSession.ts`), acceso a Firestore
   (`templateLibrary.ts`) y lógica pura de la UI: temporadas (`season.ts`), cuentas del club (`club.ts`),
-  asignación automática de columnas, carnet de ejemplo, nombre más largo
+  asignación automática de columnas (y conservarla al cambiar de plantilla), lista de socios con su estado,
+  carnet de ejemplo, nombre más largo
 - `src/firebase.ts`: configuración de Firebase; en desarrollo se conecta siempre a los emuladores
-- `src/components/`: un componente por paso (plantilla, CSV, columnas, revisión, previsualización, descarga);
-  en el paso 1, además, `PublishTemplate.vue` (publicar una desde fichero) y `TemplateLibrary.vue` (gestión)
+- `src/components/`: la interfaz es un asistente de tres pasos (`WizardNav.vue`) por el que se puede ir y volver
+  en cualquier orden sin perder nada: el estado vive en `useCarnets.ts`, no en los pasos.
+  1. `TemplatesStep.vue`: galería de plantillas (`TemplateCard.vue`: miniatura, usar, aprobar, renombrar, eliminar),
+     añadir una desde fichero y publicarla (`PublishTemplate.vue`) y el historial de cada temporada (`SeasonHistory.vue`)
+  2. `MembersStep.vue`: CSV, columnas y lista de socios con su estado e incidencias, filtrable
+  3. `CardStep.vue`: campos del carnet, previsualización (`CardPreview.vue`) y descarga (`DownloadStep.vue`)
+
+  Al cambiar de plantilla se conservan los socios y las columnas: se puede volver al paso 1, cambiarla e ir
+  directo al 3. `CardCanvas.vue` dibuja un carnet con el pipeline (miniaturas y previsualización)
 - `src/i18n/`: configuración y `locales/{ca,es,en}.json`. Todo texto visible va en los tres idiomas
 - `public/favicon.ico`: el mismo que la web
 - `src/assets/logotipo-acc.svg`: copia de `public/assets/svg/logotipo-acc.svg` de la web, para la cabecera.
@@ -137,7 +145,7 @@ así que hay mapeo de columnas en la UI.
 - Leer como UTF-8; si aparecen caracteres de reemplazo (`�`), reintentar como Windows-1252.
   Lo que siga mal codificado (`�` o mojibake como `Ã©`) lo rechaza `validate` fila a fila.
 - Las filas vacías se ignoran; el número de fila de cada registro es el del fichero original.
-- Vista previa en tabla tras la carga.
+- Tras la carga, lista de todos los socios con su estado (correcto, aviso, excluido) y el motivo.
 
 ## Validación
 
@@ -196,7 +204,7 @@ La UI muestra un resumen ("48 válidos, 2 con avisos, 3 excluidos") con la tabla
     Solo se añade, en la misma escritura que la asignación.
 - **Flujo**: la junta prepara cada año una plantilla; la prueba en la app desde fichero y desde el paso 1 la guarda
   en la biblioteca con un nombre y la aprueba para una temporada (se propone la en curso o, si ya tiene, la siguiente;
-  si la temporada ya tiene, se avisa de cuál sustituye). En "Gestionar plantillas": ver, aprobar para una temporada,
+  si la temporada ya tiene, se avisa de cuál sustituye). En la galería del paso 1: ver, usar, aprobar para una temporada,
   renombrar y eliminar (solo las que no están asignadas a ninguna temporada), el historial de la temporada elegida
   y quitar su asignación. Al entrar se abre la de la temporada en curso (o la más reciente) y su temporada rellena
   el campo `temporada`.

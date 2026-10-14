@@ -2,7 +2,7 @@ import { computed, ref, shallowRef, watch } from 'vue'
 import { CsvError, loadFontSet, parseCsv, parseTemplate } from '../pipeline'
 import type { ColumnMapping, FontFiles, ParsedCsv, Template, ValidationResult } from '../pipeline'
 import { validate } from '../pipeline'
-import { guessMapping } from './mapping'
+import { guessMapping, keepMapping } from './mapping'
 import * as store from './templateLibrary'
 import type { HistoryEntry, LibraryTemplate, SeasonAssignment } from './templateLibrary'
 import { currentSeason, defaultSeason, seasonLabel } from './season'
@@ -28,6 +28,10 @@ const fonts = computed(() => (fontFiles.value ? loadFontSet(fontFiles.value) : n
 const library = shallowRef<LibraryTemplate[]>([])
 const assignments = shallowRef<SeasonAssignment[]>([])
 const libraryStatus = ref<'idle' | 'loading' | 'ready' | 'error'>('idle')
+/** Paso del asistente: 1 plantilla, 2 socios, 3 carnet y descarga. Se puede ir y volver en cualquier orden. */
+export type WizardStep = 1 | 2 | 3
+const step = ref<WizardStep>(1)
+
 /** Temporada elegida en el paso 1. */
 const season = ref<string | null>(null)
 /** Temporada y plantilla que se acaban de aprobar, para confirmarlo en la interfaz. */
@@ -45,6 +49,20 @@ const templateError = ref<string | null>(null)
 /** Asignación de la temporada elegida y su plantilla (`undefined` si se eliminó de la biblioteca). */
 const assignment = computed(() => assignments.value.find((a) => a.season === season.value))
 const assigned = computed(() => library.value.find((t) => t.id === assignment.value?.template))
+/** Id en la biblioteca de la plantilla en uso; `null` si es un fichero sin guardar. */
+const templateId = computed(() => {
+  const from = origin.value
+  if (from?.kind === 'library') return from.id
+  if (from?.kind === 'season') return assigned.value?.id ?? null
+  return null
+})
+/** Nombre de la plantilla en uso, para el resumen de los pasos. */
+const templateName = computed(() => {
+  const from = origin.value
+  if (!template.value || !from) return null
+  if (from.kind === 'season') return assigned.value?.name ?? null
+  return from.name
+})
 
 const csv = shallowRef<ParsedCsv | null>(null)
 const csvName = ref('')
@@ -64,9 +82,11 @@ const result = computed<ValidationResult | null>(() => {
   return validate(csv.value.rows, template.value, { mapping: mapping.value, staticValues: staticValues.value }, fonts.value)
 })
 
-// Al cambiar de plantilla o de CSV se vuelve a proponer la asignación de columnas.
-watch([template, csv], ([t, c]) => {
-  mapping.value = t && c ? guessMapping(t.fields, c.headers) : {}
+// Con un CSV nuevo se vuelve a proponer la asignación de columnas. Con una plantilla nueva se conserva la que había:
+// cambiar de plantilla no obliga a volver al paso 2.
+watch([template, csv], ([t, c], [, previousCsv]) => {
+  if (!t || !c) return
+  mapping.value = c === previousCsv ? keepMapping(mapping.value, t.fields, c.headers) : guessMapping(t.fields, c.headers)
 })
 
 // Si cambia la lista de válidos, la selección no puede quedarse fuera de rango.
@@ -146,6 +166,7 @@ async function loadFonts(): Promise<void> {
 
 export function useCarnets() {
   return {
+    step,
     fontFiles,
     fonts,
     library,
@@ -154,6 +175,8 @@ export function useCarnets() {
     season,
     assignment,
     assigned,
+    templateId,
+    templateName,
     justApproved,
     template,
     origin,
@@ -176,10 +199,20 @@ export function useCarnets() {
     loadLibrary,
     useSeason,
 
-    /** Muestra una plantilla de la biblioteca (para revisarla antes de aprobarla), sin cambiar ninguna temporada. */
-    previewTemplate(id: string) {
-      const found = library.value.find((t) => t.id === id)
-      if (found) useTemplate(found.svg, { kind: 'library', id, name: found.name })
+    /**
+     * Pasa a usar una plantilla de la biblioteca. Si es la oficial de alguna temporada, se usa como tal (y su temporada
+     * rellena el campo `temporada`); si no, se usa sin cambiar ninguna temporada.
+     */
+    selectTemplate(id: string) {
+      const seasons = store.seasonsOf(id, assignments.value)
+      const chosen = season.value && seasons.includes(season.value) ? season.value : seasons[0]
+      if (chosen) {
+        justApproved.value = null
+        useSeason(chosen)
+      } else {
+        const found = library.value.find((t) => t.id === id)
+        if (found) useTemplate(found.svg, { kind: 'library', id, name: found.name })
+      }
     },
 
     /** Guarda en la biblioteca la plantilla cargada desde fichero, la aprueba para `target` y pasa a usarla. */

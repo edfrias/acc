@@ -17,23 +17,77 @@
     "failed": "Could not sign in. Please try again.",
     "notClub": "The account {email} is not a club account. Sign in with your {'@'}{domain} account."
   },
+  "wizard": {
+    "label": "Steps",
+    "templates": "Template",
+    "members": "Members",
+    "card": "Card and download",
+    "previous": "Back",
+    "next": "Next",
+    "noTemplate": "Choose a template",
+    "templateChosen": "Template chosen",
+    "noMembers": "Load the members CSV",
+    "membersLoaded": "{count} rows",
+    "membersSummary": "{valid} valid · {rejected} excluded",
+    "cardHint": "Review and download the PDF",
+    "ready": "{count} cards ready to download"
+  },
+  "gallery": {
+    "title": "Templates",
+    "help": "Choose the template to generate the cards with. From here you can also add a new one (try it before saving it), approve it for a season, rename it or delete it.",
+    "use": "Use",
+    "useNamed": "Use the {name} template",
+    "inUse": "In use",
+    "unsaved": "Not saved",
+    "duplex": "Two-sided",
+    "add": "Add a template: drop the SVG here or click to choose it",
+    "unreadable": "This template cannot be shown",
+    "current": "Template in use",
+    "noneSelected": "You haven't chosen a template yet."
+  },
+  "seasons": {
+    "title": "Seasons",
+    "official": "Official template: {name}"
+  },
+  "members": {
+    "title": "Members",
+    "columns": "Columns",
+    "needTemplate": "Choose a template in step 1 to check the members.",
+    "goTemplates": "Go to templates",
+    "filterLabel": "Filter the list",
+    "all": "all",
+    "validPlural": "correct",
+    "status": "Status",
+    "valid": "Correct",
+    "warning": "Warning",
+    "rejected": "Excluded",
+    "seeCard": "See the card",
+    "noneInFilter": "No members in this category."
+  },
+  "card": {
+    "title": "Card fields",
+    "needTemplate": "Choose a template in step 1.",
+    "needMembers": "Load the members list in step 2 to generate the cards. Meanwhile, the preview shows the sample text.",
+    "needColumns": "Some CSV column is still missing in step 2.",
+    "goMembers": "Go to members",
+    "fromColumn": "Column “{column}”",
+    "noColumn": "No column",
+    "change": "Change",
+    "summary": "{valid} cards will be generated ({rejected} excluded).",
+    "review": "Review the list"
+  },
   "template": {
-    "title": "Template",
     "official": "Official template for the {season} season: {name}",
     "custom": "Loaded template: {name}",
-    "change": "Try a template from a file (SVG)",
-    "restore": "Back to the official template",
     "invalid": "The template is not valid",
     "fields": "Fields: {list}",
     "season": "Season",
     "none": "No season has an official template: load the SVG of a new template or approve one from the library.",
     "loadFailed": "The official templates could not be loaded.",
     "retry": "Try again",
-    "duplex": "Two-sided: front and back.",
     "approved": "Approved by {email} on {date}",
     "fromLibrary": "Template from the library: {name}",
-    "notSeason": "—",
-    "missing": "The template assigned to {season} is no longer in the library. Approve another one from \"Manage templates\"."
+    "missing": "The template assigned to {season} is no longer in the library. Approve another one for that season."
   },
   "publish": {
     "title": "Save to the library and approve",
@@ -50,13 +104,8 @@
     "badName": "Give it a name (80 characters at most)."
   },
   "library": {
-    "open": "Manage templates",
-    "close": "Close",
-    "title": "Template library",
-    "help": "Every approved template. You can approve any of them again for a season.",
     "uploaded": "Uploaded by {email} on {date}",
     "officialFor": "Official {season}",
-    "preview": "View",
     "approve": "Approve…",
     "approveFor": "Approve for {season}",
     "rename": "Rename",
@@ -74,21 +123,17 @@
     "failed": "The action could not be completed. Please try again."
   },
   "csv": {
-    "title": "Member list",
     "drop": "Drop the CSV file here or click to choose it",
     "replace": "Change file",
     "loaded": "{name}: {count} rows",
     "details": "Encoding {encoding} · separator “{delimiter}”",
     "empty": "The file is empty.",
     "unreadable": "The file could not be read.",
-    "preview": "First {shown} of {total} rows",
     "row": "Row"
   },
   "mapping": {
-    "title": "Columns and season",
     "help": "Tell us which column of the file holds each piece of card data.",
     "choose": "Choose a column",
-    "season": "Season",
     "seasonHelp": "Printed on every card."
   },
   "fields": {
@@ -97,17 +142,10 @@
     "temporada": "Season"
   },
   "validation": {
-    "title": "Review",
     "waiting": "Load the member list and choose the columns to review it.",
-    "valid": "valid",
     "warnings": "with warnings",
     "rejected": "excluded",
-    "rejectedTitle": "Excluded: no card will be generated",
-    "warningsTitle": "Warnings: the card will be generated, but check it",
-    "row": "Row",
-    "field": "Data",
     "issue": "Issue",
-    "show": "Show",
     "allGood": "All rows are correct."
   },
   "issues": {

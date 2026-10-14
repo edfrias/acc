@@ -1,5 +1,5 @@
 <template>
-  <StepSection :step="5" :title="t('download.title')">
+  <StepSection :title="t('download.title')">
     <fieldset class="space-y-2 text-sm">
       <legend class="mb-1 font-medium text-slate-700">{{ t('download.layout') }}</legend>
       <label class="flex items-center gap-2">

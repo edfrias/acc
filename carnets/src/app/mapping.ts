@@ -43,3 +43,18 @@ export function guessMapping(fields: TemplateField[], headers: string[]): Column
   }
   return mapping
 }
+
+/**
+ * Asignación al cambiar de plantilla con el mismo CSV: conserva las columnas ya elegidas para los campos que siguen
+ * existiendo y solo propone las de los campos nuevos. Así no hay que volver a revisar las columnas.
+ */
+export function keepMapping(previous: ColumnMapping, fields: TemplateField[], headers: string[]): ColumnMapping {
+  const kept: ColumnMapping = {}
+  for (const field of fields) {
+    const header = previous[field.name]
+    if (!field.isStatic && header !== undefined && headers.includes(header)) kept[field.name] = header
+  }
+  const used = new Set(Object.values(kept))
+  const rest = fields.filter((field) => !(field.name in kept))
+  return { ...guessMapping(rest, headers.filter((header) => !used.has(header))), ...kept }
+}

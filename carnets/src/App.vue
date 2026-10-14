@@ -42,17 +42,25 @@
         {{ t('app.privacy') }}
       </p>
 
-      <main class="mx-auto grid max-w-7xl gap-6 px-4 py-6 sm:px-6 lg:px-8 lg:grid-cols-[minmax(0,1fr)_26rem]">
-        <div class="min-w-0 space-y-6">
-          <TemplateStep />
-          <CsvStep />
-          <MappingStep />
-          <ValidationStep />
+      <main class="mx-auto max-w-7xl space-y-6 px-4 py-6 sm:px-6 lg:px-8">
+        <WizardNav />
+
+        <TemplatesStep v-if="step === 1" />
+        <MembersStep v-else-if="step === 2" />
+        <CardStep v-else />
+
+        <div class="flex justify-between gap-3">
+          <button v-if="step > 1" type="button" :class="outlineButton" @click="go(-1)">← {{ t('wizard.previous') }}</button>
+          <span v-else />
+          <button
+            v-if="step < 3"
+            type="button"
+            class="rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            @click="go(1)"
+          >
+            {{ t('wizard.next') }} →
+          </button>
         </div>
-        <aside class="space-y-6 self-start lg:sticky lg:top-6">
-          <CardPreview />
-          <DownloadStep />
-        </aside>
       </main>
     </template>
   </div>
@@ -62,19 +70,29 @@
 import { watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useCarnets } from './app/useCarnets'
+import type { WizardStep } from './app/useCarnets'
 import { useSession } from './app/useSession'
 import logo from './assets/logotipo-acc.svg'
-import CardPreview from './components/CardPreview.vue'
-import CsvStep from './components/CsvStep.vue'
-import DownloadStep from './components/DownloadStep.vue'
+import CardStep from './components/CardStep.vue'
 import LanguageSelect from './components/LanguageSelect.vue'
-import MappingStep from './components/MappingStep.vue'
+import MembersStep from './components/MembersStep.vue'
 import SignIn from './components/SignIn.vue'
-import TemplateStep from './components/TemplateStep.vue'
-import ValidationStep from './components/ValidationStep.vue'
+import TemplatesStep from './components/TemplatesStep.vue'
+import WizardNav from './components/WizardNav.vue'
 
 const { t } = useI18n()
 const { status, email, signOut } = useSession()
+const { step } = useCarnets()
+
+const outlineButton =
+  'rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-500'
+
+function go(delta: -1 | 1) {
+  step.value = (step.value + delta) as WizardStep
+}
+
+// Cada paso empieza arriba: el contenido cambia entero
+watch(step, () => window.scrollTo({ top: 0 }))
 
 // Las plantillas solo se pueden leer con la sesión iniciada (firestore.rules)
 let initialized = false
