@@ -36,3 +36,9 @@ export function nextSeason(season: string): string {
 export function suggestedSeason(published: string[], current: string): string {
   return published.includes(current) ? nextSeason(current) : current
 }
+
+/** Cómo se escribe la temporada en el carnet: "2026-27" → "2026-2027". */
+export function seasonLabel(season: string): string {
+  const start = Number(season.slice(0, 4))
+  return `${start}-${start + 1}`
+}

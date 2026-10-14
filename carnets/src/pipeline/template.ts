@@ -20,6 +20,11 @@ export function parseTemplate(svg: string): Template {
     throw new TemplateError('La plantilla necesita un viewBox en mm que empiece en 0 0 (p. ej. "0 0 91.6 60").')
   }
 
+  const sides = Number(root.getAttribute('data-sides') ?? '1')
+  if (sides !== 1 && sides !== 2) {
+    throw new TemplateError('data-sides tiene que ser 1 (solo cara) o 2 (cara y reverso, el reverso debajo).')
+  }
+
   doc.getElementById('guides')?.remove()
   for (const el of [...doc.getElementsByTagName('metadata')]) el.remove()
 
@@ -33,8 +38,9 @@ export function parseTemplate(svg: string): Template {
   return {
     svg: new XMLSerializer().serializeToString(doc),
     width: viewBox[2],
-    height: viewBox[3],
+    height: viewBox[3] / sides,
     bleed: BLEED_MM,
+    sides,
     fields,
     drawing,
     fontWeights,

@@ -30,7 +30,8 @@
     "uploaded": "Publicada por {email} el {date}",
     "none": "Todavía no hay ninguna plantilla oficial publicada. Carga el SVG de la plantilla y publícala para la temporada.",
     "loadFailed": "No se han podido cargar las plantillas oficiales.",
-    "retry": "Reintentar"
+    "retry": "Reintentar",
+    "duplex": "Dos caras: anverso y reverso."
   },
   "publish": {
     "title": "Publicar como plantilla oficial",
@@ -98,7 +99,10 @@
     "previous": "Anterior",
     "next": "Siguiente",
     "widest": "Ver el nombre más largo",
-    "alt": "Previsualización del carnet"
+    "alt": "Previsualización del carnet",
+    "front": "Anverso",
+    "back": "Reverso",
+    "altBack": "Previsualización del reverso del carnet"
   },
   "download": {
     "title": "Descarga",
@@ -113,7 +117,8 @@
     "pdfFile": "carnets-{season}.pdf",
     "reportFile": "carnets-excluidos-{season}.csv",
     "failed": "No se ha podido generar el PDF: {error}",
-    "doesNotFit": "No caben {cols} × {rows} carnets en una hoja A4."
+    "doesNotFit": "No caben {cols} × {rows} carnets en una hoja A4.",
+    "duplexHelp": "Imprímelo a doble cara, volteando por el lado largo: detrás de cada hoja de anversos va su hoja de reversos."
   },
   "report": {
     "row": "Fila",

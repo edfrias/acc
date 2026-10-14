@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { PDFDocument } from 'pdf-lib'
-import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs'
+import { getDocument, OPS } from 'pdfjs-dist/legacy/build/pdf.mjs'
 import {
   buildPdf,
   impose,
@@ -14,7 +14,7 @@ import {
 import type { CardData, PdfOptions } from '../src/pipeline'
 import { fontFiles, readBytes, readText } from './helpers'
 
-const template = parseTemplate(readText('templates/plantilla-carnet-cr80.svg'))
+const template = parseTemplate(readText('fixtures/plantilla-una-cara.svg'))
 const files = fontFiles()
 const grid: PdfOptions = { imposition: { kind: 'grid', cols: 2, rows: 4 }, cropMarks: true }
 const single: PdfOptions = { imposition: { kind: 'single' }, cropMarks: false }
@@ -99,6 +99,82 @@ describe('buildPdf', () => {
     expect(page.getWidth() / PT_PER_MM).toBeCloseTo(91.6)
     expect(page.getHeight() / PT_PER_MM).toBeCloseTo(60)
     expect((await pageTexts(bytes))[0]).toContain('Jordi Martínez Peña')
+  })
+
+  it('dibuja los textos con contorno en el modo de texto que corresponde', async () => {
+    const svg =
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 91.6 60">' +
+      '<text x="5" y="20" font-weight="800" fill="#ffffff" stroke="#00579b" stroke-width="0.4">26-27</text>' +
+      '<text x="5" y="40" font-weight="800" fill="none" stroke="#ffffff" stroke-width="0.2">26-27</text>' +
+      '<text x="5" y="50" font-weight="800">26-27</text></svg>'
+    const outlined = parseTemplate(svg)
+    const bytes = await buildPdf([{ rowNumber: 0, values: {}, fontSizes: {} }], outlined, single, files)
+    const page = await (await getDocument({ data: bytes.slice() }).promise).getPage(1)
+    const { fnArray, argsArray } = await page.getOperatorList()
+    const modes = fnArray.flatMap((fn, i) => (fn === OPS.setTextRenderingMode ? [argsArray[i][0]] : []))
+    // 2: relleno y contorno; 1: solo contorno; 0: solo relleno
+    expect(modes).toEqual([2, 1, 0])
+  })
+
+  describe('dos caras', () => {
+    // La cara lleva el nombre y el reverso (debajo, en y = 60..120) la licencia, para saber qué es cada cosa
+    const duplex = parseTemplate(
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 91.6 120" data-sides="2">' +
+        '<text data-field="nombre" data-max-width="70" data-min-size="2" x="10" y="30" font-weight="700">Nom</text>' +
+        '<text data-field="num_federado" data-max-width="70" data-min-size="2" x="10" y="90" font-weight="700">0</text>' +
+        '</svg>',
+    )
+    const cardsFor = (n: number): CardData[] =>
+      Array.from({ length: n }, (_, i) => ({
+        rowNumber: i + 2,
+        values: { nombre: `Soci ${i + 1}`, num_federado: `${1000 + i}` },
+        fontSizes: { nombre: 4, num_federado: 4 },
+      }))
+
+    /** Posición x (mm) de cada texto de cada página. */
+    async function textX(bytes: Uint8Array): Promise<Record<string, number>[]> {
+      const pdf = await getDocument({ data: bytes.slice() }).promise
+      const pages = []
+      for (let n = 1; n <= pdf.numPages; n++) {
+        const items = (await (await pdf.getPage(n)).getTextContent()).items
+        pages.push(Object.fromEntries(items.flatMap((it) => ('str' in it && it.str.trim() ? [[it.str, it.transform[4] / PT_PER_MM]] : []))))
+      }
+      return pages
+    }
+
+    it('detrás de cada hoja de caras va su hoja de reversos', async () => {
+      const doc = await PDFDocument.load(await buildPdf(cardsFor(9), duplex, grid, files))
+      expect(doc.getPageCount()).toBe(4)
+    })
+
+    it('los reversos van en espejo: el de la columna izquierda cae a la derecha', async () => {
+      const [front, back] = await textX(await buildPdf(cardsFor(2), duplex, grid, files))
+      const marginX = (210 - 2 * 91.6) / 2
+      expect(front['Soci 1']).toBeCloseTo(marginX + 10)
+      expect(front['Soci 2']).toBeCloseTo(marginX + 91.6 + 10)
+      expect(back['1000']).toBeCloseTo(marginX + 91.6 + 10)
+      expect(back['1001']).toBeCloseTo(marginX + 10)
+    })
+
+    it('un carnet por página: cara y reverso seguidos, del tamaño del carnet', async () => {
+      const bytes = await buildPdf(cardsFor(2), duplex, single, files)
+      const doc = await PDFDocument.load(bytes)
+      expect(doc.getPageCount()).toBe(4)
+      expect(doc.getPage(1).getHeight() / PT_PER_MM).toBeCloseTo(60)
+      const pages = await textX(bytes)
+      expect(Object.keys(pages[1])).toContain('1000')
+      expect(Object.keys(pages[2])).toContain('Soci 2')
+    })
+
+    it('la plantilla oficial genera las dos caras con los datos del socio', async () => {
+      const official = parseTemplate(readText('templates/plantilla-carnet-2026-27.svg'))
+      const card = { ...valid[0], values: { ...valid[0].values, temporada: '2026-2027' } }
+      const texts = await pageTexts(await buildPdf([card], official, single, files))
+      expect(texts).toHaveLength(2)
+      expect(texts[0]).toContain('Jordi Martínez Peña')
+      expect(texts[0]).toContain('2026-2027')
+      expect(texts[1]).toContain('secretaria@arquerscastelldefels.com')
+    })
   })
 
   it('exige un TTF para cada peso de la plantilla', async () => {

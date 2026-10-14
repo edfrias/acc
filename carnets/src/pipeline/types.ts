@@ -39,10 +39,15 @@ export interface TemplateField {
 export interface Template {
   /** SVG saneado: sin `#guides` ni `<metadata>`. */
   svg: string
-  /** Tamaño total con sangrado, en mm. */
+  /** Tamaño de una cara con sangrado, en mm. */
   width: number
   height: number
   bleed: number
+  /**
+   * Caras del carnet (`data-sides` en la raíz del SVG). Con 2, el reverso va debajo de la cara en el mismo SVG:
+   * la cara ocupa de y = 0 a `height` y el reverso de `height` a 2 × `height`.
+   */
+  sides: 1 | 2
   fields: TemplateField[]
   /** La plantilla compilada, lista para dibujar. Coordenadas SVG (mm, y hacia abajo). */
   drawing: GroupNode
@@ -106,6 +111,8 @@ export interface TextNode {
   letterSpacing: number
   anchor: TextAnchor
   fill: Paint | null
+  /** Contorno de las letras (`stroke`), centrado en el borde del glifo como en SVG. */
+  stroke: StrokePaint | null
 }
 
 export interface GroupNode {

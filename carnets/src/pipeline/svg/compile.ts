@@ -90,6 +90,7 @@ export function compileSvg(root: Element): CompiledTemplate {
       letterSpacing: number(style, 'letter-spacing', 0),
       anchor,
       fill: paint(style, 'fill', 'black', opacity),
+      stroke: strokePaint(style, opacity),
     }
     if (el.hasAttribute('data-field')) {
       const field = readField(el, node)
@@ -128,21 +129,27 @@ export function compileSvg(root: Element): CompiledTemplate {
 function shape(el: Element, style: Style, opacity: number): ShapeNode {
   // Una línea no tiene área: nunca se rellena.
   const fill = el.localName === 'line' ? null : paint(style, 'fill', 'black', opacity)
-  const strokeColor = paint(style, 'stroke', 'none', opacity)
-  const stroke: StrokePaint | null = strokeColor && {
-    ...strokeColor,
-    width: number(style, 'stroke-width', 1),
-    dash: dashes(style['stroke-dasharray']),
-    lineCap: oneOf(style['stroke-linecap'], ['butt', 'round', 'square'] as const, 'butt'),
-    lineJoin: oneOf(style['stroke-linejoin'], ['miter', 'round', 'bevel'] as const, 'miter'),
-  }
   return {
     type: 'shape',
     geometry: geometry(el),
     fill,
     fillRule: style['fill-rule'] === 'evenodd' ? 'evenodd' : 'nonzero',
-    stroke,
+    stroke: strokePaint(style, opacity),
   }
+}
+
+/** Contorno de una forma o de un texto; `null` si no tiene (`stroke` por defecto es `none`). */
+function strokePaint(style: Style, opacity: number): StrokePaint | null {
+  const color = paint(style, 'stroke', 'none', opacity)
+  return (
+    color && {
+      ...color,
+      width: number(style, 'stroke-width', 1),
+      dash: dashes(style['stroke-dasharray']),
+      lineCap: oneOf(style['stroke-linecap'], ['butt', 'round', 'square'] as const, 'butt'),
+      lineJoin: oneOf(style['stroke-linejoin'], ['miter', 'round', 'bevel'] as const, 'miter'),
+    }
+  )
 }
 
 function geometry(el: Element): Geometry {

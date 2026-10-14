@@ -30,7 +30,8 @@
     "uploaded": "Publicada per {email} el {date}",
     "none": "Encara no hi ha cap plantilla oficial publicada. Carrega l'SVG de la plantilla i publica-la per a la temporada.",
     "loadFailed": "No s'han pogut carregar les plantilles oficials.",
-    "retry": "Tornar-ho a provar"
+    "retry": "Tornar-ho a provar",
+    "duplex": "Dues cares: anvers i revers."
   },
   "publish": {
     "title": "Publicar com a plantilla oficial",
@@ -98,7 +99,10 @@
     "previous": "Anterior",
     "next": "Següent",
     "widest": "Veure el nom més llarg",
-    "alt": "Previsualització del carnet"
+    "alt": "Previsualització del carnet",
+    "front": "Anvers",
+    "back": "Revers",
+    "altBack": "Previsualització del revers del carnet"
   },
   "download": {
     "title": "Descàrrega",
@@ -113,7 +117,8 @@
     "pdfFile": "carnets-{season}.pdf",
     "reportFile": "carnets-exclosos-{season}.csv",
     "failed": "No s'ha pogut generar el PDF: {error}",
-    "doesNotFit": "No hi caben {cols} × {rows} carnets en un full A4."
+    "doesNotFit": "No hi caben {cols} × {rows} carnets en un full A4.",
+    "duplexHelp": "Imprimeix-lo a doble cara, girant pel costat llarg: darrere de cada full d'anversos hi ha el seu full de reversos."
   },
   "report": {
     "row": "Fila",

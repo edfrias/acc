@@ -5,7 +5,7 @@ import { currentSeason } from '../src/app/season'
 import { loadFontSet, parseCsvBytes, parseTemplate, validate } from '../src/pipeline'
 import { fontFiles, readBytes, readText } from './helpers'
 
-const template = parseTemplate(readText('templates/plantilla-carnet-cr80.svg'))
+const template = parseTemplate(readText('fixtures/plantilla-una-cara.svg'))
 
 describe('currentSeason', () => {
   it('empieza en septiembre', () => {

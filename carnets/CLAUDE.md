@@ -50,9 +50,11 @@ Desde la raíz: `pnpm dev:carnets`, `pnpm test:carnets`, `pnpm build:carnets`, o
 - `public/favicon.ico`: el mismo que la web
 - `src/assets/logotipo-acc.svg`: copia de `public/assets/svg/logotipo-acc.svg` de la web, para la cabecera.
   Si cambia el logo de la web, hay que volver a copiarlo (y el de la plantilla, ver más abajo)
-- `templates/`: plantilla de referencia, para los tests y como punto de partida de cada temporada.
-  No va en el bundle: la app usa las plantillas oficiales de Firestore
+- `templates/`: plantillas oficiales, una por temporada (`plantilla-carnet-2026-27.svg`: diseño "Escut", dos caras).
+  No van en el bundle: se publican desde la app en Firestore. Sirven de punto de partida para la siguiente
 - `fonts/`: Inter 4.1 en TTF estático (Medium, SemiBold, Bold, ExtraBold) + licencia OFL
+- `fixtures/plantilla-una-cara.svg`: la primera plantilla de referencia, de una cara. Los tests miden contra ella
+  (posiciones, estilos, texto de ejemplo): no la retoques sin revisar los tests
 - `fixtures/`: CSV de prueba, generados con `pnpm fixtures` (`scripts/make-fixtures.mjs`).
   No se editan a mano: el de Latin-1 se corrompería al guardarlo en UTF-8.
   `socios.csv` y `socios-latin1.csv` cubren los casos límite de los tests; `socios-ejemplo.csv` es una lista
@@ -85,19 +87,26 @@ llevan un código y sus parámetros, y la interfaz redacta el mensaje en el idio
 
 ## Plantilla SVG: contrato
 
-Fichero de referencia: `templates/plantilla-carnet-cr80.svg`.
+Plantilla oficial actual: `templates/plantilla-carnet-2026-27.svg` (dos caras).
 
-- Tamaño: CR80 (85,6 × 54 mm) + 3 mm de sangrado por lado = 91,6 × 60 mm.
+- Tamaño: CR80 (85,6 × 54 mm) + 3 mm de sangrado por lado = 91,6 × 60 mm por cara.
   viewBox en mm (1 unidad = 1 mm). Línea de corte en (3,3) → (88,6, 57). Zona segura: 3 mm dentro del corte.
+- **Dos caras**: `data-sides="2"` en la raíz y viewBox `0 0 91.6 120`, con el reverso debajo de la cara (y = 60..120).
+  Así se diseña en una sola mesa de trabajo y en Firestore sigue siendo un único SVG. Cada cara se recorta a su
+  rectángulo al dibujar: lo que se salga no pisa la otra cara ni al vecino en la hoja. Sin `data-sides`, una cara.
 - `<text data-field="...">` es un campo variable; su contenido es texto de ejemplo.
   - `data-field`: nombre del campo, se mapea a una columna del CSV (`nombre`, `num_federado`).
   - `data-max-width`: ancho máximo en mm. Si el texto no cabe, se reduce la fuente.
   - `data-min-size`: tamaño mínimo en mm. Si ni así cabe → error de validación.
   - `text-anchor`: alineación.
 - `data-static="true"`: campo que no viene del CSV; se configura una vez en la app (p. ej. `temporada`).
+  La app rellena `temporada` con la de la plantilla oficial escrita entera: "2026-2027" (`seasonLabel`).
 - `#guides`: guías de corte y zona segura, ocultas. La app las elimina antes de generar.
 - `#logo`: logotipo oficial, copiado de `public/assets/svg/logotipo-acc.svg` (el de la web) con los `id`
-  prefijados con `logo-` y escalado a 11 mm de alto. Si cambia el logo de la web, hay que volver a copiarlo aquí.
+  prefijados con `logo-`. Si cambia el logo de la web, hay que volver a copiarlo en las plantillas.
+  Versión de una tinta (`#escut`, `#revers-logo`): líneas, texto y franjas en un color y lo amarillo y blanco en el
+  del fondo. Las franjas de las almenas y la base no tocan el contorno del original: en una tinta llevan un trazo
+  de su color (`stroke-width` 1.2 en unidades del logo) para que no aparezcan hilos del color del fondo.
 
 **SVG soportado por el render** (lo demás se rechaza al cargar la plantilla, con un mensaje que dice qué falla):
 
@@ -105,6 +114,7 @@ Fichero de referencia: `templates/plantilla-carnet-cr80.svg`.
   los comandos, arcos incluidos), `text` (con `tspan` sin posición propia). Se ignoran `defs`, `title`, `desc`.
 - Estilo: atributos de presentación, `style=""` y `<style>` con selectores simples (`tag`, `#id`, `.clase`).
   Colores `#rgb`, `#rrggbb`, `rgb()` y algunos nombres; `fill-rule`, trazos con discontinuas, `opacity`.
+  El texto admite `stroke` (contorno de las letras, con o sin relleno).
 - `transform` (todas las funciones) y `clip-path` a un `<clipPath>` de formas sin `transform`.
 - Longitudes sin unidades o en `px` (= unidades de usuario = mm).
 - No soportado: `<image>`, `<use>`, degradados, patrones, filtros, máscaras.
@@ -149,7 +159,8 @@ La UI muestra un resumen ("48 válidos, 2 con avisos, 3 excluidos") con la tabla
   - Los carnets se tocan por el sangrado; las marcas de corte van en el margen, fuera del bloque,
     alineadas con cada línea de corte (dentro caerían sobre el sangrado del vecino).
   - Color en RGB. Si la copistería pide CMYK, hay que convertir los colores en el render.
-  - Doble cara (fase 2): hoja de reverso con columnas espejadas.
+  - Doble cara: detrás de cada hoja de anversos, su hoja de reversos con las columnas en espejo, para imprimir
+    a doble cara volteando por el lado largo. Un carnet por página: anverso y reverso seguidos.
 - **CSV de rechazados**: número de fila, datos originales, motivo. Se puede corregir y volver a subir solo ese fichero.
 
 ## Alojamiento
@@ -193,7 +204,7 @@ La UI muestra un resumen ("48 válidos, 2 con avisos, 3 excluidos") con la tabla
 - Descarga del PDF impuesto + CSV de rechazados
 
 **Fase 2**
-- Reverso con doble cara
+- ~~Reverso con doble cara~~ Hecho (§ Plantilla SVG, § Salida)
 - Guardar/cargar configuración como JSON
 - ~~Login + plantilla fuera del bundle~~ Hecho: Google + Firestore (§ Acceso y plantillas oficiales)
 
@@ -205,7 +216,6 @@ La UI muestra un resumen ("48 válidos, 2 con avisos, 3 excluidos") con la tabla
 ## Pendiente de decidir
 
 - Formato que prefiere la copistería (tamaño, imposición, marcas de corte)
-- Si el carnet tiene reverso
 - Si el nombre llega en una columna o en dos ("Nom" + "Cognoms"). De momento se asume una
 
 ## Casos de prueba obligatorios

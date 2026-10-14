@@ -46,6 +46,7 @@
             {{ t('template.uploaded', { email: current.uploadedBy, date: current.uploadedAt.toLocaleDateString(locale) }) }}
           </p>
           <p class="text-slate-500">{{ t('template.fields', { list: fieldList }) }}</p>
+          <p v-if="template.sides === 2" class="text-slate-500">{{ t('template.duplex') }}</p>
         </div>
         <div class="flex flex-wrap gap-2">
           <button

@@ -5,7 +5,7 @@ import { validate } from '../pipeline'
 import { guessMapping } from './mapping'
 import { listOfficialTemplates, publishOfficialTemplate } from './officialTemplates'
 import type { OfficialTemplate } from './officialTemplates'
-import { currentSeason, defaultSeason } from './season'
+import { currentSeason, defaultSeason, seasonLabel } from './season'
 import interMedium from '../../fonts/Inter-Medium.ttf?url'
 import interSemiBold from '../../fonts/Inter-SemiBold.ttf?url'
 import interBold from '../../fonts/Inter-Bold.ttf?url'
@@ -45,7 +45,7 @@ const csvError = ref<'empty' | 'unreadable' | null>(null)
 const mapping = ref<ColumnMapping>({})
 /** Carnet válido que se está previsualizando. */
 const selected = ref(0)
-const staticValues = ref<Record<string, string>>({ temporada: currentSeason(new Date()) })
+const staticValues = ref<Record<string, string>>({ temporada: seasonLabel(currentSeason(new Date())) })
 
 const csvFields = computed(() => template.value?.fields.filter((f) => !f.isStatic) ?? [])
 const staticFields = computed(() => template.value?.fields.filter((f) => f.isStatic) ?? [])
@@ -93,8 +93,8 @@ function useOfficialTemplate(chosen: string): void {
   if (!official) return
   season.value = chosen
   useTemplate(official.svg, null)
-  // La temporada del carnet es la de su plantilla
-  staticValues.value['temporada'] = chosen
+  // La temporada del carnet es la de su plantilla, escrita entera: "2026-2027"
+  staticValues.value['temporada'] = seasonLabel(chosen)
 }
 
 async function loadOfficialTemplates(select?: string): Promise<void> {
@@ -157,7 +157,7 @@ export function useCarnets() {
       // La plantilla en uso ya es la oficial publicada, aunque falle la recarga de la lista
       templateName.value = null
       season.value = target
-      staticValues.value['temporada'] = target
+      staticValues.value['temporada'] = seasonLabel(target)
       justPublished.value = target
       await loadOfficialTemplates(target)
     },

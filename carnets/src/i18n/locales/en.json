@@ -30,7 +30,8 @@
     "uploaded": "Published by {email} on {date}",
     "none": "No official template has been published yet. Load the template SVG and publish it for the season.",
     "loadFailed": "The official templates could not be loaded.",
-    "retry": "Try again"
+    "retry": "Try again",
+    "duplex": "Two-sided: front and back."
   },
   "publish": {
     "title": "Publish as the official template",
@@ -98,7 +99,10 @@
     "previous": "Previous",
     "next": "Next",
     "widest": "Show the longest name",
-    "alt": "Card preview"
+    "alt": "Card preview",
+    "front": "Front",
+    "back": "Back",
+    "altBack": "Card back preview"
   },
   "download": {
     "title": "Download",
@@ -113,7 +117,8 @@
     "pdfFile": "cards-{season}.pdf",
     "reportFile": "cards-excluded-{season}.csv",
     "failed": "The PDF could not be generated: {error}",
-    "doesNotFit": "{cols} × {rows} cards do not fit on an A4 sheet."
+    "doesNotFit": "{cols} × {rows} cards do not fit on an A4 sheet.",
+    "duplexHelp": "Print it double-sided, flipping on the long edge: each sheet of fronts is followed by its sheet of backs."
   },
   "report": {
     "row": "Row",

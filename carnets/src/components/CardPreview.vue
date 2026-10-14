@@ -1,18 +1,32 @@
 <template>
   <StepSection :title="t('preview.title')">
-    <div ref="frame" class="relative w-full overflow-hidden rounded-md bg-slate-100 shadow-inner" :style="{ aspectRatio }">
-      <canvas ref="canvas" class="block h-full w-full" role="img" :aria-label="t('preview.alt')" />
-      <!-- Línea de corte: lo que queda fuera es sangrado y se recorta. -->
+    <figure v-for="side in sides" :key="side" :class="side > 0 ? 'mt-3' : ''">
+      <figcaption v-if="sides.length > 1" class="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-500">
+        {{ side === 0 ? t('preview.front') : t('preview.back') }}
+      </figcaption>
       <div
-        v-if="template"
-        class="pointer-events-none absolute border border-dashed border-slate-500/70"
-        :style="trimStyle"
-        aria-hidden="true"
-      />
-      <p v-if="!fontFiles" class="absolute inset-0 flex items-center justify-center text-sm text-slate-500">
-        {{ t('loading') }}
-      </p>
-    </div>
+        :ref="(el) => (frames[side] = el as HTMLDivElement)"
+        class="relative w-full overflow-hidden rounded-md bg-slate-100 shadow-inner"
+        :style="{ aspectRatio }"
+      >
+        <canvas
+          :ref="(el) => (canvases[side] = el as HTMLCanvasElement)"
+          class="block h-full w-full"
+          role="img"
+          :aria-label="side === 0 ? t('preview.alt') : t('preview.altBack')"
+        />
+        <!-- Línea de corte: lo que queda fuera es sangrado y se recorta. -->
+        <div
+          v-if="template"
+          class="pointer-events-none absolute border border-dashed border-slate-500/70"
+          :style="trimStyle"
+          aria-hidden="true"
+        />
+        <p v-if="!fontFiles" class="absolute inset-0 flex items-center justify-center text-sm text-slate-500">
+          {{ t('loading') }}
+        </p>
+      </div>
+    </figure>
 
     <div class="mt-3 flex flex-wrap items-center justify-between gap-2 text-sm">
       <p class="text-slate-600" aria-live="polite">
@@ -42,7 +56,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { getDocument, GlobalWorkerOptions, RenderingCancelledException } from 'pdfjs-dist'
 import type { RenderTask } from 'pdfjs-dist'
@@ -57,8 +71,10 @@ GlobalWorkerOptions.workerSrc = workerUrl
 const { t } = useI18n()
 const { template, fontFiles, fonts, result, selected, staticValues } = useCarnets()
 
-const frame = ref<HTMLDivElement>()
-const canvas = ref<HTMLCanvasElement>()
+/** Un lienzo por cara: la cara (0) y, si la plantilla tiene dos caras, el reverso (1). */
+const sides = computed(() => (template.value?.sides === 2 ? [0, 1] : [0]))
+const frames: HTMLDivElement[] = []
+const canvases: HTMLCanvasElement[] = []
 
 const cards = computed(() => result.value?.valid ?? [])
 /** Sin socios cargados se enseña la plantilla con su texto de ejemplo. */
@@ -85,26 +101,36 @@ function showWidest() {
   if (index >= 0) selected.value = index
 }
 
-let task: RenderTask | null = null
+const tasks: (RenderTask | null)[] = []
 let generation = 0
 
-/** Genera el PDF de un carnet y lo dibuja: la previsualización es exactamente lo que se imprimirá. */
+/**
+ * Genera el PDF de un carnet y lo dibuja: la previsualización es exactamente lo que se imprimirá.
+ * Con dos caras, el PDF tiene dos páginas: la cara y el reverso.
+ */
 async function draw() {
   const current = ++generation
-  if (!template.value || !fontFiles.value || !card.value || !canvas.value || !frame.value) return
+  await nextTick()
+  if (!template.value || !fontFiles.value || !card.value) return
 
   const bytes = await buildPdf([card.value], template.value, { imposition: { kind: 'single' }, cropMarks: false }, fontFiles.value)
   const loading = getDocument({ data: bytes })
   try {
-    const page = await (await loading.promise).getPage(1)
-    if (current !== generation) return
-    const scale = (frame.value.clientWidth / page.getViewport({ scale: 1 }).width) * window.devicePixelRatio
-    const viewport = page.getViewport({ scale })
-    task?.cancel()
-    canvas.value.width = Math.round(viewport.width)
-    canvas.value.height = Math.round(viewport.height)
-    task = page.render({ canvas: canvas.value, viewport })
-    await task.promise
+    const pdf = await loading.promise
+    for (const side of sides.value) {
+      const frame = frames[side]
+      const canvas = canvases[side]
+      if (!frame || !canvas) continue
+      const page = await pdf.getPage(side + 1)
+      if (current !== generation) return
+      const scale = (frame.clientWidth / page.getViewport({ scale: 1 }).width) * window.devicePixelRatio
+      const viewport = page.getViewport({ scale })
+      tasks[side]?.cancel()
+      canvas.width = Math.round(viewport.width)
+      canvas.height = Math.round(viewport.height)
+      tasks[side] = page.render({ canvas, viewport })
+      await tasks[side].promise
+    }
   } catch (error) {
     if (!(error instanceof RenderingCancelledException)) throw error
   } finally {
@@ -116,8 +142,9 @@ watch([card, template, fontFiles], draw)
 
 let resize: ResizeObserver | null = null
 onMounted(() => {
+  // Todas las caras tienen el mismo ancho: basta con observar la primera
   resize = new ResizeObserver(() => draw())
-  if (frame.value) resize.observe(frame.value)
+  if (frames[0]) resize.observe(frames[0])
   draw()
 })
 onBeforeUnmount(() => resize?.disconnect())

@@ -15,6 +15,9 @@
         {{ t('download.cropMarks') }}
       </label>
     </fieldset>
+    <p v-if="template?.sides === 2" class="mt-3 rounded-md bg-slate-50 p-2 text-xs text-slate-600">
+      {{ t('download.duplexHelp') }}
+    </p>
 
     <button
       type="button"

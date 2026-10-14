@@ -3,7 +3,27 @@ import { parseTemplate, TemplateError } from '../src/pipeline'
 import type { DrawNode, GroupNode, ShapeNode, TextNode } from '../src/pipeline'
 import { readText } from './helpers'
 
-const svg = readText('templates/plantilla-carnet-cr80.svg')
+const svg = readText('fixtures/plantilla-una-cara.svg')
+
+describe('plantilla oficial 2026-27', () => {
+  const official = parseTemplate(readText('templates/plantilla-carnet-2026-27.svg'))
+
+  it('es de dos caras, CR80 con sangrado', () => {
+    expect(official).toMatchObject({ width: 91.6, height: 60, bleed: 3, sides: 2 })
+  })
+
+  it('tiene los tres campos: nombre, licencia y temporada (fija)', () => {
+    expect(official.fields.map((f) => [f.name, f.isStatic])).toEqual([
+      ['nombre', false],
+      ['num_federado', false],
+      ['temporada', true],
+    ])
+  })
+
+  it('usa pesos de Inter que la app tiene', () => {
+    expect(official.fontWeights.every((w) => [500, 600, 700, 800].includes(w))).toBe(true)
+  })
+})
 
 describe('parseTemplate', () => {
   const template = parseTemplate(svg)
@@ -92,6 +112,25 @@ describe('compilación del SVG', () => {
     const [css, inline] = drawing.children as ShapeNode[]
     expect(css.fill?.color).toEqual({ r: 0, g: 1, b: 0 })
     expect(inline.fill?.color).toEqual({ r: 0, g: 0, b: 1 })
+  })
+
+  it('lee el contorno de los textos; sin stroke, no tienen', () => {
+    const { drawing } = parseTemplate(
+      minimal('<text stroke="#ffffff" stroke-width="0.3" stroke-linejoin="round" fill="none">26-27</text><text>Nom</text>'),
+    )
+    const [outlined, plain] = texts(drawing)
+    expect(outlined.fill).toBeNull()
+    expect(outlined.stroke).toMatchObject({ color: { r: 1, g: 1, b: 1 }, width: 0.3, lineJoin: 'round' })
+    expect(plain.stroke).toBeNull()
+  })
+
+  it('con data-sides="2", el reverso va debajo: cada cara mide la mitad del viewBox', () => {
+    const duplex = parseTemplate('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 91.6 120" data-sides="2"/>')
+    expect(duplex).toMatchObject({ width: 91.6, height: 60, sides: 2 })
+    expect(template.sides).toBe(1)
+    expect(() => parseTemplate('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 91.6 60" data-sides="3"/>')).toThrow(
+      /data-sides/,
+    )
   })
 
   it('rechaza elementos que el render no sabe dibujar', () => {

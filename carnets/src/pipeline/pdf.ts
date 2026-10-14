@@ -1,6 +1,6 @@
 import fontkit from '@pdf-lib/fontkit'
 import { PDFDocument, rgb } from 'pdf-lib'
-import type { PDFFont } from 'pdf-lib'
+import type { PDFFont, PDFPage } from 'pdf-lib'
 import { PT_PER_MM, renderCard } from './render'
 import type { CardData, FontFiles, PdfOptions, Template } from './types'
 
@@ -133,14 +133,10 @@ export async function buildPdf(
   }
 
   const pt = (mm: number) => mm * PT_PER_MM
-  const perPage = layout.slots.length
-  for (let start = 0; start < cards.length; start += perPage) {
-    const page = doc.addPage([pt(layout.pageWidth), pt(layout.pageHeight)])
-    const pageHeight = pt(layout.pageHeight)
-    cards.slice(start, start + perPage).forEach((card, i) => {
-      const slot = layout.slots[i]
-      renderCard(page, card, template, fonts, { x: pt(slot.x), y: pageHeight - pt(slot.y) })
-    })
+  const pageHeight = pt(layout.pageHeight)
+  const sheet = (draw: (page: PDFPage) => void) => {
+    const page = doc.addPage([pt(layout.pageWidth), pageHeight])
+    draw(page)
     for (const mark of layout.marks) {
       page.drawLine({
         start: { x: pt(mark.x1), y: pageHeight - pt(mark.y1) },
@@ -148,6 +144,28 @@ export async function buildPdf(
         thickness: MARK_WIDTH_PT,
         color: rgb(0, 0, 0),
       })
+    }
+  }
+
+  const perPage = layout.slots.length
+  for (let start = 0; start < cards.length; start += perPage) {
+    const batch = cards.slice(start, start + perPage)
+    sheet((page) =>
+      batch.forEach((card, i) => {
+        const slot = layout.slots[i]
+        renderCard(page, card, template, fonts, { x: pt(slot.x), y: pageHeight - pt(slot.y) })
+      }),
+    )
+    // Con dos caras, detrás de cada hoja va la de reversos, en espejo: al imprimir a doble cara (volteo por el lado
+    // largo) cada reverso cae detrás de su carnet. El bloque está centrado, así que las marcas coinciden.
+    if (template.sides === 2) {
+      sheet((page) =>
+        batch.forEach((card, i) => {
+          const slot = layout.slots[i]
+          const x = layout.pageWidth - slot.x - template.width
+          renderCard(page, card, template, fonts, { x: pt(x), y: pageHeight - pt(slot.y) }, 1)
+        }),
+      )
     }
   }
   return doc.save()

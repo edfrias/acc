@@ -25,10 +25,12 @@ import {
   setLineWidth,
   setStrokingRgbColor,
   setTextMatrix,
+  setTextRenderingMode,
   showText,
+  TextRenderingMode,
 } from 'pdf-lib'
 import type { PDFFont, PDFPage } from 'pdf-lib'
-import type { CardData, DrawNode, Geometry, GroupNode, ShapeNode, Template, TextNode } from './types'
+import type { CardData, DrawNode, Geometry, GroupNode, ShapeNode, StrokePaint, Template, TextNode } from './types'
 
 export const PT_PER_MM = 72 / 25.4
 
@@ -39,8 +41,9 @@ export type EmbeddedFonts = ReadonlyMap<number, PDFFont>
 const KAPPA = 0.5522847498
 
 /**
- * Dibuja un carnet en `page`. `origin` es la esquina superior izquierda del carnet (con sangrado), en pt.
+ * Dibuja una cara de un carnet en `page`. `origin` es la esquina superior izquierda del carnet (con sangrado), en pt.
  * El contenido se dibuja en coordenadas SVG (mm, y hacia abajo) gracias a una matriz que invierte el eje y.
+ * `side` 1 es el reverso, que en el SVG está debajo de la cara.
  */
 export function renderCard(
   page: PDFPage,
@@ -48,11 +51,22 @@ export function renderCard(
   template: Template,
   fonts: EmbeddedFonts,
   origin: { x: number; y: number },
+  side: 0 | 1 = 0,
 ): void {
+  const { width: w, height: h } = template
   const ops: PDFOperator[] = [
     pushGraphicsState(),
     concatTransformationMatrix(PT_PER_MM, 0, 0, -PT_PER_MM, origin.x, origin.y),
+    // Nada sale del carnet con su sangrado: ni sobre el vecino en la hoja ni, con dos caras, de una cara a la otra.
+    moveTo(0, 0),
+    lineTo(w, 0),
+    lineTo(w, h),
+    lineTo(0, h),
+    closePath(),
+    clip(),
+    endPath(),
   ]
+  if (side === 1) ops.push(concatTransformationMatrix(1, 0, 0, 1, 0, -h))
   drawGroup(resourcesFor(page, fonts), card, template.drawing, ops)
   ops.push(popGraphicsState())
   page.pushOperators(...ops)
@@ -82,15 +96,7 @@ function drawShape(res: PageResources, shape: ShapeNode, ops: PDFOperator[]): vo
   const alpha = res.opacity(fill?.opacity ?? 1, stroke?.opacity ?? 1)
   if (alpha) ops.push(setGraphicsState(alpha))
   if (fill) ops.push(setFillingRgbColor(fill.color.r, fill.color.g, fill.color.b))
-  if (stroke) {
-    ops.push(
-      setStrokingRgbColor(stroke.color.r, stroke.color.g, stroke.color.b),
-      setLineWidth(stroke.width),
-      setLineCap(LINE_CAPS[stroke.lineCap]),
-      setLineJoin(LINE_JOINS[stroke.lineJoin]),
-      setDashPattern(stroke.dash, 0),
-    )
-  }
+  if (stroke) ops.push(...strokeOps(stroke))
   ops.push(...geometryOps(shape.geometry))
   const evenOdd = shape.fillRule === 'evenodd'
   if (fill && stroke) ops.push(PDFOperator.of(evenOdd ? PDFOperatorNames.FillEvenOddAndStroke : PDFOperatorNames.FillNonZeroAndStroke))
@@ -102,18 +108,23 @@ function drawShape(res: PageResources, shape: ShapeNode, ops: PDFOperator[]): vo
 function drawText(res: PageResources, card: CardData, node: TextNode, ops: PDFOperator[]): void {
   const content = node.field === null ? node.content : (card.values[node.field] ?? '')
   const size = node.field === null ? node.fontSize : (card.fontSizes[node.field] ?? node.fontSize)
-  if (!node.fill || content === '') return
+  const { fill, stroke } = node
+  if ((!fill && !stroke) || content === '') return
 
   const font = res.font(node.fontWeight)
   const width = font.widthOfTextAtSize(content, size) + node.letterSpacing * [...content].length
   const x = node.anchor === 'middle' ? node.x - width / 2 : node.anchor === 'end' ? node.x - width : node.x
 
   ops.push(pushGraphicsState())
-  const alpha = res.opacity(node.fill.opacity, 1)
+  const alpha = res.opacity(fill?.opacity ?? 1, stroke?.opacity ?? 1)
   if (alpha) ops.push(setGraphicsState(alpha))
+  if (fill) ops.push(setFillingRgbColor(fill.color.r, fill.color.g, fill.color.b))
+  if (stroke) ops.push(...strokeOps(stroke))
   ops.push(
-    setFillingRgbColor(node.fill.color.r, node.fill.color.g, node.fill.color.b),
     beginText(),
+    setTextRenderingMode(
+      fill && stroke ? TextRenderingMode.FillAndOutline : stroke ? TextRenderingMode.Outline : TextRenderingMode.Fill,
+    ),
     setFontAndSize(res.fontKey(font), size),
     // El eje y ya está invertido: la matriz de texto lo vuelve a invertir para que las letras no salgan del revés.
     setTextMatrix(1, 0, 0, -1, x, node.y),
@@ -122,6 +133,16 @@ function drawText(res: PageResources, card: CardData, node: TextNode, ops: PDFOp
     endText(),
     popGraphicsState(),
   )
+}
+
+function strokeOps(stroke: StrokePaint): PDFOperator[] {
+  return [
+    setStrokingRgbColor(stroke.color.r, stroke.color.g, stroke.color.b),
+    setLineWidth(stroke.width),
+    setLineCap(LINE_CAPS[stroke.lineCap]),
+    setLineJoin(LINE_JOINS[stroke.lineJoin]),
+    setDashPattern(stroke.dash, 0),
+  ]
 }
 
 function geometryOps(geometry: Geometry): PDFOperator[] {

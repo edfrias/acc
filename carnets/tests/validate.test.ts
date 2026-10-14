@@ -3,7 +3,7 @@ import { loadFontSet, parseCsvBytes, parseTemplate, validate } from '../src/pipe
 import type { RawRow, ValidationConfig } from '../src/pipeline'
 import { readBytes, readText } from './helpers'
 
-const template = parseTemplate(readText('templates/plantilla-carnet-cr80.svg'))
+const template = parseTemplate(readText('fixtures/plantilla-una-cara.svg'))
 const fonts = loadFontSet({
   600: readBytes('fonts/Inter-SemiBold.ttf'),
   700: readBytes('fonts/Inter-Bold.ttf'),

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { isClubAccount } from '../src/app/club'
-import { defaultSeason, isSeason, nextSeason, suggestedSeason } from '../src/app/season'
+import { defaultSeason, isSeason, nextSeason, seasonLabel, suggestedSeason } from '../src/app/season'
 
 describe('isClubAccount', () => {
   it('acepta las cuentas verificadas del club', () => {
@@ -49,5 +49,12 @@ describe('suggestedSeason', () => {
 
   it('pasa de siglo', () => {
     expect(nextSeason('2099-00')).toBe('2100-01')
+  })
+})
+
+describe('seasonLabel', () => {
+  it('escribe la temporada entera, como en el carnet', () => {
+    expect(seasonLabel('2026-27')).toBe('2026-2027')
+    expect(seasonLabel('2099-00')).toBe('2099-2100')
   })
 })

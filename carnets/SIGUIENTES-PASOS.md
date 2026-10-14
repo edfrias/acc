@@ -50,7 +50,12 @@ sin tocar producción: `pnpm build:site` y `firebase hosting:channel:deploy prev
 
 ## 4. Fase 2 (CLAUDE.md § Fases)
 
-- Reverso con doble cara (hoja de reverso con columnas espejadas).
+- ~~Reverso con doble cara~~: hecho el 2026-10-14. Plantilla de dos caras (`data-sides="2"`, reverso debajo) y PDF con
+  la hoja de reversos en espejo detrás de cada hoja de anversos. **Confirmar con la copistería** que imprimen a
+  doble cara volteando por el lado largo y que el registro anverso/reverso les cuadra.
+- Plantilla 2026-27 elegida por la junta: diseño "Escut" con franja tricolor (`templates/plantilla-carnet-2026-27.svg`).
+  Antes de la tirada, una prueba impresa: el escudo de fondo está al 9 % de blanco sobre el azul y en papel puede
+  quedar más apagado que en pantalla (subirlo al 11-12 % si casi no se ve).
 - Guardar y cargar la configuración (mapeo, temporada, imposición) como JSON.
 - ~~Login y plantilla fuera del bundle~~: hecho en `feat/carnets` el 2026-10-14 (CLAUDE.md § Acceso y plantillas
   oficiales). Probado en local con los emuladores: cuenta de fuera rechazada, publicar, recargar y flujo completo.
@@ -58,7 +63,7 @@ sin tocar producción: `pnpm build:site` y `firebase hosting:channel:deploy prev
   1. Pantalla de consentimiento de OAuth en "Interna" (Google Cloud → Google Auth Platform → Público).
   2. `pnpm deploy:rules`: sin las reglas, la base de datos de producción está cerrada (modo producción).
   3. `pnpm run deploy` y publicar desde la app la plantilla de la temporada 2026-27
-     (`templates/plantilla-carnet-cr80.svg`): hasta entonces la app no tiene ninguna.
+     (`templates/plantilla-carnet-2026-27.svg`): hasta entonces la app no tiene ninguna.
   4. Probar el login real con una cuenta del club y con una de fuera.
 
 ## Cómo verificar antes de dar algo por hecho
