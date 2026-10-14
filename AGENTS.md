@@ -19,6 +19,8 @@ Desde la raíz:
   carnets se abre en http://localhost:3000/carnets/ (el servidor de la web lo redirige al de carnets)
 - `pnpm build:site`: los dos builds y el sitio completo en `dist/` (carnets en `dist/carnets/`), tal como se publica
 - `pnpm dev:carnets`, `pnpm build:carnets`, `pnpm test:carnets`: atajos a los scripts de `carnets/`
+- `pnpm emulators`: emuladores de Firebase (Auth y Firestore) para carnets en local; necesitan Java 21.
+  `pnpm test:rules`: tests de `firestore.rules` (arranca el emulador solo)
 
 También puedes ejecutar `pnpm <script>` dentro de `carnets/`.
 
@@ -45,6 +47,7 @@ Comandos (desde la raíz):
 - **No despliegues sin permiso explícito.** `pnpm run deploy` publica en producción la web y el generador de carnets
   (`arquerscastelldefels.com/carnets/`): es un único sitio de Firebase, así que siempre van juntos.
   Ojo: con `run`. `pnpm deploy` a secas es un comando de pnpm que no tiene nada que ver.
+  Las reglas de Firestore (`firestore.rules`, del login de carnets) van aparte: `pnpm deploy:rules`, también con permiso.
 - **Datos de socios:** nunca subas CSV reales ni datos personales al repo ni a servicios externos.
   Los ficheros de prueba de `carnets/fixtures/` usan datos inventados.
 - **Commits** con Conventional Commits (`feat:`, `fix:`, `chore:`…), como el historial existente.

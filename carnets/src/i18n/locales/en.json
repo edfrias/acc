@@ -8,14 +8,41 @@
     "label": "Language"
   },
   "loading": "Loading…",
+  "auth": {
+    "title": "Board access",
+    "intro": "Sign in with your club account ({'@'}{domain}).",
+    "signIn": "Sign in with Google",
+    "signOut": "Sign out",
+    "popupBlocked": "The browser blocked the sign-in window. Allow pop-ups for this page and try again.",
+    "failed": "Could not sign in. Please try again.",
+    "notClub": "The account {email} is not a club account. Sign in with your {'@'}{domain} account."
+  },
   "template": {
     "title": "Template",
-    "official": "Official club template",
+    "official": "Official template for the {season} season",
     "custom": "Loaded template: {name}",
-    "change": "Load another template (SVG)",
+    "change": "Try a template from a file (SVG)",
     "restore": "Back to the official template",
     "invalid": "The template is not valid",
-    "fields": "Fields: {list}"
+    "fields": "Fields: {list}",
+    "season": "Season",
+    "fromFile": "Template from file",
+    "uploaded": "Published by {email} on {date}",
+    "none": "No official template has been published yet. Load the template SVG and publish it for the season.",
+    "loadFailed": "The official templates could not be loaded.",
+    "retry": "Try again"
+  },
+  "publish": {
+    "title": "Publish as the official template",
+    "help": "The whole board will use it to generate that season's cards. Check the preview before publishing it.",
+    "season": "Season",
+    "publish": "Publish for {season}",
+    "replace": "Replace the {season} one",
+    "publishing": "Publishing…",
+    "badSeason": "Write the season as 2026-27.",
+    "replaceWarning": "The {season} season already has an official template: this one will replace it.",
+    "failed": "The template could not be published. Please try again.",
+    "done": "The official template for the {season} season has been published."
   },
   "csv": {
     "title": "Member list",

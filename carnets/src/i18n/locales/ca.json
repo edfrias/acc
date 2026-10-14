@@ -8,14 +8,41 @@
     "label": "Idioma"
   },
   "loading": "Carregant…",
+  "auth": {
+    "title": "Accés de la junta",
+    "intro": "Entra amb el teu compte del club ({'@'}{domain}).",
+    "signIn": "Entrar amb Google",
+    "signOut": "Sortir",
+    "popupBlocked": "El navegador ha bloquejat la finestra d'inici de sessió. Permet les finestres emergents per a aquesta pàgina i torna-ho a provar.",
+    "failed": "No s'ha pogut iniciar la sessió. Torna-ho a provar.",
+    "notClub": "El compte {email} no és del club. Entra amb el teu compte {'@'}{domain}."
+  },
   "template": {
     "title": "Plantilla",
-    "official": "Plantilla oficial del club",
+    "official": "Plantilla oficial de la temporada {season}",
     "custom": "Plantilla carregada: {name}",
-    "change": "Carregar una altra plantilla (SVG)",
+    "change": "Provar una plantilla des de fitxer (SVG)",
     "restore": "Tornar a la plantilla oficial",
     "invalid": "La plantilla no és vàlida",
-    "fields": "Camps: {list}"
+    "fields": "Camps: {list}",
+    "season": "Temporada",
+    "fromFile": "Plantilla de fitxer",
+    "uploaded": "Publicada per {email} el {date}",
+    "none": "Encara no hi ha cap plantilla oficial publicada. Carrega l'SVG de la plantilla i publica-la per a la temporada.",
+    "loadFailed": "No s'han pogut carregar les plantilles oficials.",
+    "retry": "Tornar-ho a provar"
+  },
+  "publish": {
+    "title": "Publicar com a plantilla oficial",
+    "help": "La farà servir tota la junta per generar els carnets d'aquesta temporada. Revisa la previsualització abans de publicar-la.",
+    "season": "Temporada",
+    "publish": "Publicar per a {season}",
+    "replace": "Substituir la de {season}",
+    "publishing": "Publicant…",
+    "badSeason": "Escriu la temporada amb el format 2026-27.",
+    "replaceWarning": "La temporada {season} ja té una plantilla oficial: es substituirà per aquesta.",
+    "failed": "No s'ha pogut publicar la plantilla. Torna-ho a provar.",
+    "done": "S'ha publicat la plantilla oficial de la temporada {season}."
   },
   "csv": {
     "title": "Llista de socis",

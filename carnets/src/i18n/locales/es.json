@@ -8,14 +8,41 @@
     "label": "Idioma"
   },
   "loading": "Cargando…",
+  "auth": {
+    "title": "Acceso de la junta",
+    "intro": "Entra con tu cuenta del club ({'@'}{domain}).",
+    "signIn": "Entrar con Google",
+    "signOut": "Salir",
+    "popupBlocked": "El navegador ha bloqueado la ventana de inicio de sesión. Permite las ventanas emergentes para esta página y vuelve a intentarlo.",
+    "failed": "No se ha podido iniciar la sesión. Vuelve a intentarlo.",
+    "notClub": "La cuenta {email} no es del club. Entra con tu cuenta {'@'}{domain}."
+  },
   "template": {
     "title": "Plantilla",
-    "official": "Plantilla oficial del club",
+    "official": "Plantilla oficial de la temporada {season}",
     "custom": "Plantilla cargada: {name}",
-    "change": "Cargar otra plantilla (SVG)",
+    "change": "Probar una plantilla desde fichero (SVG)",
     "restore": "Volver a la plantilla oficial",
     "invalid": "La plantilla no es válida",
-    "fields": "Campos: {list}"
+    "fields": "Campos: {list}",
+    "season": "Temporada",
+    "fromFile": "Plantilla de fichero",
+    "uploaded": "Publicada por {email} el {date}",
+    "none": "Todavía no hay ninguna plantilla oficial publicada. Carga el SVG de la plantilla y publícala para la temporada.",
+    "loadFailed": "No se han podido cargar las plantillas oficiales.",
+    "retry": "Reintentar"
+  },
+  "publish": {
+    "title": "Publicar como plantilla oficial",
+    "help": "La usará toda la junta para generar los carnets de esa temporada. Revisa la previsualización antes de publicarla.",
+    "season": "Temporada",
+    "publish": "Publicar para {season}",
+    "replace": "Sustituir la de {season}",
+    "publishing": "Publicando…",
+    "badSeason": "Escribe la temporada con el formato 2026-27.",
+    "replaceWarning": "La temporada {season} ya tiene una plantilla oficial: se sustituirá por esta.",
+    "failed": "No se ha podido publicar la plantilla. Vuelve a intentarlo.",
+    "done": "Se ha publicado la plantilla oficial de la temporada {season}."
   },
   "csv": {
     "title": "Lista de socios",

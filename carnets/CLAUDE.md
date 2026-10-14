@@ -12,6 +12,7 @@ Usuarios: miembros de la junta del club. No necesariamente con perfil técnico.
 
 - **Todo en el navegador.** Los datos de los socios nunca se suben a ningún servidor
   (ni Firestore ni Storage). El CSV se procesa en cliente y desaparece al cerrar la pestaña. Evita problemas de RGPD.
+  En Firestore solo están las plantillas oficiales (ver § Acceso y plantillas oficiales).
 - **Lo que se previsualiza es lo que se imprime.** La previsualización y el PDF final usan la misma función de render.
 - **Procesado parcial.** Una fila inválida nunca bloquea el lote: se generan los carnets válidos y se informa de los rechazados.
 - **Sin ataduras a herramientas de diseño.** El formato de plantilla es SVG; cualquier herramienta que exporte SVG sirve.
@@ -27,6 +28,8 @@ Usuarios: miembros de la junta del club. No necesariamente con perfil técnico.
 - Interfaz con el aspecto de la web del club: misma cabecera que su `NavBar.vue` (logo, nombre en Montserrat),
   Inter y Montserrat servidas desde el bundle con `@fontsource` (nada de Google Fonts: la app no pide nada a terceros)
 - Tests: Vitest con entorno jsdom
+- Firebase (SDK `firebase`): Auth con Google y Firestore para las plantillas oficiales. Plan gratuito (Spark) siempre:
+  nada que pida el plan Blaze (Storage, Functions)
 
 Subproyecto independiente dentro del repo de la web: miembro del workspace de pnpm de la raíz, con su propio
 `package.json`. Se usa `pnpm` (nunca `npm`); las dependencias se instalan con `pnpm install` desde la raíz.
@@ -38,20 +41,25 @@ Desde la raíz: `pnpm dev:carnets`, `pnpm test:carnets`, `pnpm build:carnets`, o
 - `src/pipeline/`: `types.ts` (tipos), `template.ts`, `csv.ts`, `validate.ts`, `fonts.ts` (medición con fontkit),
   `render.ts` (un carnet sobre pdf-lib), `pdf.ts` (imposición y marcas), `report.ts`; `index.ts` lo reexporta todo
 - `src/pipeline/svg/`: compilador de la plantilla (`compile.ts`), estilos y CSS (`style.ts`), trazados (`path.ts`)
-- `src/app/`: estado de la interfaz (`useCarnets.ts`) y lógica pura de la UI: temporada por defecto,
+- `src/app/`: estado de la interfaz (`useCarnets.ts`), sesión (`useSession.ts`), acceso a Firestore
+  (`officialTemplates.ts`) y lógica pura de la UI: temporadas (`season.ts`), cuentas del club (`club.ts`),
   asignación automática de columnas, carnet de ejemplo, nombre más largo
+- `src/firebase.ts`: configuración de Firebase; en desarrollo se conecta siempre a los emuladores
 - `src/components/`: un componente por paso (plantilla, CSV, columnas, revisión, previsualización, descarga)
 - `src/i18n/`: configuración y `locales/{ca,es,en}.json`. Todo texto visible va en los tres idiomas
 - `public/favicon.ico`: el mismo que la web
 - `src/assets/logotipo-acc.svg`: copia de `public/assets/svg/logotipo-acc.svg` de la web, para la cabecera.
   Si cambia el logo de la web, hay que volver a copiarlo (y el de la plantilla, ver más abajo)
-- `templates/`: plantilla de referencia (fuera de `public/`, no se publica)
+- `templates/`: plantilla de referencia, para los tests y como punto de partida de cada temporada.
+  No va en el bundle: la app usa las plantillas oficiales de Firestore
 - `fonts/`: Inter 4.1 en TTF estático (Medium, SemiBold, Bold, ExtraBold) + licencia OFL
 - `fixtures/`: CSV de prueba, generados con `pnpm fixtures` (`scripts/make-fixtures.mjs`).
   No se editan a mano: el de Latin-1 se corrompería al guardarlo en UTF-8.
   `socios.csv` y `socios-latin1.csv` cubren los casos límite de los tests; `socios-ejemplo.csv` es una lista
   normal de 30 socios inventados para probar la app en local (`pnpm dev` y cargarlo en el paso 2).
-- `tests/`: tests de Vitest (`*.test.ts`), con su propio `tsconfig.test.json` (tipos de Node)
+- `tests/`: tests de Vitest (`*.test.ts`), con su propio `tsconfig.test.json` (tipos de Node).
+  `tests/rules/`: tests de `firestore.rules` (raíz del repo) contra el emulador, con `pnpm test:rules`
+  (`vitest.rules.config.ts`); `pnpm test` no los incluye
 - `scripts/pdf-to-png.mjs`: rasteriza un PDF a PNG (`node scripts/pdf-to-png.mjs fichero.pdf 150`).
   Úsalo para revisar a ojo cualquier cambio en la plantilla o en el render.
 
@@ -155,8 +163,24 @@ La UI muestra un resumen ("48 válidos, 2 con avisos, 3 excluidos") con la tabla
 - Mismo origen que la web: comparten `localStorage`, incluida la clave `locale` (el idioma elegido en una vale para la otra).
 - Cabecera `X-Robots-Tag: noindex, nofollow` para `/carnets/**` y meta `robots` en `index.html`.
   No hay `robots.txt` propio: los buscadores solo leen el de la raíz del dominio.
-- Fase posterior: Firebase Auth (Google) con lista de correos de la junta, y la plantilla oficial
-  servida desde Firebase Storage con reglas de acceso (no en el bundle). Dejar la arquitectura preparada.
+
+## Acceso y plantillas oficiales
+
+- **Login con Google** (Firebase Auth, popup). Solo cuentas `@arquerscastelldefels.com`: las tiene solo la junta.
+  Tres capas: la pantalla de consentimiento de OAuth en "Interna" (el proyecto cuelga de la organización de
+  Workspace del club, así que Google no deja entrar a cuentas de fuera), la app cierra la sesión de cualquier otra
+  cuenta (`isClubAccount`) y, la que cuenta de verdad, las reglas de Firestore.
+- **Una plantilla oficial por temporada** en Firestore: colección `plantilles`, id = temporada (`2026-27`),
+  campos `svg`, `uploadedBy`, `uploadedAt`. La junta prepara cada año una plantilla nueva: la prueba en la app
+  desde fichero y la publica desde el mismo paso 1 (se propone la temporada en curso o, si ya tiene, la siguiente).
+  Al entrar se abre la de la temporada en curso (o la más reciente) y su temporada rellena el campo `temporada`.
+- **`firestore.rules`** (raíz): leer y publicar solo con cuenta de Google del club verificada; temporada con formato
+  válido; autor = quien publica; fecha del servidor; solo esos tres campos; SVG de hasta 500 000 caracteres.
+  Borrar, nunca desde la app (desde la consola de Firebase). El resto de la base de datos, cerrado.
+- **Local**: `pnpm emulators` (raíz; necesita Java 21, instalado con Temurin) levanta los emuladores de Auth y
+  Firestore, y `pnpm dev` se conecta a ellos: nunca toca producción. El emulador tiene su propio selector de
+  cuentas falsas. La base de datos del emulador empieza vacía: hay que publicar una plantilla.
+- **Despliegue de las reglas**: `pnpm deploy:rules` (raíz), aparte del de hosting. Pide confirmación antes.
 
 ## Fases
 
@@ -171,7 +195,7 @@ La UI muestra un resumen ("48 válidos, 2 con avisos, 3 excluidos") con la tabla
 **Fase 2**
 - Reverso con doble cara
 - Guardar/cargar configuración como JSON
-- Login con lista de correos + plantilla en Storage
+- ~~Login + plantilla fuera del bundle~~ Hecho: Google + Firestore (§ Acceso y plantillas oficiales)
 
 **Fase 3 (si hace falta)**
 - Editor visual de posiciones

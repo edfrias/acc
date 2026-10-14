@@ -52,8 +52,14 @@ sin tocar producción: `pnpm build:site` y `firebase hosting:channel:deploy prev
 
 - Reverso con doble cara (hoja de reverso con columnas espejadas).
 - Guardar y cargar la configuración (mapeo, temporada, imposición) como JSON.
-- Login con Firebase Auth (Google) y lista de correos de la junta; plantilla oficial servida desde Storage
-  con reglas de acceso en lugar de ir en el bundle (`officialTemplateSvg` en `src/app/useCarnets.ts`).
+- ~~Login y plantilla fuera del bundle~~: hecho en `feat/carnets` el 2026-10-14 (CLAUDE.md § Acceso y plantillas
+  oficiales). Probado en local con los emuladores: cuenta de fuera rechazada, publicar, recargar y flujo completo.
+  **Falta para producción**, en este orden y con permiso:
+  1. Pantalla de consentimiento de OAuth en "Interna" (Google Cloud → Google Auth Platform → Público).
+  2. `pnpm deploy:rules`: sin las reglas, la base de datos de producción está cerrada (modo producción).
+  3. `pnpm run deploy` y publicar desde la app la plantilla de la temporada 2026-27
+     (`templates/plantilla-carnet-cr80.svg`): hasta entonces la app no tiene ninguna.
+  4. Probar el login real con una cuenta del club y con una de fuera.
 
 ## Cómo verificar antes de dar algo por hecho
 

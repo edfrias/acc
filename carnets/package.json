@@ -9,10 +9,12 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:rules": "firebase emulators:exec --only firestore --project demo-carnets \"vitest run --config vitest.rules.config.ts\"",
     "typecheck": "vue-tsc -b",
     "fixtures": "node scripts/make-fixtures.mjs"
   },
   "devDependencies": {
+    "@firebase/rules-unit-testing": "^6.0.0",
     "@napi-rs/canvas": "^1.0.11",
     "@tailwindcss/vite": "^4.3.3",
     "@types/node": "^24.19.2",
@@ -30,6 +32,7 @@
     "@fontsource/inter": "^5.3.0",
     "@fontsource/montserrat": "^5.3.0",
     "@pdf-lib/fontkit": "^1.1.1",
+    "firebase": "^13.0.0",
     "papaparse": "^5.7.0",
     "pdf-lib": "^1.17.1",
     "pdfjs-dist": "^6.4.299",

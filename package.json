@@ -12,8 +12,11 @@
     "build:site": "pnpm build && pnpm build:carnets && node scripts/copy-carnets.mjs",
     "build:carnets": "pnpm --filter acc-carnets build",
     "test:carnets": "pnpm --filter acc-carnets test",
+    "test:rules": "pnpm --filter acc-carnets test:rules",
+    "emulators": "firebase emulators:start --only auth,firestore --project arquers-club-castelldefels",
     "preview": "vite preview",
     "deploy": "pnpm build:site && firebase deploy --only hosting",
+    "deploy:rules": "firebase deploy --only firestore:rules",
     "firebase:login": "firebase login",
     "firebase:init": "firebase init hosting"
   },
