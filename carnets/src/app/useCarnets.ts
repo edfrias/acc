@@ -223,6 +223,14 @@ export function useCarnets() {
       justApproved.value = { season: target, name }
     },
 
+    /** Guarda en la biblioteca la plantilla cargada desde fichero, sin aprobarla, y la sigue usando desde allí. */
+    async saveTemplate(name: string, email: string) {
+      const id = await store.saveTemplate(name, templateSvg.value, email)
+      origin.value = { kind: 'library', id, name }
+      justApproved.value = null
+      await loadLibrary()
+    },
+
     /** Aprueba para `target` una plantilla de la biblioteca y pasa a usarla. */
     async approveTemplate(id: string, target: string, email: string) {
       const found = library.value.find((t) => t.id === id)

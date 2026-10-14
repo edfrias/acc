@@ -17,11 +17,18 @@ function make(design: string, season: string): string {
   return readFileSync(file, 'utf-8')
 }
 
+// Sin contar los saltos de línea: en Windows, git puede dejar las plantillas con CRLF al hacer checkout
+const lf = (text: string) => text.replaceAll('\r\n', '\n')
+
 describe('scripts/make-template.mjs', () => {
   it('regenera la plantilla oficial de 2026-27 tal cual', () => {
-    // Sin contar los saltos de línea: en Windows, git puede dejar la plantilla con CRLF al hacer checkout
-    const lf = (text: string) => text.replaceAll('\r\n', '\n')
     expect(lf(make('escut', '2026-27'))).toBe(lf(readText('templates/plantilla-carnet-2026-27.svg')))
+  })
+
+  it('regenera tal cual las propuestas guardadas en templates/propuestas', () => {
+    for (const design of ['diana', 'fletxa']) {
+      expect(lf(make(design, '2027-28'))).toBe(lf(readText(`templates/propuestas/${design}-2027-28.svg`)))
+    }
   })
 
   for (const design of ['escut', 'diana', 'fletxa']) {

@@ -90,8 +90,8 @@
     "missing": "The template assigned to {season} is no longer in the library. Approve another one for that season."
   },
   "publish": {
-    "title": "Save to the library and approve",
-    "help": "It is saved to the library and becomes the official template of the season for the whole board. Check the preview first.",
+    "title": "Save to the library",
+    "help": "Save it to the library for the whole board. You can approve it now as the official one for a season or just save it for later. Check the preview first.",
     "season": "Season",
     "publish": "Publish for {season}",
     "replace": "Replace the {season} one",
@@ -101,7 +101,8 @@
     "failed": "The template could not be published. Please try again.",
     "done": "\"{name}\" is the official template for the {season} season.",
     "name": "Name",
-    "badName": "Give it a name (80 characters at most)."
+    "badName": "Give it a name (80 characters at most).",
+    "saveOnly": "Only save to the library"
   },
   "library": {
     "uploaded": "Uploaded by {email} on {date}",

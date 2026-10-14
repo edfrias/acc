@@ -90,8 +90,8 @@
     "missing": "La plantilla asignada a {season} ya no está en la biblioteca. Aprueba otra para esa temporada."
   },
   "publish": {
-    "title": "Guardar en la biblioteca y aprobar",
-    "help": "Se guarda en la biblioteca y pasa a ser la oficial de la temporada para toda la junta. Revisa la previsualización antes.",
+    "title": "Guardar en la biblioteca",
+    "help": "Guárdala en la biblioteca para toda la junta. Puedes aprobarla ya como la oficial de una temporada o solo guardarla para más adelante. Revisa la previsualización antes.",
     "season": "Temporada",
     "publish": "Publicar para {season}",
     "replace": "Sustituir la de {season}",
@@ -101,7 +101,8 @@
     "failed": "No se ha podido publicar la plantilla. Vuelve a intentarlo.",
     "done": "«{name}» es la plantilla oficial de la temporada {season}.",
     "name": "Nombre",
-    "badName": "Ponle un nombre (como máximo 80 caracteres)."
+    "badName": "Ponle un nombre (como máximo 80 caracteres).",
+    "saveOnly": "Solo guardar en la biblioteca"
   },
   "library": {
     "uploaded": "Subida por {email} el {date}",

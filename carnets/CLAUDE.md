@@ -60,7 +60,9 @@ Desde la raíz: `pnpm dev:carnets`, `pnpm test:carnets`, `pnpm build:carnets`, o
 - `src/assets/logotipo-acc.svg`: copia de `public/assets/svg/logotipo-acc.svg` de la web, para la cabecera.
   Si cambia el logo de la web, hay que volver a copiarlo (y el de la plantilla, ver más abajo)
 - `templates/`: plantillas oficiales, una por temporada (`plantilla-carnet-2026-27.svg`: diseño "Escut", dos caras).
-  No van en el bundle: se publican desde la app en Firestore. Sirven de punto de partida para la siguiente
+  No van en el bundle: se publican desde la app en Firestore. Sirven de punto de partida para la siguiente.
+  `templates/propuestas/`: los otros dos diseños ("Diana" y "Fletxa") para 2027-28, para guardarlos en la biblioteca
+  sin aprobar. Llevan la temporada corta ("27-28") como marca de agua: para otra temporada, se regeneran con el script
 - `fonts/`: Inter 4.1 en TTF estático (Medium, SemiBold, Bold, ExtraBold) + licencia OFL
 - `fixtures/plantilla-una-cara.svg`: la primera plantilla de referencia, de una cara. Los tests miden contra ella
   (posiciones, estilos, texto de ejemplo): no la retoques sin revisar los tests
@@ -203,7 +205,7 @@ La UI muestra un resumen ("48 válidos, 2 con avisos, 3 excluidos") con la tabla
   - `temporades/{temporada}/historial/*`: cada aprobación (`template`, `name` en ese momento, quién y cuándo).
     Solo se añade, en la misma escritura que la asignación.
 - **Flujo**: la junta prepara cada año una plantilla; la prueba en la app desde fichero y desde el paso 1 la guarda
-  en la biblioteca con un nombre y la aprueba para una temporada (se propone la en curso o, si ya tiene, la siguiente;
+  en la biblioteca con un nombre y la aprueba para una temporada, o solo la guarda para más adelante (se propone la en curso o, si ya tiene, la siguiente;
   si la temporada ya tiene, se avisa de cuál sustituye). En la galería del paso 1: ver, usar, aprobar para una temporada,
   renombrar y eliminar (solo las que no están asignadas a ninguna temporada), el historial de la temporada elegida
   y quitar su asignación. Al entrar se abre la de la temporada en curso (o la más reciente) y su temporada rellena

@@ -4,6 +4,7 @@ import {
   doc,
   getDocs,
   serverTimestamp,
+  setDoc,
   Timestamp,
   updateDoc,
   writeBatch,
@@ -125,6 +126,13 @@ export async function publishTemplate(name: string, svg: string, season: string,
   batch.set(ref, { name, svg, uploadedBy: email, uploadedAt: serverTimestamp() })
   assign(batch, ref.id, name, season, email)
   await batch.commit()
+  return ref.id
+}
+
+/** Guarda una plantilla en la biblioteca sin aprobarla para ninguna temporada (una alternativa para más adelante). */
+export async function saveTemplate(name: string, svg: string, email: string): Promise<string> {
+  const ref = doc(collection(db, TEMPLATES))
+  await setDoc(ref, { name, svg, uploadedBy: email, uploadedAt: serverTimestamp() })
   return ref.id
 }
 
