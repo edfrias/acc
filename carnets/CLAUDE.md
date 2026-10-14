@@ -62,6 +62,10 @@ Desde la raíz: `pnpm dev:carnets`, `pnpm test:carnets`, `pnpm build:carnets`, o
 - `tests/`: tests de Vitest (`*.test.ts`), con su propio `tsconfig.test.json` (tipos de Node).
   `tests/rules/`: tests de `firestore.rules` (raíz del repo) contra el emulador, con `pnpm test:rules`
   (`vitest.rules.config.ts`); `pnpm test` no los incluye
+- `scripts/make-template.mjs`: genera una plantilla oficial de dos caras para una temporada
+  (`pnpm template [escut|diana|fletxa] [2027-28]`, deja `templates/plantilla-carnet-<temporada>.svg`). Son los tres
+  diseños de las propuestas de 2026-27: "Escut" se eligió para 2026-27; "Diana" y "Fletxa" quedan para otros años.
+  Con la plantilla nueva: probarla en la app desde fichero y publicarla. Un test comprueba que regenera la de 2026-27
 - `scripts/pdf-to-png.mjs`: rasteriza un PDF a PNG (`node scripts/pdf-to-png.mjs fichero.pdf 150`).
   Úsalo para revisar a ojo cualquier cambio en la plantilla o en el render.
 

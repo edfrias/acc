@@ -53,7 +53,9 @@ sin tocar producción: `pnpm build:site` y `firebase hosting:channel:deploy prev
 - ~~Reverso con doble cara~~: hecho el 2026-10-14. Plantilla de dos caras (`data-sides="2"`, reverso debajo) y PDF con
   la hoja de reversos en espejo detrás de cada hoja de anversos. **Confirmar con la copistería** que imprimen a
   doble cara volteando por el lado largo y que el registro anverso/reverso les cuadra.
-- Plantilla 2026-27 elegida por la junta: diseño "Escut" con franja tricolor (`templates/plantilla-carnet-2026-27.svg`).
+- Plantilla 2026-27 elegida por la junta: diseño "Escut" con franja tricolor (`templates/plantilla-carnet-2026-27.svg`),
+  generada con `pnpm template escut 2026-27`. Para otra temporada: `pnpm template <diseño> <temporada>`;
+  "Diana" (marino, diana) y "Fletxa" (blanco, franja vertical) quedan como alternativas.
   Antes de la tirada, una prueba impresa: el escudo de fondo está al 9 % de blanco sobre el azul y en papel puede
   quedar más apagado que en pantalla (subirlo al 11-12 % si casi no se ve).
 - Guardar y cargar la configuración (mapeo, temporada, imposición) como JSON.
