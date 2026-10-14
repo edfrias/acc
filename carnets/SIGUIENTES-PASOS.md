@@ -63,8 +63,10 @@ sin tocar producción: `pnpm build:site` y `firebase hosting:channel:deploy prev
   oficiales). Pantalla de OAuth en "Interna", reglas y app desplegadas; la junta confirmó que una cuenta de fuera
   no puede entrar y publicó la plantilla de 2026-27.
 - ~~Biblioteca de plantillas~~: hecha el 2026-10-14, probada en local con los emuladores (publicar, sustituir,
-  volver a una anterior, renombrar, eliminar, quitar la asignación e historial). **Falta para producción**, con permiso:
-  1. `pnpm deploy:rules` y `pnpm run deploy` a la vez: las reglas nuevas no aceptan la app anterior y al revés.
+  volver a una anterior, renombrar, eliminar, quitar la asignación e historial).
+- ~~Asistente de tres pasos con galería de plantillas~~: hecho el 2026-10-14 (CLAUDE.md § Estructura).
+- **En producción desde el 2026-10-14** (reglas y app). Falta hacerlo a mano en la app, con una cuenta del club:
+  1. Comprobar que se entra y que la galería carga.
   2. En la galería de plantillas (paso 1): la plantilla publicada antes de la biblioteca sale con el nombre "2026-27".
      Renombrarla (p. ej. "Escut") y aprobarla para 2026-27. Hasta entonces ninguna temporada tiene plantilla oficial.
      No hay que volver a subirla ni borrar nada: el documento antiguo ya es esa entrada de la biblioteca.
