@@ -134,13 +134,17 @@
   },
   "mapping": {
     "help": "Tell us which column of the file holds each piece of card data.",
-    "choose": "Choose a column",
-    "seasonHelp": "Printed on every card."
+    "choose": "Choose a column"
+  },
+  "cardSeason": {
+    "label": "Season of the cards",
+    "printed": "On the card: {list}. Approving the template for a season sets it automatically."
   },
   "fields": {
     "nombre": "Name",
     "num_federado": "License number",
-    "temporada": "Season"
+    "temporada": "Season",
+    "temporada_corta": "Season (short)"
   },
   "validation": {
     "waiting": "Load the member list and choose the columns to review it.",

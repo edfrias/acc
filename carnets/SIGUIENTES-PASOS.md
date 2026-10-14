@@ -70,8 +70,9 @@ sin tocar producción: `pnpm build:site` y `firebase hosting:channel:deploy prev
   2. En la galería de plantillas (paso 1): la plantilla publicada antes de la biblioteca sale con el nombre "2026-27".
      Renombrarla (p. ej. "Escut") y aprobarla para 2026-27. Hasta entonces ninguna temporada tiene plantilla oficial.
      No hay que volver a subirla ni borrar nada: el documento antiguo ya es esa entrada de la biblioteca.
-  3. Añadir a la galería las propuestas "Diana" y "Fletxa" (`templates/propuestas/*-2027-28.svg`) con
-     "Solo guardar en la biblioteca", sin aprobarlas. Probado en local con los emuladores.
+  3. Añadir a la galería las propuestas "Diana" y "Fletxa" (`templates/propuestas/diana.svg` y `fletxa.svg`) con
+     "Solo guardar en la biblioteca", sin aprobarlas. Valen para cualquier temporada (campo `temporada_corta`):
+     hace falta desplegar antes la app que conoce ese campo. Si ya se subieron las de "2027-28", eliminarlas.
 
 ## Cómo verificar antes de dar algo por hecho
 

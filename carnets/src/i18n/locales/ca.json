@@ -134,13 +134,17 @@
   },
   "mapping": {
     "help": "Indica quina columna del fitxer correspon a cada dada del carnet.",
-    "choose": "Tria una columna",
-    "seasonHelp": "Surt a tots els carnets."
+    "choose": "Tria una columna"
+  },
+  "cardSeason": {
+    "label": "Temporada dels carnets",
+    "printed": "Al carnet: {list}. En aprovar la plantilla per a una temporada es posa sola."
   },
   "fields": {
     "nombre": "Nom",
     "num_federado": "Número de federat",
-    "temporada": "Temporada"
+    "temporada": "Temporada",
+    "temporada_corta": "Temporada (curta)"
   },
   "validation": {
     "waiting": "Carrega la llista de socis i indica les columnes per revisar-la.",

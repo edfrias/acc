@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Plantilla de carnet de soci · Arquers Club Castelldefels · temporada 2027-28 (diseño "Fletxa")
+  Plantilla de carnet de soci · Arquers Club Castelldefels · temporada 2027-28 (diseño "Diana")
   Formato: CR80 (85,6 × 54 mm) + 3 mm de sangrado por lado = 91,6 × 60 mm por cara.
   Dos caras (data-sides="2"): la cara de y = 0 a 60 y el reverso debajo, de y = 60 a 120.
   Unidades: 1 unidad del viewBox = 1 mm. Corte en (3, 3) → (88,6, 57) en cada cara.
@@ -11,12 +11,13 @@
       data-max-width   ancho máximo en mm; si no cabe, se reduce la fuente
       data-min-size    tamaño mínimo de fuente en mm; si ni así cabe → error de validación
       data-static      "true": no viene del CSV; la app pone la temporada de la plantilla ("2027-2028")
+      temporada_corta  la temporada corta ("27-28"), también la pone la app: la plantilla vale para cualquier año
   - #guides : guías de corte y zona segura de las dos caras. La app las elimina antes de generar el PDF.
   - #logo, #revers-logo : logotipo oficial en trazados (de public/assets/svg/logotipo-acc.svg, la web).
     Los logos de una tinta (#escut, #revers-logo en "Escut") llevan líneas, texto y franjas en un color y lo amarillo
     y blanco del original en el del fondo. #logo-halo, si está, es la silueta blanca que hace de reborde.
   - Fuente: Inter (OFL); la app incrusta los TTF.
-  Generada con scripts/make-template.mjs (fletxa). Se puede retocar aquí directamente.
+  Generada con scripts/make-template.mjs (diana). Se puede retocar aquí directamente.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" width="91.6mm" height="120mm" viewBox="0 0 91.6 120" data-sides="2">
   <defs>
@@ -27,14 +28,13 @@
   <!-- ===== CARA ===== -->
   <g id="cara">
   <g id="background" clip-path="url(#clip-bleed)">
-    <rect width="91.6" height="60" fill="#ffffff"/>
-    <text x="87" y="28" font-size="19" font-weight="800" letter-spacing="-0.6" fill="#0099ff" opacity="0.13" text-anchor="end">27-28</text>
-    <rect width="9" height="20" fill="#fcdd09"/>
-    <rect y="20" width="9" height="20" fill="#d41519"/>
-    <rect y="40" width="9" height="20" fill="#0099ff"/>
-    <g fill="#d41519"><rect x="37" y="30.75" width="46" height="0.5"/><path d="M86 31 L81.8 29.2 L82.8 31 L81.8 32.8 Z"/><path d="M33 29 L37 29 L39 31 L35 31 Z" opacity="0.85"/><path d="M33 33 L37 33 L39 31 L35 31 Z" opacity="0.85"/></g>
+    <rect width="91.6" height="60" fill="#0b1f3a"/>
+    <circle cx="84" cy="14" r="34.00" fill="#13294b"/><circle cx="84" cy="14" r="27.00" fill="#16365f"/><circle cx="84" cy="14" r="20.00" fill="#1a4475"/><circle cx="84" cy="14" r="13.00" fill="#1f5590"/><circle cx="84" cy="14" r="6.00" fill="#fcdd09"/>
+    <text id="temporada-corta" data-field="temporada_corta" data-static="true" data-max-width="75" data-min-size="15.4" x="90" y="34" font-size="22" font-weight="800" letter-spacing="-0.6" fill="#ffffff" opacity="0.1" text-anchor="end">27-28</text>
+    <rect x="0.00" y="54.5" width="31.53" height="5.5" fill="#fcdd09"/><rect x="31.53" y="54.5" width="28.53" height="5.5" fill="#d41519"/><rect x="60.07" y="54.5" width="31.53" height="5.5" fill="#0099ff"/>
   </g>
-  <g id="logo" transform="translate(12.5 6) scale(0.082991)"><g
+  <circle cx="15.5" cy="14.2" r="9.4" fill="#ffffff"/>
+  <g id="logo" transform="translate(8.85 8.4) scale(0.071926)"><g
      id="logo-g1"
      transform="translate(-12.175169,-34.643852)"><g
        id="logo-g12"
@@ -110,23 +110,23 @@
          transform="matrix(0.26458333,0,0,0.26458333,1.2747676,17.460042)"
          aria-label="ARQUERS CLUB&#10;CASTELLDEFELS" /></g></g></g>
   <g id="fields">
-    <text x="12.5" y="39.3" font-size="2" font-weight="700" letter-spacing="0.3" fill="#64748b">NOM</text>
-    <text id="nombre" data-field="nombre" data-max-width="76" data-min-size="2.8" x="12.5" y="44.5" font-size="4.6" font-weight="800" fill="#0f172a">MARIA PUIG I SOLER</text>
-    <text x="12.5" y="48.3" font-size="2" font-weight="700" letter-spacing="0.3" fill="#64748b">LLICÈNCIA FEDERATIVA</text>
-    <text id="num_federado" data-field="num_federado" data-max-width="30" data-min-size="3" x="12.5" y="52.6" font-size="3.8" font-weight="700" fill="#0099ff">124692</text>
-    <text id="temporada" data-field="temporada" data-static="true" data-max-width="26" data-min-size="2.4" x="84.6" y="52.6" font-size="3.2" font-weight="700" fill="#0f172a" text-anchor="end">2027-2028</text>
+    <text x="7" y="39.3" font-size="2" font-weight="700" letter-spacing="0.3" fill="#8aa0bd">NOM</text>
+    <text id="nombre" data-field="nombre" data-max-width="76" data-min-size="2.8" x="7" y="44.5" font-size="4.6" font-weight="800" fill="#ffffff">MARIA PUIG I SOLER</text>
+    <text x="7" y="48.3" font-size="2" font-weight="700" letter-spacing="0.3" fill="#8aa0bd">LLICÈNCIA FEDERATIVA</text>
+    <text id="num_federado" data-field="num_federado" data-max-width="30" data-min-size="3" x="7" y="52.6" font-size="3.8" font-weight="700" fill="#fcdd09">124692</text>
+    <text id="temporada" data-field="temporada" data-static="true" data-max-width="26" data-min-size="2.4" x="84.6" y="52.6" font-size="3.2" font-weight="700" fill="#fcdd09" text-anchor="end">2027-2028</text>
   </g>
   </g>
 
   <!-- ===== REVERS (debajo de la cara) ===== -->
   <g id="revers" transform="translate(0 60)">
   <g id="revers-background" clip-path="url(#revers-clip-bleed)">
-    <rect width="91.6" height="60" fill="#ffffff"/>
-    <rect x="85.1" width="6.5" height="20" fill="#fcdd09"/>
-    <rect x="85.1" y="20" width="6.5" height="20" fill="#d41519"/>
-    <rect x="85.1" y="40" width="6.5" height="20" fill="#0099ff"/>
+    <rect width="91.6" height="60" fill="#0b1f3a"/>
+    <circle cx="18" cy="30" r="30.60" fill="#13294b"/><circle cx="18" cy="30" r="24.30" fill="#16365f"/><circle cx="18" cy="30" r="18.00" fill="#1a4475"/><circle cx="18" cy="30" r="11.70" fill="#1f5590"/><circle cx="18" cy="30" r="5.40" fill="#fcdd09"/>
+    <rect x="0.00" y="54.5" width="31.53" height="5.5" fill="#0099ff"/><rect x="31.53" y="54.5" width="28.53" height="5.5" fill="#d41519"/><rect x="60.07" y="54.5" width="31.53" height="5.5" fill="#fcdd09"/>
   </g>
-  <g id="revers-logo" transform="translate(7 7) scale(0.132786)"><g
+  <circle cx="18" cy="30" r="12.5" fill="#ffffff"/>
+  <g id="revers-logo" transform="translate(9.06 22.38) scale(0.096823)"><g
      id="revers-logo-g1"
      transform="translate(-12.175169,-34.643852)"><g
        id="revers-logo-g12"
@@ -202,18 +202,18 @@
          transform="matrix(0.26458333,0,0,0.26458333,1.2747676,17.460042)"
          aria-label="ARQUERS CLUB&#10;CASTELLDEFELS" /></g></g></g>
   <g id="revers-contact">
-    <text x="33" y="11" font-size="2.75" font-weight="800" letter-spacing="0.1" fill="#0f172a">ARQUERS CLUB CASTELLDEFELS</text>
-    <text x="33" y="16" font-size="1.6" font-weight="700" letter-spacing="0.3" fill="#64748b">ADREÇA</text>
-    <text x="33" y="18.9" font-size="2.3" font-weight="500" fill="#0f172a">Canal Olímpic de Catalunya</text>
-    <text x="33" y="21.8" font-size="2.3" font-weight="500" fill="#0f172a">Av. de Castelldefels, 0</text>
-    <text x="33" y="24.7" font-size="2.3" font-weight="500" fill="#0f172a">08860 Castelldefels (Barcelona)</text>
-    <text x="33" y="28.7" font-size="1.6" font-weight="700" letter-spacing="0.3" fill="#64748b">WHATSAPP</text>
-    <text x="33" y="31.6" font-size="2.3" font-weight="500" fill="#0f172a">+34 606 750 639 · +34 666 941 845</text>
-    <text x="33" y="35.6" font-size="1.6" font-weight="700" letter-spacing="0.3" fill="#64748b">CORREU</text>
-    <text x="33" y="38.5" font-size="2.3" font-weight="500" fill="#0f172a">secretaria@arquerscastelldefels.com</text>
-    <text x="33" y="41.4" font-size="2.3" font-weight="500" fill="#0f172a">junta@arquerscastelldefels.com</text>
-    <text x="33" y="45.4" font-size="1.6" font-weight="700" letter-spacing="0.3" fill="#64748b">INSTAGRAM</text>
-    <text x="33" y="48.3" font-size="2.3" font-weight="500" fill="#0f172a">@arquersclubc</text>
+    <text x="36" y="11" font-size="2.75" font-weight="800" letter-spacing="0.1" fill="#fcdd09">ARQUERS CLUB CASTELLDEFELS</text>
+    <text x="36" y="16" font-size="1.6" font-weight="700" letter-spacing="0.3" fill="#8aa0bd">ADREÇA</text>
+    <text x="36" y="18.9" font-size="2.3" font-weight="500" fill="#ffffff">Canal Olímpic de Catalunya</text>
+    <text x="36" y="21.8" font-size="2.3" font-weight="500" fill="#ffffff">Av. de Castelldefels, 0</text>
+    <text x="36" y="24.7" font-size="2.3" font-weight="500" fill="#ffffff">08860 Castelldefels (Barcelona)</text>
+    <text x="36" y="28.7" font-size="1.6" font-weight="700" letter-spacing="0.3" fill="#8aa0bd">WHATSAPP</text>
+    <text x="36" y="31.6" font-size="2.3" font-weight="500" fill="#ffffff">+34 606 750 639 · +34 666 941 845</text>
+    <text x="36" y="35.6" font-size="1.6" font-weight="700" letter-spacing="0.3" fill="#8aa0bd">CORREU</text>
+    <text x="36" y="38.5" font-size="2.3" font-weight="500" fill="#ffffff">secretaria@arquerscastelldefels.com</text>
+    <text x="36" y="41.4" font-size="2.3" font-weight="500" fill="#ffffff">junta@arquerscastelldefels.com</text>
+    <text x="36" y="45.4" font-size="1.6" font-weight="700" letter-spacing="0.3" fill="#8aa0bd">INSTAGRAM</text>
+    <text x="36" y="48.3" font-size="2.3" font-weight="500" fill="#ffffff">@arquersclubc</text>
   </g>
   </g>
 

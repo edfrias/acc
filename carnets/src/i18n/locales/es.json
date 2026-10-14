@@ -134,13 +134,17 @@
   },
   "mapping": {
     "help": "Indica qué columna del fichero corresponde a cada dato del carnet.",
-    "choose": "Elige una columna",
-    "seasonHelp": "Aparece en todos los carnets."
+    "choose": "Elige una columna"
+  },
+  "cardSeason": {
+    "label": "Temporada de los carnets",
+    "printed": "En el carnet: {list}. Al aprobar la plantilla para una temporada se pone sola."
   },
   "fields": {
     "nombre": "Nombre",
     "num_federado": "Número de federado",
-    "temporada": "Temporada"
+    "temporada": "Temporada",
+    "temporada_corta": "Temporada (corta)"
   },
   "validation": {
     "waiting": "Carga la lista de socios e indica las columnas para revisarla.",

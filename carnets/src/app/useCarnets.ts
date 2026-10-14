@@ -5,7 +5,7 @@ import { validate } from '../pipeline'
 import { guessMapping, keepMapping } from './mapping'
 import * as store from './templateLibrary'
 import type { HistoryEntry, LibraryTemplate, SeasonAssignment } from './templateLibrary'
-import { currentSeason, defaultSeason, seasonLabel } from './season'
+import { currentSeason, defaultSeason, isSeasonField, seasonValues } from './season'
 import interMedium from '../../fonts/Inter-Medium.ttf?url'
 import interSemiBold from '../../fonts/Inter-SemiBold.ttf?url'
 import interBold from '../../fonts/Inter-Bold.ttf?url'
@@ -71,7 +71,12 @@ const csvError = ref<'empty' | 'unreadable' | null>(null)
 const mapping = ref<ColumnMapping>({})
 /** Carnet válido que se está previsualizando. */
 const selected = ref(0)
-const staticValues = ref<Record<string, string>>({ temporada: seasonLabel(currentSeason(new Date())) })
+/** Temporada de los carnets ("2026-27"). Rellena los campos de temporada de la plantilla (`SEASON_FIELDS`). */
+const cardSeason = ref(currentSeason(new Date()))
+/** Valores de los demás campos estáticos de la plantilla, que se escriben a mano en el paso 3. */
+const extraStatic = ref<Record<string, string>>({})
+/** Todos los campos estáticos: los escritos a mano y los de temporada, que salen de `cardSeason`. */
+const staticValues = computed(() => ({ ...extraStatic.value, ...seasonValues(cardSeason.value) }))
 
 const csvFields = computed(() => template.value?.fields.filter((f) => !f.isStatic) ?? [])
 const staticFields = computed(() => template.value?.fields.filter((f) => f.isStatic) ?? [])
@@ -110,8 +115,8 @@ function useTemplate(svg: string, from: TemplateOrigin): void {
     templateSvg.value = svg
     origin.value = from
     templateError.value = null
-    for (const field of parsed.fields.filter((f) => f.isStatic)) {
-      staticValues.value[field.name] ??= ''
+    for (const field of parsed.fields.filter((f) => f.isStatic && !isSeasonField(f.name))) {
+      extraStatic.value[field.name] ??= ''
     }
   } catch (error) {
     templateError.value = error instanceof Error ? error.message : String(error)
@@ -124,8 +129,8 @@ function useSeason(chosen: string): void {
   const official = library.value.find((t) => t.id === assignments.value.find((a) => a.season === chosen)?.template)
   if (!official) return
   useTemplate(official.svg, { kind: 'season' })
-  // La temporada del carnet es la de su plantilla, escrita entera: "2026-2027"
-  staticValues.value['temporada'] = seasonLabel(chosen)
+  // Los carnets son de la temporada de su plantilla oficial
+  cardSeason.value = chosen
 }
 
 /** Vuelve a leer la biblioteca. Con `select`, pasa a la plantilla oficial de esa temporada. */
@@ -186,6 +191,8 @@ export function useCarnets() {
     csvError,
     mapping,
     selected,
+    cardSeason,
+    extraStatic,
     staticValues,
     csvFields,
     staticFields,

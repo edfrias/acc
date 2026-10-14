@@ -81,6 +81,13 @@ function outlinedLogo(x, y, h, id, border = 0.6, color = '#ffffff') {
 
 // ---------- Piezas comunes ----------
 
+/**
+ * Temporada corta ("26-27") en grande, como marca de agua. Es un campo que rellena la app (temporada_corta):
+ * la misma plantilla sirve para cualquier temporada. `season` en el SVG es solo el texto de ejemplo.
+ */
+const shortSeasonField = (season, x, y, size, fill, opacity) =>
+  `<text id="temporada-corta" data-field="temporada_corta" data-static="true" data-max-width="${Math.round(size * 3.4)}" data-min-size="${Math.round(size * 7) / 10}" x="${x}" y="${y}" font-size="${size}" font-weight="800" letter-spacing="-0.6" fill="${fill}" opacity="${opacity}" text-anchor="end">${shortSeason(season)}</text>`
+
 /** Datos del socio en la cara. La temporada va abajo a la derecha o, con `seasonY`, a esa altura. */
 function fields(season, { name, number, label, seasonFill, x = 7, seasonY }) {
   return `  <g id="fields">
@@ -158,7 +165,7 @@ ${contact(36, { ink: '#ffffff', label: '#9cc9ef', title: YELLOW })}`,
   diana: {
     name: 'Diana',
     front: (season) => `${background(NAVY, `${target(84, 14)}
-    <text x="90" y="34" font-size="22" font-weight="800" letter-spacing="-0.6" fill="#ffffff" opacity="0.1" text-anchor="end">${shortSeason(season)}</text>
+    ${shortSeasonField(season, 90, 34, 22, '#ffffff', 0.1)}
     ${tricolor()}`)}
   <circle cx="15.5" cy="14.2" r="9.4" fill="#ffffff"/>
   ${logo(8.85, 8.4, 13, 'logo')}
@@ -173,7 +180,7 @@ ${contact(36, { ink: '#ffffff', label: '#8aa0bd', title: YELLOW })}`,
   // Blanco minimalista con franja vertical tricolor y una flecha bajo el "26-27".
   fletxa: {
     name: 'Fletxa',
-    front: (season) => `${background('#ffffff', `<text x="87" y="28" font-size="19" font-weight="800" letter-spacing="-0.6" fill="${BLUE}" opacity="0.13" text-anchor="end">${shortSeason(season)}</text>
+    front: (season) => `${background('#ffffff', `${shortSeasonField(season, 87, 28, 19, BLUE, 0.13)}
     <rect width="9" height="20" fill="${YELLOW}"/>
     <rect y="20" width="9" height="20" fill="${RED}"/>
     <rect y="40" width="9" height="20" fill="${BLUE}"/>
@@ -223,6 +230,7 @@ const prefixed = (content, prefix) =>
 export function makeTemplate(designKey, season) {
   const design = DESIGNS[designKey]
   if (!design) throw new Error(`Diseño desconocido: "${designKey}". Disponibles: ${Object.keys(DESIGNS).join(', ')}.`)
+  const front = design.front(season)
   return `<?xml version="1.0" encoding="UTF-8"?>
 <!--
   Plantilla de carnet de soci · Arquers Club Castelldefels · temporada ${season} (diseño "${design.name}")
@@ -236,7 +244,8 @@ export function makeTemplate(designKey, season) {
       data-max-width   ancho máximo en mm; si no cabe, se reduce la fuente
       data-min-size    tamaño mínimo de fuente en mm; si ni así cabe → error de validación
       data-static      "true": no viene del CSV; la app pone la temporada de la plantilla ("${seasonLabel(season)}")
-  - #guides : guías de corte y zona segura de las dos caras. La app las elimina antes de generar el PDF.
+${front.includes('data-field="temporada_corta"') ? `      temporada_corta  la temporada corta ("${shortSeason(season)}"), también la pone la app: la plantilla vale para cualquier año
+` : ''}  - #guides : guías de corte y zona segura de las dos caras. La app las elimina antes de generar el PDF.
   - #logo, #revers-logo : logotipo oficial en trazados (de public/assets/svg/logotipo-acc.svg, la web).
     Los logos de una tinta (#escut, #revers-logo en "Escut") llevan líneas, texto y franjas en un color y lo amarillo
     y blanco del original en el del fondo. #logo-halo, si está, es la silueta blanca que hace de reborde.
@@ -251,7 +260,7 @@ export function makeTemplate(designKey, season) {
 
   <!-- ===== CARA ===== -->
   <g id="cara">
-${design.front(season)}
+${front}
   </g>
 
   <!-- ===== REVERS (debajo de la cara) ===== -->

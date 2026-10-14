@@ -88,7 +88,7 @@
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { sampleCard } from '../app/cards'
-import { currentSeason, isSeason } from '../app/season'
+import { currentSeason, isSeason, seasonValues } from '../app/season'
 import { cleanName, NAME_MAX_LENGTH, seasonsOf } from '../app/templateLibrary'
 import type { LibraryTemplate } from '../app/templateLibrary'
 import { useCarnets } from '../app/useCarnets'
@@ -122,9 +122,9 @@ const parsed = computed<Template | null>(() => {
     return null
   }
 })
-/** La miniatura muestra el texto de ejemplo de la plantilla. */
-const sample = computed(() => (parsed.value ? sampleCard(parsed.value, {}) : undefined))
 const seasons = computed(() => seasonsOf(props.item.id, assignments.value))
+/** La miniatura muestra el texto de ejemplo, con la temporada para la que es oficial si lo es de alguna. */
+const sample = computed(() => (parsed.value ? sampleCard(parsed.value, seasons.value[0] ? seasonValues(seasons.value[0]) : {}) : undefined))
 const inUse = computed(() => templateId.value === props.item.id)
 
 /** Acción abierta en esta plantilla: solo una a la vez. */

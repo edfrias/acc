@@ -26,21 +26,21 @@
                 </button>
               </dd>
             </div>
-            <div v-for="field in staticFields" :key="field.name">
+            <div v-for="field in otherStatic" :key="field.name">
               <dt class="mb-1 font-medium text-slate-700">
                 <label :for="`static-${field.name}`">{{ fieldLabel(t, te, field.name) }}</label>
               </dt>
               <dd>
                 <input
                   :id="`static-${field.name}`"
-                  v-model="staticValues[field.name]"
+                  v-model="extraStatic[field.name]"
                   type="text"
                   class="w-full rounded-md border border-slate-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
-                <span v-if="field.name === 'temporada'" class="mt-1 block text-xs text-slate-500">{{ t('mapping.seasonHelp') }}</span>
               </dd>
             </div>
           </dl>
+          <CardSeasonField v-if="hasSeason" class="mt-4" />
 
           <p v-if="result" class="mt-4 text-sm text-slate-600">
             {{ t('card.summary', { valid: result.valid.length, rejected: result.rejected.length }) }}
@@ -66,15 +66,22 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { isSeasonField } from '../app/season'
 import { useCarnets } from '../app/useCarnets'
 import { fieldLabel } from '../i18n'
 import CardPreview from './CardPreview.vue'
+import CardSeasonField from './CardSeasonField.vue'
 import DownloadStep from './DownloadStep.vue'
 import StepSection from './StepSection.vue'
 
 const { t, te } = useI18n()
-const { step, template, csv, csvFields, staticFields, mapping, staticValues, result } = useCarnets()
+const { step, template, csv, csvFields, staticFields, mapping, extraStatic, result } = useCarnets()
+
+/** Los campos de temporada se rellenan solos con la temporada de los carnets; los demás se escriben aquí. */
+const hasSeason = computed(() => staticFields.value.some((f) => isSeasonField(f.name)))
+const otherStatic = computed(() => staticFields.value.filter((f) => !isSeasonField(f.name)))
 
 const linkButton =
   'rounded-md px-3 py-1.5 text-sm font-medium text-blue-700 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500'

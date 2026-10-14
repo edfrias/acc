@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { sampleCard, widestCard } from '../src/app/cards'
 import { guessMapping, keepMapping, normalizeHeader } from '../src/app/mapping'
 import { listMembers } from '../src/app/members'
-import { currentSeason } from '../src/app/season'
+import { currentSeason, seasonValues } from '../src/app/season'
 import { loadFontSet, parseCsvBytes, parseTemplate, validate } from '../src/pipeline'
 import { fontFiles, readBytes, readText } from './helpers'
 
@@ -40,6 +40,18 @@ describe('guessMapping', () => {
 
   it('no asigna los campos estáticos ni lo que no reconoce', () => {
     expect(guessMapping(template.fields, ['Temporada', 'Columna A'])).toEqual({})
+  })
+})
+
+describe('seasonValues', () => {
+  it('rellena los campos de temporada, entera y corta', () => {
+    expect(seasonValues('2027-28')).toEqual({ temporada: '2027-2028', temporada_corta: '27-28' })
+    expect(seasonValues('2099-00')).toEqual({ temporada: '2099-2100', temporada_corta: '99-00' })
+  })
+
+  it('sin una temporada válida no rellena nada (y la validación avisa de que falta)', () => {
+    expect(seasonValues('2027-2')).toEqual({})
+    expect(seasonValues('2027/28')).toEqual({})
   })
 })
 

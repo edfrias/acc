@@ -61,8 +61,8 @@ Desde la raíz: `pnpm dev:carnets`, `pnpm test:carnets`, `pnpm build:carnets`, o
   Si cambia el logo de la web, hay que volver a copiarlo (y el de la plantilla, ver más abajo)
 - `templates/`: plantillas oficiales, una por temporada (`plantilla-carnet-2026-27.svg`: diseño "Escut", dos caras).
   No van en el bundle: se publican desde la app en Firestore. Sirven de punto de partida para la siguiente.
-  `templates/propuestas/`: los otros dos diseños ("Diana" y "Fletxa") para 2027-28, para guardarlos en la biblioteca
-  sin aprobar. Llevan la temporada corta ("27-28") como marca de agua: para otra temporada, se regeneran con el script
+  `templates/propuestas/`: los otros dos diseños ("Diana" y "Fletxa"), para guardarlos en la biblioteca sin aprobar.
+  Valen para cualquier temporada: su marca de agua es el campo `temporada_corta`
 - `fonts/`: Inter 4.1 en TTF estático (Medium, SemiBold, Bold, ExtraBold) + licencia OFL
 - `fixtures/plantilla-una-cara.svg`: la primera plantilla de referencia, de una cara. Los tests miden contra ella
   (posiciones, estilos, texto de ejemplo): no la retoques sin revisar los tests
@@ -114,8 +114,12 @@ Plantilla oficial actual: `templates/plantilla-carnet-2026-27.svg` (dos caras).
   - `data-max-width`: ancho máximo en mm. Si el texto no cabe, se reduce la fuente.
   - `data-min-size`: tamaño mínimo en mm. Si ni así cabe → error de validación.
   - `text-anchor`: alineación.
-- `data-static="true"`: campo que no viene del CSV; se configura una vez en la app (p. ej. `temporada`).
-  La app rellena `temporada` con la de la plantilla oficial escrita entera: "2026-2027" (`seasonLabel`).
+- `data-static="true"`: campo que no viene del CSV; se configura una vez en la app.
+  **Campos de temporada** (`SEASON_FIELDS` en `src/app/season.ts`): la app los rellena sola con la temporada de los
+  carnets, así que ninguna plantilla queda atada a un año. `temporada` sale entera ("2026-2027") y `temporada_corta`
+  abreviada ("26-27", p. ej. para una marca de agua). La temporada de los carnets ("2026-27") es la de la plantilla
+  oficial elegida; se puede cambiar junto a la plantilla en uso (paso 1) o en el paso 3.
+  Los demás campos estáticos se escriben a mano en el paso 3.
 - `#guides`: guías de corte y zona segura, ocultas. La app las elimina antes de generar.
 - `#logo`: logotipo oficial, copiado de `public/assets/svg/logotipo-acc.svg` (el de la web) con los `id`
   prefijados con `logo-`. Si cambia el logo de la web, hay que volver a copiarlo en las plantillas.

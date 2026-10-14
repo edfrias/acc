@@ -78,6 +78,7 @@
             </p>
             <p class="text-slate-500">{{ t('template.fields', { list: fieldList }) }}</p>
           </div>
+          <CardSeasonField v-if="hasSeason" class="mb-3" />
           <CardCanvas :template="template" :card="sample" :font-files="fontFiles" trim />
         </template>
         <p v-else class="text-sm text-slate-500">{{ t('gallery.noneSelected') }}</p>
@@ -90,9 +91,11 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { sampleCard } from '../app/cards'
+import { isSeasonField } from '../app/season'
 import { useCarnets } from '../app/useCarnets'
 import { fieldLabel } from '../i18n'
 import CardCanvas from './CardCanvas.vue'
+import CardSeasonField from './CardSeasonField.vue'
 import FileDrop from './FileDrop.vue'
 import PublishTemplate from './PublishTemplate.vue'
 import SeasonHistory from './SeasonHistory.vue'
@@ -116,6 +119,8 @@ const {
   loadLibrary,
   loadTemplateFile,
 } = useCarnets()
+
+const hasSeason = computed(() => template.value?.fields.some((f) => f.isStatic && isSeasonField(f.name)) ?? false)
 
 /** La plantilla en uso con su texto de ejemplo y los campos estáticos ya configurados (la temporada). */
 const sample = computed(() => (template.value ? sampleCard(template.value, staticValues.value) : undefined))

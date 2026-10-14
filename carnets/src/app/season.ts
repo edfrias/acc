@@ -42,3 +42,27 @@ export function seasonLabel(season: string): string {
   const start = Number(season.slice(0, 4))
   return `${start}-${start + 1}`
 }
+
+/** Temporada corta, para marcas de agua y textos grandes: "2026-27" → "26-27". */
+export function shortSeasonLabel(season: string): string {
+  return season.slice(2)
+}
+
+/**
+ * Campos estáticos que la app rellena sola con la temporada de los carnets, y cómo se escribe en cada uno.
+ * Así una plantilla no queda atada a un año: la misma sirve para cualquier temporada.
+ */
+export const SEASON_FIELDS: Record<string, (season: string) => string> = {
+  temporada: seasonLabel,
+  temporada_corta: shortSeasonLabel,
+}
+
+export function isSeasonField(name: string): boolean {
+  return name in SEASON_FIELDS
+}
+
+/** Valores de los campos de temporada para `season`; vacío si no es una temporada válida. */
+export function seasonValues(season: string): Record<string, string> {
+  if (!isSeason(season)) return {}
+  return Object.fromEntries(Object.entries(SEASON_FIELDS).map(([field, format]) => [field, format(season)]))
+}
