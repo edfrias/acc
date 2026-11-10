@@ -68,7 +68,22 @@
               <p class="text-gray-600 mb-4">
                 {{ t('programs.courses.intermediate.description') }}
               </p>
-              <p class="text-sm font-medium text-blue-700 mb-4">{{ t('programs.courses.intermediate.teacher') }}</p>
+              <i18n-t keypath="programs.courses.intermediate.teacher" tag="p" class="text-sm font-medium text-blue-700 mb-4">
+                <template #instagram>
+                  <a
+                    href="https://www.instagram.com/vio.archery/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-0.5 underline underline-offset-4 hover:text-blue-900 transition-colors"
+                    :aria-label="t('programs.courses.intermediate.teacherInstagramAriaLabel')"
+                  >
+                    vio.archery
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                    </svg>
+                  </a>
+                </template>
+              </i18n-t>
               <div class="flex justify-center mb-6">
                 <img
                   src="/assets/images/violeta_nogueira_tecnico.jpeg"

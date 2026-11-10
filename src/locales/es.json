@@ -84,7 +84,8 @@
       "intermediate": {
         "title": "Curso Intermedio - Adultos",
         "description": "Consolidar y perfeccionar los fundamentos. Profundizando en las fases del tiro y en el uso correcto del material. Preparación física específica y nociones de psicología deportiva para mejorar la técnica, la coordinación, la estabilidad y la consistencia en la ejecución.",
-        "teacher": "Impartido por Violeta",
+        "teacher": "Impartido por Violeta ({instagram})",
+        "teacherInstagramAriaLabel": "Instagram de Violeta, vio.archery (se abre en una pestaña nueva)",
         "item1": "Análisis y revisión técnica",
         "item2": "Preparación física",
         "item3": "Psicología deportiva",
