@@ -85,15 +85,24 @@
                 </template>
               </i18n-t>
               <div class="flex justify-center mb-6">
-                <img
-                  src="/assets/images/violeta_nogueira_tecnico.jpeg"
-                  :alt="t('programs.courses.intermediate.photoAlt')"
-                  loading="lazy"
-                  decoding="async"
-                  width="160"
-                  height="160"
-                  class="w-32 h-32 sm:w-36 sm:h-36 lg:w-40 lg:h-40 max-w-[220px] rounded-full object-cover ring-4 ring-blue-50 shadow-sm"
-                />
+                <a
+                  href="https://www.instagram.com/vio.archery/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="group rounded-full"
+                  tabindex="-1"
+                  aria-hidden="true"
+                >
+                  <img
+                    src="/assets/images/violeta_nogueira_tecnico.jpeg"
+                    :alt="t('programs.courses.intermediate.photoAlt')"
+                    loading="lazy"
+                    decoding="async"
+                    width="160"
+                    height="160"
+                    class="w-32 h-32 sm:w-36 sm:h-36 lg:w-40 lg:h-40 max-w-[220px] rounded-full object-cover ring-4 ring-blue-50 shadow-sm group-hover:ring-blue-200 transition"
+                  />
+                </a>
               </div>
               <ul class="text-sm text-gray-600 space-y-2 mb-6">
                 <li class="flex items-center">
