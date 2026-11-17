@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { CsvError, parseCsv, parseCsvBytes } from '../src/pipeline'
+import { columnValue, CsvError, parseCsv, parseCsvBytes, parseTableBytes } from '../src/pipeline'
 import { readBytes } from './helpers'
 
 const utf8 = (text: string) => new TextEncoder().encode(text)
@@ -66,5 +66,52 @@ describe('parseCsv', () => {
   it('acepta un Blob', async () => {
     const csv = await parseCsv(new Blob(['nombre;num_federado\nAnna;1\n']))
     expect(csv.rows).toHaveLength(1)
+  })
+})
+
+describe('Excel y tablas HTML', () => {
+  describe('.xlsx con el nombre en dos columnas', async () => {
+    const table = await parseTableBytes(readBytes('fixtures/socios-nom-cognoms.xlsx'))
+
+    it('lee la primera hoja con sus cabeceras', () => {
+      expect(table).toMatchObject({ format: 'xlsx', sheet: 'Socis', delimiter: null })
+      expect(table.headers).toEqual(['Llicència', 'Nom', 'Cognoms'])
+    })
+
+    it('lee textos compartidos, en línea y números, y salta la fila vacía conservando el número de fila', () => {
+      expect(table.rows.map((r) => r.rowNumber)).toEqual([2, 3, 5, 6, 7])
+      expect(table.rows[0].data).toEqual({ Llicència: '125101', Nom: 'Marta', Cognoms: 'Casals Ribas' })
+      expect(table.rows[2].data.Nom).toBe('Berta')
+      expect(table.rows[3].data).toEqual({ Llicència: '125104', Nom: 'Iñaki', Cognoms: 'Muñoz Ibáñez' })
+    })
+
+    it('une nombre y apellidos', () => {
+      expect(columnValue(table.rows[4], ['Nom', 'Cognoms'])).toBe('Maria del Carme Puigdomènech i Sabaté')
+      expect(columnValue({ rowNumber: 2, data: { Nom: 'Anna', Cognoms: '' } }, ['Nom', 'Cognoms'])).toBe('Anna')
+    })
+  })
+
+  it('lee el falso .xls que en realidad es una tabla HTML', async () => {
+    const html = '<html><body><table><tr><th>Nombre</th><th>Licencia</th></tr><tr><td> Anna  Roca </td><td>124700</td></tr></table></body></html>'
+    const table = await parseTableBytes(utf8(html))
+    expect(table.format).toBe('html')
+    expect(table.headers).toEqual(['Nombre', 'Licencia'])
+    expect(table.rows).toEqual([{ rowNumber: 2, data: { Nombre: 'Anna Roca', Licencia: '124700' } }])
+  })
+
+  it('pide guardar como .xlsx o .csv el .xls binario antiguo', async () => {
+    const ole = new Uint8Array([0xd0, 0xcf, 0x11, 0xe0, 0xa1, 0xb1, 0x1a, 0xe1, 0, 0, 0, 0])
+    await expect(parseTableBytes(ole)).rejects.toMatchObject({ code: 'legacy-xls' })
+  })
+
+  it('rechaza un zip que no es un Excel', async () => {
+    // Zip vacío: solo el final del directorio central, sin entradas
+    const empty = new Uint8Array([0x50, 0x4b, 0x03, 0x04, ...new Array(18).fill(0)])
+    await expect(parseTableBytes(empty)).rejects.toMatchObject({ code: 'bad-xlsx' })
+  })
+
+  it('un CSV sigue siendo CSV', async () => {
+    const table = await parseTableBytes(readBytes('fixtures/socios.csv'))
+    expect(table).toMatchObject({ format: 'csv', delimiter: ';' })
   })
 })

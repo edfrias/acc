@@ -44,15 +44,31 @@ export class ImpositionError extends Error {
   }
 }
 
-/** Calcula dónde va cada carnet en la página y dónde van las marcas de corte. */
+/**
+ * Caras que van una al lado de la otra en cada hueco: 2 si la plantilla tiene reverso y se pide anverso y reverso
+ * juntos; si no, 1.
+ */
+export function facesAcross(template: Template, options: PdfOptions): 1 | 2 {
+  return template.sides === 2 && options.sides === 'side-by-side' ? 2 : 1
+}
+
+/**
+ * Calcula dónde va cada carnet en la página y dónde van las marcas de corte. Con anverso y reverso juntos, cada
+ * hueco es el par (el doble de ancho) y hay marcas para el corte de cada cara.
+ */
 export function impose(template: Template, options: PdfOptions): Layout {
-  const { width: w, height: h, bleed } = template
+  const { width: faceWidth, height: h, bleed } = template
+  const across = facesAcross(template, options)
+  const w = across * faceWidth
   const markSpace = options.cropMarks ? MARK_GAP_MM + MARK_LENGTH_MM : 0
+  /** Líneas de corte verticales de un hueco que empieza en `x`: las dos de cada cara. */
+  const cutsIn = (x: number) =>
+    Array.from({ length: across }, (_, f) => [x + f * faceWidth + bleed, x + (f + 1) * faceWidth - bleed]).flat()
 
   if (options.imposition.kind === 'single') {
     const margin = options.cropMarks ? markSpace + 2 : 0
     const layout: Layout = { pageWidth: w + 2 * margin, pageHeight: h + 2 * margin, slots: [{ x: margin, y: margin }], marks: [] }
-    if (options.cropMarks) layout.marks = cropMarks(layout, [margin + bleed, margin + w - bleed], [margin + bleed, margin + h - bleed], template)
+    if (options.cropMarks) layout.marks = cropMarks(layout, cutsIn(margin), [margin + bleed, margin + h - bleed], w, h)
     return layout
   }
 
@@ -82,9 +98,9 @@ export function impose(template: Template, options: PdfOptions): Layout {
   }
   const layout: Layout = { pageWidth: A4_MM.width, pageHeight: A4_MM.height, slots, marks: [] }
   if (options.cropMarks) {
-    const cutsX = Array.from({ length: cols }, (_, c) => [marginX + c * w + bleed, marginX + (c + 1) * w - bleed]).flat()
+    const cutsX = Array.from({ length: cols }, (_, c) => cutsIn(marginX + c * w)).flat()
     const cutsY = Array.from({ length: rows }, (_, r) => [marginY + r * h + bleed, marginY + (r + 1) * h - bleed]).flat()
-    layout.marks = cropMarks(layout, cutsX, cutsY, template)
+    layout.marks = cropMarks(layout, cutsX, cutsY, w, h)
   }
   return layout
 }
@@ -93,11 +109,11 @@ export function impose(template: Template, options: PdfOptions): Layout {
  * Marcas en el margen, fuera del bloque de carnets, alineadas con cada línea de corte.
  * Nunca dentro del bloque: se imprimirían sobre el sangrado del carnet vecino.
  */
-function cropMarks(layout: Layout, cutsX: number[], cutsY: number[], template: Template): Line[] {
+function cropMarks(layout: Layout, cutsX: number[], cutsY: number[], slotWidth: number, slotHeight: number): Line[] {
   const top = Math.min(...layout.slots.map((s) => s.y))
   const left = Math.min(...layout.slots.map((s) => s.x))
-  const bottom = Math.max(...layout.slots.map((s) => s.y)) + template.height
-  const right = Math.max(...layout.slots.map((s) => s.x)) + template.width
+  const bottom = Math.max(...layout.slots.map((s) => s.y)) + slotHeight
+  const right = Math.max(...layout.slots.map((s) => s.x)) + slotWidth
   const marks: Line[] = []
   for (const x of cutsX) {
     marks.push({ x1: x, y1: top - MARK_GAP_MM, x2: x, y2: top - MARK_GAP_MM - MARK_LENGTH_MM })
@@ -148,22 +164,37 @@ export async function buildPdf(
   }
 
   const perPage = layout.slots.length
-  for (let start = 0; start < cards.length; start += perPage) {
-    const batch = cards.slice(start, start + perPage)
-    sheet((page) =>
-      batch.forEach((card, i) => {
-        const slot = layout.slots[i]
-        renderCard(page, card, template, fonts, { x: pt(slot.x), y: pageHeight - pt(slot.y) })
-      }),
-    )
-    // Con dos caras, detrás de cada hoja va la de reversos, en espejo: al imprimir a doble cara (volteo por el lado
-    // largo) cada reverso cae detrás de su carnet. El bloque está centrado, así que las marcas coinciden.
-    if (template.sides === 2) {
+  const batches: CardData[][] = []
+  for (let start = 0; start < cards.length; start += perPage) batches.push(cards.slice(start, start + perPage))
+  const draw = (page: PDFPage, card: CardData, x: number, y: number, side: 0 | 1) =>
+    renderCard(page, card, template, fonts, { x: pt(x), y: pageHeight - pt(y) }, side)
+
+  if (facesAcross(template, options) === 2) {
+    // Anverso y reverso juntos: cada carnet ocupa su hueco con la cara a la izquierda y el reverso a la derecha
+    for (const batch of batches) {
       sheet((page) =>
         batch.forEach((card, i) => {
           const slot = layout.slots[i]
-          const x = layout.pageWidth - slot.x - template.width
-          renderCard(page, card, template, fonts, { x: pt(x), y: pageHeight - pt(slot.y) }, 1)
+          draw(page, card, slot.x, slot.y, 0)
+          draw(page, card, slot.x + template.width, slot.y, 1)
+        }),
+      )
+    }
+    return doc.save()
+  }
+
+  for (const batch of batches) {
+    sheet((page) => batch.forEach((card, i) => draw(page, card, layout.slots[i].x, layout.slots[i].y, 0)))
+  }
+  // Con dos caras, después de todos los anversos van todos los reversos, en el mismo orden de hojas y en espejo:
+  // la hoja n de reversos va detrás de la hoja n de anversos al imprimir a doble cara volteando por el lado largo.
+  // El bloque está centrado, así que las marcas coinciden.
+  if (template.sides === 2) {
+    for (const batch of batches) {
+      sheet((page) =>
+        batch.forEach((card, i) => {
+          const slot = layout.slots[i]
+          draw(page, card, layout.pageWidth - slot.x - template.width, slot.y, 1)
         }),
       )
     }

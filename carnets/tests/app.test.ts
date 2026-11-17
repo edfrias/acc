@@ -38,6 +38,23 @@ describe('guessMapping', () => {
     expect(guessMapping(template.fields, ['Nom del club', 'Nom', 'Llicència']).nombre).toBe('Nom')
   })
 
+  it('con el nombre y los apellidos en columnas separadas, los une', () => {
+    expect(guessMapping(template.fields, ['Llicència', 'Nom', 'Cognoms'])).toEqual({ nombre: ['Nom', 'Cognoms'], num_federado: 'Llicència' })
+    expect(guessMapping(template.fields, ['Nombre', 'Primer apellido', 'Segundo apellido', 'Licencia']).nombre).toEqual([
+      'Nombre',
+      'Primer apellido',
+      'Segundo apellido',
+    ])
+  })
+
+  it('prefiere la columna del nombre completo a nombre + apellidos', () => {
+    expect(guessMapping(template.fields, ['Nom', 'Cognoms', 'Nom complet', 'Llicència']).nombre).toBe('Nom complet')
+  })
+
+  it('no toma los apellidos por el nombre', () => {
+    expect(guessMapping(template.fields, ['Cognoms', 'Llicència']).nombre).toBeUndefined()
+  })
+
   it('no asigna los campos estáticos ni lo que no reconoce', () => {
     expect(guessMapping(template.fields, ['Temporada', 'Columna A'])).toEqual({})
   })

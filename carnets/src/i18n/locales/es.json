@@ -62,7 +62,14 @@
     "warning": "Aviso",
     "rejected": "Excluido",
     "seeCard": "Ver el carnet",
-    "noneInFilter": "Ningún socio en esta categoría."
+    "noneInFilter": "Ningún socio en esta categoría.",
+    "selectAll": "Seleccionar todos los carnets de la lista",
+    "selectRow": "Seleccionar la fila {row}",
+    "chosen": "{count} seleccionados",
+    "downloadChosen": "Descargar sus carnets",
+    "clearChosen": "Quitar la selección",
+    "downloadOne": "Descargar",
+    "downloadHelp": "Con las opciones de descarga del paso 3."
   },
   "card": {
     "title": "Campos del carnet",
@@ -124,17 +131,28 @@
     "failed": "No se ha podido completar la acción. Vuelve a intentarlo."
   },
   "csv": {
-    "drop": "Arrastra aquí el fichero CSV o haz clic para elegirlo",
+    "drop": "Arrastra aquí el fichero de socios (CSV o Excel) o haz clic para elegirlo",
     "replace": "Cambiar el fichero",
     "loaded": "{name}: {count} filas",
     "details": "Codificación {encoding} · separador «{delimiter}»",
     "empty": "El fichero está vacío.",
     "unreadable": "No se ha podido leer el fichero.",
-    "row": "Fila"
+    "row": "Fila",
+    "detailsExcel": "Excel · hoja «{sheet}»",
+    "detailsHtml": "Tabla HTML · codificación {encoding}",
+    "legacy-xls": "Es un Excel antiguo (.xls) que la app no sabe leer. Ábrelo en Excel y guárdalo como .xlsx o .csv.",
+    "bad-xlsx": "No se ha podido leer el fichero de Excel."
   },
   "mapping": {
     "help": "Indica qué columna del fichero corresponde a cada dato del carnet.",
-    "choose": "Elige una columna"
+    "choose": "Elige una columna",
+    "nameMode": "El nombre viene",
+    "nameFull": "En una columna (nombre completo)",
+    "nameSplit": "En columnas separadas (nombre y apellidos)",
+    "firstName": "Nombre",
+    "surname": "Apellidos",
+    "surname2": "Segundo apellido (opcional)",
+    "none": "Ninguna"
   },
   "cardSeason": {
     "label": "Temporada de los carnets",
@@ -189,7 +207,14 @@
     "reportFile": "carnets-excluidos-{season}.csv",
     "failed": "No se ha podido generar el PDF: {error}",
     "doesNotFit": "No caben {cols} × {rows} carnets en una hoja A4.",
-    "duplexHelp": "Imprímelo a doble cara, volteando por el lado largo: detrás de cada hoja de anversos va su hoja de reversos."
+    "duplexHelp": "Primero van todas las hojas de anversos y después todas las de reversos, en el mismo orden y en espejo: imprime los anversos, vuelve a poner el papel volteándolo por el lado largo e imprime los reversos.",
+    "sides": "Caras",
+    "separate": "Todos los anversos y después todos los reversos",
+    "sideBySide": "Anverso y reverso juntos, uno al lado del otro",
+    "gridPairs": "4 carnets por hoja A4 (anverso y reverso juntos)",
+    "sideBySideHelp": "Cada carnet ocupa el ancho de dos: el anverso a la izquierda y su reverso a la derecha. Se imprime a una cara.",
+    "chosenFile": "carnets-seleccion-{season}.pdf",
+    "oneFile": "carnet-{name}.pdf"
   },
   "report": {
     "row": "Fila",

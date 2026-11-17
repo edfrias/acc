@@ -110,9 +110,9 @@
          transform="matrix(0.26458333,0,0,0.26458333,1.2747676,17.460042)"
          aria-label="ARQUERS CLUB&#10;CASTELLDEFELS" /></g></g></g>
   <g id="fields">
-    <text x="7" y="39.3" font-size="2" font-weight="700" letter-spacing="0.3" fill="#8aa0bd">NOM</text>
+    <text x="7" y="39.3" font-size="2" font-weight="700" letter-spacing="0.3" fill="#8aa0bd">NOM / NOMBRE</text>
     <text id="nombre" data-field="nombre" data-max-width="76" data-min-size="2.8" x="7" y="44.5" font-size="4.6" font-weight="800" fill="#ffffff">MARIA PUIG I SOLER</text>
-    <text x="7" y="48.3" font-size="2" font-weight="700" letter-spacing="0.3" fill="#8aa0bd">LLICÈNCIA FEDERATIVA</text>
+    <text x="7" y="48.3" font-size="2" font-weight="700" letter-spacing="0.3" fill="#8aa0bd">LLICÈNCIA / LICENCIA</text>
     <text id="num_federado" data-field="num_federado" data-max-width="30" data-min-size="3" x="7" y="52.6" font-size="3.8" font-weight="700" fill="#fcdd09">124692</text>
     <text id="temporada" data-field="temporada" data-static="true" data-max-width="26" data-min-size="2.4" x="84.6" y="52.6" font-size="3.2" font-weight="700" fill="#fcdd09" text-anchor="end">2027-2028</text>
   </g>
@@ -203,13 +203,13 @@
          aria-label="ARQUERS CLUB&#10;CASTELLDEFELS" /></g></g></g>
   <g id="revers-contact">
     <text x="36" y="11" font-size="2.75" font-weight="800" letter-spacing="0.1" fill="#fcdd09">ARQUERS CLUB CASTELLDEFELS</text>
-    <text x="36" y="16" font-size="1.6" font-weight="700" letter-spacing="0.3" fill="#8aa0bd">ADREÇA</text>
+    <text x="36" y="16" font-size="1.6" font-weight="700" letter-spacing="0.3" fill="#8aa0bd">ADREÇA / DIRECCIÓN</text>
     <text x="36" y="18.9" font-size="2.3" font-weight="500" fill="#ffffff">Canal Olímpic de Catalunya</text>
     <text x="36" y="21.8" font-size="2.3" font-weight="500" fill="#ffffff">Av. de Castelldefels, 0</text>
     <text x="36" y="24.7" font-size="2.3" font-weight="500" fill="#ffffff">08860 Castelldefels (Barcelona)</text>
     <text x="36" y="28.7" font-size="1.6" font-weight="700" letter-spacing="0.3" fill="#8aa0bd">WHATSAPP</text>
     <text x="36" y="31.6" font-size="2.3" font-weight="500" fill="#ffffff">+34 606 750 639 · +34 666 941 845</text>
-    <text x="36" y="35.6" font-size="1.6" font-weight="700" letter-spacing="0.3" fill="#8aa0bd">CORREU</text>
+    <text x="36" y="35.6" font-size="1.6" font-weight="700" letter-spacing="0.3" fill="#8aa0bd">CORREU / CORREO</text>
     <text x="36" y="38.5" font-size="2.3" font-weight="500" fill="#ffffff">secretaria@arquerscastelldefels.com</text>
     <text x="36" y="41.4" font-size="2.3" font-weight="500" fill="#ffffff">junta@arquerscastelldefels.com</text>
     <text x="36" y="45.4" font-size="1.6" font-weight="700" letter-spacing="0.3" fill="#8aa0bd">INSTAGRAM</text>

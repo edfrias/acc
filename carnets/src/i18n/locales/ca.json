@@ -62,7 +62,14 @@
     "warning": "Avís",
     "rejected": "Exclòs",
     "seeCard": "Veure el carnet",
-    "noneInFilter": "Cap soci en aquesta categoria."
+    "noneInFilter": "Cap soci en aquesta categoria.",
+    "selectAll": "Seleccionar tots els carnets de la llista",
+    "selectRow": "Seleccionar la fila {row}",
+    "chosen": "{count} seleccionats",
+    "downloadChosen": "Descarregar els seus carnets",
+    "clearChosen": "Treure la selecció",
+    "downloadOne": "Descarregar",
+    "downloadHelp": "Amb les opcions de descàrrega del pas 3."
   },
   "card": {
     "title": "Camps del carnet",
@@ -124,17 +131,28 @@
     "failed": "No s'ha pogut completar l'acció. Torna-ho a provar."
   },
   "csv": {
-    "drop": "Arrossega aquí el fitxer CSV o fes clic per triar-lo",
+    "drop": "Arrossega aquí el fitxer de socis (CSV o Excel) o fes clic per triar-lo",
     "replace": "Canviar el fitxer",
     "loaded": "{name}: {count} files",
     "details": "Codificació {encoding} · separador «{delimiter}»",
     "empty": "El fitxer és buit.",
     "unreadable": "No s'ha pogut llegir el fitxer.",
-    "row": "Fila"
+    "row": "Fila",
+    "detailsExcel": "Excel · full «{sheet}»",
+    "detailsHtml": "Taula HTML · codificació {encoding}",
+    "legacy-xls": "És un Excel antic (.xls) que l'app no sap llegir. Obre'l amb l'Excel i desa'l com a .xlsx o .csv.",
+    "bad-xlsx": "No s'ha pogut llegir el fitxer d'Excel."
   },
   "mapping": {
     "help": "Indica quina columna del fitxer correspon a cada dada del carnet.",
-    "choose": "Tria una columna"
+    "choose": "Tria una columna",
+    "nameMode": "El nom ve",
+    "nameFull": "En una columna (nom complet)",
+    "nameSplit": "En columnes separades (nom i cognoms)",
+    "firstName": "Nom",
+    "surname": "Cognoms",
+    "surname2": "Segon cognom (opcional)",
+    "none": "Cap"
   },
   "cardSeason": {
     "label": "Temporada dels carnets",
@@ -189,7 +207,14 @@
     "reportFile": "carnets-exclosos-{season}.csv",
     "failed": "No s'ha pogut generar el PDF: {error}",
     "doesNotFit": "No hi caben {cols} × {rows} carnets en un full A4.",
-    "duplexHelp": "Imprimeix-lo a doble cara, girant pel costat llarg: darrere de cada full d'anversos hi ha el seu full de reversos."
+    "duplexHelp": "Primer van tots els fulls d'anversos i després tots els de reversos, en el mateix ordre i en mirall: imprimeix els anversos, torna a posar el paper girant-lo pel costat llarg i imprimeix els reversos.",
+    "sides": "Cares",
+    "separate": "Tots els anversos i després tots els reversos",
+    "sideBySide": "Anvers i revers junts, l'un al costat de l'altre",
+    "gridPairs": "4 carnets per full A4 (anvers i revers junts)",
+    "sideBySideHelp": "Cada carnet ocupa l'amplada de dos: l'anvers a l'esquerra i el seu revers a la dreta. S'imprimeix a una cara.",
+    "chosenFile": "carnets-seleccio-{season}.pdf",
+    "oneFile": "carnet-{name}.pdf"
   },
   "report": {
     "row": "Fila",

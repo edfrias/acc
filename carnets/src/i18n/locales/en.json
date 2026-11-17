@@ -62,7 +62,14 @@
     "warning": "Warning",
     "rejected": "Excluded",
     "seeCard": "See the card",
-    "noneInFilter": "No members in this category."
+    "noneInFilter": "No members in this category.",
+    "selectAll": "Select every card in the list",
+    "selectRow": "Select row {row}",
+    "chosen": "{count} selected",
+    "downloadChosen": "Download their cards",
+    "clearChosen": "Clear selection",
+    "downloadOne": "Download",
+    "downloadHelp": "With the download options from step 3."
   },
   "card": {
     "title": "Card fields",
@@ -124,17 +131,28 @@
     "failed": "The action could not be completed. Please try again."
   },
   "csv": {
-    "drop": "Drop the CSV file here or click to choose it",
+    "drop": "Drop the members file here (CSV or Excel) or click to choose it",
     "replace": "Change file",
     "loaded": "{name}: {count} rows",
     "details": "Encoding {encoding} · separator “{delimiter}”",
     "empty": "The file is empty.",
     "unreadable": "The file could not be read.",
-    "row": "Row"
+    "row": "Row",
+    "detailsExcel": "Excel · sheet “{sheet}”",
+    "detailsHtml": "HTML table · {encoding} encoding",
+    "legacy-xls": "This is an old Excel file (.xls) the app can't read. Open it in Excel and save it as .xlsx or .csv.",
+    "bad-xlsx": "The Excel file couldn't be read."
   },
   "mapping": {
     "help": "Tell us which column of the file holds each piece of card data.",
-    "choose": "Choose a column"
+    "choose": "Choose a column",
+    "nameMode": "The name comes",
+    "nameFull": "In one column (full name)",
+    "nameSplit": "In separate columns (first name and surnames)",
+    "firstName": "First name",
+    "surname": "Surnames",
+    "surname2": "Second surname (optional)",
+    "none": "None"
   },
   "cardSeason": {
     "label": "Season of the cards",
@@ -189,7 +207,14 @@
     "reportFile": "cards-excluded-{season}.csv",
     "failed": "The PDF could not be generated: {error}",
     "doesNotFit": "{cols} × {rows} cards do not fit on an A4 sheet.",
-    "duplexHelp": "Print it double-sided, flipping on the long edge: each sheet of fronts is followed by its sheet of backs."
+    "duplexHelp": "All the front sheets come first and then all the back sheets, in the same order and mirrored: print the fronts, put the paper back in flipped on the long edge and print the backs.",
+    "sides": "Sides",
+    "separate": "All fronts, then all backs",
+    "sideBySide": "Front and back together, side by side",
+    "gridPairs": "4 cards per A4 sheet (front and back together)",
+    "sideBySideHelp": "Each card takes the width of two: the front on the left and its back on the right. Print it single-sided.",
+    "chosenFile": "cards-selection-{season}.pdf",
+    "oneFile": "card-{name}.pdf"
   },
   "report": {
     "row": "Row",

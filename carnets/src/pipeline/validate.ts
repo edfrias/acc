@@ -60,6 +60,14 @@ export function validate(
   return { valid, warnings, rejected }
 }
 
+/** Valor de una o varias columnas (unidas con un espacio, sin dejar huecos por las vacías). */
+export function columnValue(row: RawRow, columns: string | string[]): string {
+  return (Array.isArray(columns) ? columns : [columns])
+    .map((column) => (row.data[column] ?? '').trim())
+    .filter((value) => value !== '')
+    .join(' ')
+}
+
 function checkRow(row: RawRow, template: Template, config: ValidationConfig, fonts: FontSet): RowCheck {
   const check: RowCheck = { row, values: {}, fontSizes: {}, errors: [], warnings: [] }
   const rowNumber = row.rowNumber
@@ -67,7 +75,7 @@ function checkRow(row: RawRow, template: Template, config: ValidationConfig, fon
   for (const field of template.fields) {
     let value = field.isStatic
       ? (config.staticValues[field.name] ?? '').trim()
-      : (row.data[config.mapping[field.name]] ?? '').trim()
+      : columnValue(row, config.mapping[field.name])
 
     const name = field.name
     if (value === '') {

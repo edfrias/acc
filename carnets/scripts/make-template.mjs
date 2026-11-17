@@ -91,19 +91,22 @@ const shortSeasonField = (season, x, y, size, fill, opacity) =>
 /** Datos del socio en la cara. La temporada va abajo a la derecha o, con `seasonY`, a esa altura. */
 function fields(season, { name, number, label, seasonFill, x = 7, seasonY }) {
   return `  <g id="fields">
-    <text x="${x}" y="39.3" font-size="2" font-weight="700" letter-spacing="0.3" fill="${label}">NOM</text>
+    <text x="${x}" y="39.3" font-size="2" font-weight="700" letter-spacing="0.3" fill="${label}">NOM / NOMBRE</text>
     <text id="nombre" data-field="nombre" data-max-width="76" data-min-size="2.8" x="${x}" y="44.5" font-size="4.6" font-weight="800" fill="${name}">MARIA PUIG I SOLER</text>
-    <text x="${x}" y="48.3" font-size="2" font-weight="700" letter-spacing="0.3" fill="${label}">LLICÈNCIA FEDERATIVA</text>
+    <text x="${x}" y="48.3" font-size="2" font-weight="700" letter-spacing="0.3" fill="${label}">LLICÈNCIA / LICENCIA</text>
     <text id="num_federado" data-field="num_federado" data-max-width="30" data-min-size="3" x="${x}" y="52.6" font-size="3.8" font-weight="700" fill="${number}">124692</text>
     <text id="temporada" data-field="temporada" data-static="true" data-max-width="26" data-min-size="2.4" x="84.6" y="${seasonY ?? 52.6}" font-size="3.2" font-weight="700" fill="${seasonFill}" text-anchor="end">${seasonLabel(season)}</text>
   </g>`
 }
 
-/** Datos de contacto del reverso: los mismos que en la web (src/locales y el pie de página). */
+/**
+ * Datos de contacto del reverso: los mismos que en la web (src/locales y el pie de página). Los títulos van en catalán
+ * y castellano, salvo los nombres propios (WhatsApp, Instagram).
+ */
 const CONTACT = [
-  ['ADREÇA', ['Canal Olímpic de Catalunya', 'Av. de Castelldefels, 0', '08860 Castelldefels (Barcelona)']],
+  ['ADREÇA / DIRECCIÓN', ['Canal Olímpic de Catalunya', 'Av. de Castelldefels, 0', '08860 Castelldefels (Barcelona)']],
   ['WHATSAPP', ['+34 606 750 639 · +34 666 941 845']],
-  ['CORREU', ['secretaria@arquerscastelldefels.com', 'junta@arquerscastelldefels.com']],
+  ['CORREU / CORREO', ['secretaria@arquerscastelldefels.com', 'junta@arquerscastelldefels.com']],
   ['INSTAGRAM', ['@arquersclubc']],
 ]
 

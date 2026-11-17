@@ -20,7 +20,7 @@
             <div v-for="field in csvFields" :key="field.name">
               <dt class="mb-1 font-medium text-slate-700">{{ fieldLabel(t, te, field.name) }}</dt>
               <dd class="flex flex-wrap items-center gap-2 rounded-md bg-slate-50 px-3 py-2 text-slate-600">
-                <span>{{ mapping[field.name] ? t('card.fromColumn', { column: mapping[field.name] }) : t('card.noColumn') }}</span>
+                <span>{{ columnsOf(field.name) ? t('card.fromColumn', { column: columnsOf(field.name) }) : t('card.noColumn') }}</span>
                 <button type="button" class="text-xs font-medium text-blue-700 underline hover:text-blue-900" @click="step = 2">
                   {{ t('card.change') }}
                 </button>
@@ -69,6 +69,7 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { isSeasonField } from '../app/season'
+import { mappedColumns } from '../app/mapping'
 import { useCarnets } from '../app/useCarnets'
 import { fieldLabel } from '../i18n'
 import CardPreview from './CardPreview.vue'
@@ -78,6 +79,8 @@ import StepSection from './StepSection.vue'
 
 const { t, te } = useI18n()
 const { step, template, csv, csvFields, staticFields, mapping, extraStatic, result } = useCarnets()
+/** Columna asignada al campo; si son varias (nombre + apellidos), unidas con «+». */
+const columnsOf = (field: string) => mappedColumns(mapping.value[field]).join(' + ')
 
 /** Los campos de temporada se rellenan solos con la temporada de los carnets; los demás se escriben aquí. */
 const hasSeason = computed(() => staticFields.value.some((f) => isSeasonField(f.name)))

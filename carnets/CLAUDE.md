@@ -3,7 +3,7 @@
 ## Qué es
 
 App web para generar los carnets de soci de los federados de cada temporada.
-Entrada: una plantilla de diseño + un CSV de socios. Salida: un PDF listo para enviar a la copistería
+Entrada: una plantilla de diseño + la lista de socios (CSV o Excel). Salida: un PDF listo para enviar a la copistería
 y un CSV con las filas que no se pudieron procesar.
 
 Usuarios: miembros de la junta del club. No necesariamente con perfil técnico.
@@ -22,7 +22,8 @@ Usuarios: miembros de la junta del club. No necesariamente con perfil técnico.
 - Vite + TypeScript + Vue 3 + Tailwind 4 (igual que la web del club)
 - vue-i18n: catalán (por defecto), castellano (idioma de reserva) e inglés, como la web
 - pdf.js (`pdfjs-dist`) para la previsualización
-- PapaParse para el CSV
+- PapaParse para el CSV; Excel (.xlsx) sin dependencias en `src/pipeline/xlsx.ts`: descomprime el zip con
+  `DecompressionStream` y lee el XML con `DOMParser`
 - pdf-lib + @pdf-lib/fontkit para generar el PDF e incrustar fuentes
 - Fuente de la plantilla: Inter (OFL), incrustada como TTF (un fichero estático por peso, en `fonts/`)
 - Interfaz con el aspecto de la web del club: misma cabecera que su `NavBar.vue` (logo, nombre en Montserrat),
@@ -39,7 +40,7 @@ Desde la raíz: `pnpm dev:carnets`, `pnpm test:carnets`, `pnpm build:carnets`, o
 ## Estructura
 
 - `src/pipeline/`: `types.ts` (tipos), `template.ts`, `csv.ts`, `validate.ts`, `fonts.ts` (medición con fontkit),
-  `render.ts` (un carnet sobre pdf-lib), `pdf.ts` (imposición y marcas), `report.ts`; `index.ts` lo reexporta todo
+  `render.ts` (un carnet sobre pdf-lib), `pdf.ts` (imposición y marcas), `report.ts`, `xlsx.ts` (lector de Excel); `index.ts` lo reexporta todo
 - `src/pipeline/svg/`: compilador de la plantilla (`compile.ts`), estilos y CSS (`style.ts`), trazados (`path.ts`)
 - `src/app/`: estado de la interfaz (`useCarnets.ts`), sesión (`useSession.ts`), acceso a Firestore
   (`templateLibrary.ts`) y lógica pura de la UI: temporadas (`season.ts`), cuentas del club (`club.ts`),
@@ -50,7 +51,9 @@ Desde la raíz: `pnpm dev:carnets`, `pnpm test:carnets`, `pnpm build:carnets`, o
   en cualquier orden sin perder nada: el estado vive en `useCarnets.ts`, no en los pasos.
   1. `TemplatesStep.vue`: galería de plantillas (`TemplateCard.vue`: miniatura, usar, aprobar, renombrar, eliminar),
      añadir una desde fichero y publicarla (`PublishTemplate.vue`) y el historial de cada temporada (`SeasonHistory.vue`)
-  2. `MembersStep.vue`: CSV, columnas y lista de socios con su estado e incidencias, filtrable
+  2. `MembersStep.vue`: CSV o Excel, columnas (el nombre en una columna o en nombre + apellidos) y lista de socios
+     con su estado e incidencias, filtrable, con selección múltiple para descargar solo esos carnets o uno suelto
+     (con las opciones de descarga del paso 3; `src/app/download.ts` lo comparten los dos pasos)
   3. `CardStep.vue`: campos del carnet, previsualización (`CardPreview.vue`) y descarga (`DownloadStep.vue`)
 
   Al cambiar de plantilla se conservan los socios y las columnas: se puede volver al paso 1, cambiarla e ir
@@ -70,6 +73,7 @@ Desde la raíz: `pnpm dev:carnets`, `pnpm test:carnets`, `pnpm build:carnets`, o
   No se editan a mano: el de Latin-1 se corrompería al guardarlo en UTF-8.
   `socios.csv` y `socios-latin1.csv` cubren los casos límite de los tests; `socios-ejemplo.csv` es una lista
   normal de 30 socios inventados para probar la app en local (`pnpm dev` y cargarlo en el paso 2).
+  `socios-nom-cognoms.xlsx`: Excel con el nombre en dos columnas ("Nom" + "Cognoms") y la licencia como número.
 - `tests/`: tests de Vitest (`*.test.ts`), con su propio `tsconfig.test.json` (tipos de Node).
   `tests/rules/`: tests de `firestore.rules` (raíz del repo) contra el emulador, con `pnpm test:rules`
   (`vitest.rules.config.ts`); `pnpm test` no los incluye
@@ -84,7 +88,7 @@ Desde la raíz: `pnpm dev:carnets`, `pnpm test:carnets`, `pnpm build:carnets`, o
 
 ```ts
 parseTemplate(svg)                        → Template        // compila el SVG; campos; sin #guides ni <metadata>
-parseCsv(file)                            → ParsedCsv       // detección de separador y codificación
+parseCsv(file)                            → ParsedCsv       // CSV (separador y codificación), .xlsx o tabla HTML
 validate(rows, template, config, fonts)   → { valid, warnings, rejected }  // config: mapeo + campos estáticos
 renderCard(page, card, template, fonts, origin) → dibuja un carnet en una página PDF
 buildPdf(valid, template, options, fontFiles)   → Uint8Array                // imposición, sangrado, marcas
@@ -142,10 +146,19 @@ Plantilla oficial actual: `templates/plantilla-carnet-2026-27.svg` (dos caras).
 - Solo Inter: `font-family` se ignora. Hace falta un TTF por cada `font-weight` que use la plantilla.
 - Formato alternativo futuro: fondo PNG/PDF + posiciones de campos en JSON, para quien diseñe en herramientas sin buen soporte SVG.
 
-## CSV
+## Lista de socios (CSV o Excel)
 
-Columnas: nombre completo y número de federado. Posibles cabeceras en catalán ("Nom", "Llicència"),
-así que hay mapeo de columnas en la UI.
+Columnas: nombre y número de federado. Posibles cabeceras en catalán ("Nom", "Llicència"),
+así que hay mapeo de columnas en la UI. El nombre puede venir en una columna (nombre completo) o en varias
+(nombre + apellidos, o nombre + primer y segundo apellido): en `ColumnMapping` un campo puede llevar una lista de
+columnas, que `validate` une con un espacio. `guessMapping` lo detecta solo si no hay columna de nombre completo.
+
+El formato se decide por el contenido, no por la extensión:
+- `.xlsx`: primera hoja con datos; número de fila = el de la hoja. Los números se leen sin formato (la licencia sale entera).
+- `.xls` que en realidad es una tabla HTML (lo que exportan muchas webs): se lee la primera `<table>`.
+- `.xls` binario antiguo (Excel 97-2003): no se lee; se pide guardarlo como .xlsx o .csv (`CsvError` `legacy-xls`).
+  Si hiciera falta, la opción es SheetJS, que se instala desde su CDN y no desde npm.
+- Lo demás, CSV:
 
 - Detectar separador (`;` o `,`).
 - Leer como UTF-8; si aparecen caracteres de reemplazo (`�`), reintentar como Windows-1252.
@@ -178,8 +191,12 @@ La UI muestra un resumen ("48 válidos, 2 con avisos, 3 excluidos") con la tabla
   - Los carnets se tocan por el sangrado; las marcas de corte van en el margen, fuera del bloque,
     alineadas con cada línea de corte (dentro caerían sobre el sangrado del vecino).
   - Color en RGB. Si la copistería pide CMYK, hay que convertir los colores en el render.
-  - Doble cara: detrás de cada hoja de anversos, su hoja de reversos con las columnas en espejo, para imprimir
-    a doble cara volteando por el lado largo. Un carnet por página: anverso y reverso seguidos.
+  - Dos caras (`PdfOptions.sides`), a elegir en el paso 3:
+    - `separate` (por defecto): primero todas las hojas de anversos y después todas las de reversos, en el mismo
+      orden y con las columnas en espejo: la hoja n de reversos cae detrás de la n de anversos volteando por el lado
+      largo. Un carnet por página: todos los anversos y después todos los reversos.
+    - `side-by-side`: cada anverso con su reverso a la derecha, en un hueco del doble de ancho y con marcas para el
+      corte de cada cara. En A4 caben 4 (1 × 4). Se imprime a una cara.
 - **CSV de rechazados**: número de fila, datos originales, motivo. Se puede corregir y volver a subir solo ese fichero.
 
 ## Alojamiento
@@ -246,7 +263,6 @@ La UI muestra un resumen ("48 válidos, 2 con avisos, 3 excluidos") con la tabla
 ## Pendiente de decidir
 
 - Formato que prefiere la copistería (tamaño, imposición, marcas de corte)
-- Si el nombre llega en una columna o en dos ("Nom" + "Cognoms"). De momento se asume una
 
 ## Casos de prueba obligatorios
 

@@ -1,8 +1,8 @@
 import { computed, ref, shallowRef, watch } from 'vue'
 import { CsvError, loadFontSet, parseCsv, parseTemplate } from '../pipeline'
-import type { ColumnMapping, FontFiles, ParsedCsv, Template, ValidationResult } from '../pipeline'
+import type { CardData, ColumnMapping, CsvErrorCode, FontFiles, ParsedCsv, SideLayout, Template, ValidationResult } from '../pipeline'
 import { validate } from '../pipeline'
-import { guessMapping, keepMapping } from './mapping'
+import { guessMapping, keepMapping, mappedColumns } from './mapping'
 import * as store from './templateLibrary'
 import type { HistoryEntry, LibraryTemplate, SeasonAssignment } from './templateLibrary'
 import { currentSeason, defaultSeason, isSeasonField, seasonValues } from './season'
@@ -66,7 +66,14 @@ const templateName = computed(() => {
 
 const csv = shallowRef<ParsedCsv | null>(null)
 const csvName = ref('')
-const csvError = ref<'empty' | 'unreadable' | null>(null)
+const csvError = ref<CsvErrorCode | 'unreadable' | null>(null)
+/** Socios marcados en la lista del paso 2 (número de fila), para descargar solo sus carnets. */
+const chosenRows = ref<Set<number>>(new Set())
+
+/** Opciones del PDF (paso 3); valen también para descargar carnets sueltos desde la lista. */
+const pdfLayout = ref<'grid' | 'single'>('grid')
+const cropMarks = ref(true)
+const sideLayout = ref<SideLayout>('separate')
 
 const mapping = ref<ColumnMapping>({})
 /** Carnet válido que se está previsualizando. */
@@ -80,7 +87,7 @@ const staticValues = computed(() => ({ ...extraStatic.value, ...seasonValues(car
 
 const csvFields = computed(() => template.value?.fields.filter((f) => !f.isStatic) ?? [])
 const staticFields = computed(() => template.value?.fields.filter((f) => f.isStatic) ?? [])
-const mappingComplete = computed(() => csvFields.value.every((f) => Boolean(mapping.value[f.name])))
+const mappingComplete = computed(() => csvFields.value.every((f) => mappedColumns(mapping.value[f.name]).length > 0))
 
 const result = computed<ValidationResult | null>(() => {
   if (!template.value || !csv.value || !fonts.value || !mappingComplete.value) return null
@@ -93,6 +100,12 @@ watch([template, csv], ([t, c], [, previousCsv]) => {
   if (!t || !c) return
   mapping.value = c === previousCsv ? keepMapping(mapping.value, t.fields, c.headers) : guessMapping(t.fields, c.headers)
 })
+
+/** Carnets válidos de los socios marcados, en el orden del fichero. */
+const chosenCards = computed<CardData[]>(() => result.value?.valid.filter((card) => chosenRows.value.has(card.rowNumber)) ?? [])
+
+// Un fichero nuevo empieza sin nadie marcado
+watch(csv, () => (chosenRows.value = new Set()))
 
 // Si cambia la lista de válidos, la selección no puede quedarse fuera de rango.
 watch(result, (r) => {
@@ -198,6 +211,11 @@ export function useCarnets() {
     staticFields,
     mappingComplete,
     result,
+    chosenRows,
+    chosenCards,
+    pdfLayout,
+    cropMarks,
+    sideLayout,
 
     async init() {
       await Promise.all([loadFonts(), loadLibrary()])
@@ -284,7 +302,7 @@ export function useCarnets() {
         csvError.value = null
       } catch (error) {
         csv.value = null
-        csvError.value = error instanceof CsvError ? 'empty' : 'unreadable'
+        csvError.value = error instanceof CsvError ? error.code : 'unreadable'
       }
     },
   }

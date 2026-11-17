@@ -11,11 +11,17 @@ export interface RawRow {
 export type CsvDelimiter = ';' | ','
 export type CsvEncoding = 'utf-8' | 'windows-1252'
 
+/** Lista de socios leída de un fichero: CSV, Excel (.xlsx) o tabla HTML (el falso .xls que exportan muchas webs). */
 export interface ParsedCsv {
   headers: string[]
   rows: RawRow[]
-  delimiter: CsvDelimiter
-  encoding: CsvEncoding
+  format: 'csv' | 'xlsx' | 'html'
+  /** Solo CSV. */
+  delimiter: CsvDelimiter | null
+  /** CSV y HTML. */
+  encoding: CsvEncoding | null
+  /** Solo Excel: la hoja leída. */
+  sheet: string | null
 }
 
 export type TextAnchor = 'start' | 'middle' | 'end'
@@ -125,8 +131,11 @@ export interface GroupNode {
 
 export type DrawNode = GroupNode | ShapeNode | TextNode
 
-/** Nombre de campo de la plantilla → cabecera del CSV. */
-export type ColumnMapping = Record<string, string>
+/**
+ * Nombre de campo de la plantilla → cabecera del CSV, o varias cabeceras cuyos valores se unen con un espacio
+ * (p. ej. el nombre en "Nom" + "Cognoms").
+ */
+export type ColumnMapping = Record<string, string | string[]>
 
 export interface ValidationConfig {
   mapping: ColumnMapping
@@ -177,9 +186,17 @@ export type Imposition =
   /** Un carnet por página, del tamaño del carnet con sangrado (más margen para las marcas). */
   | { kind: 'single' }
 
+/**
+ * Cómo van las dos caras en el PDF (solo plantillas de dos caras):
+ * - `separate` (por defecto): primero todas las hojas de anversos y después todas las de reversos, en espejo.
+ * - `side-by-side`: cada anverso con su reverso a la derecha, en el mismo hueco.
+ */
+export type SideLayout = 'separate' | 'side-by-side'
+
 export interface PdfOptions {
   imposition: Imposition
   cropMarks: boolean
+  sides?: SideLayout
 }
 
 /** TTF de Inter por peso (500, 600, 700…). */
