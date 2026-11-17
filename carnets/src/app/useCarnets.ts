@@ -3,6 +3,7 @@ import { CsvError, loadFontSet, parseCsv, parseTemplate } from '../pipeline'
 import type { CardData, ColumnMapping, CsvErrorCode, FontFiles, ParsedCsv, SideLayout, Template, ValidationResult } from '../pipeline'
 import { validate } from '../pipeline'
 import { guessMapping, keepMapping, mappedColumns } from './mapping'
+import { loadRepoTemplates, planSync, repoTemplateId } from './repoTemplates'
 import * as store from './templateLibrary'
 import type { HistoryEntry, LibraryTemplate, SeasonAssignment } from './templateLibrary'
 import { currentSeason, defaultSeason, isSeasonField, seasonValues } from './season'
@@ -172,6 +173,41 @@ async function loadLibrary(select?: string): Promise<void> {
   }
 }
 
+/**
+ * Guarda en la biblioteca las plantillas del repositorio que aún no tiene y aprueba la oficial de su temporada
+ * (repoTemplates.ts), con la sesión de quien entra. Si algo falla (p. ej. otra persona de la junta lo ha hecho a la
+ * vez), se deja: lo vuelve a intentar quien entre después.
+ */
+async function syncRepoTemplates(email: string): Promise<void> {
+  if (libraryStatus.value !== 'ready') return
+  let actions
+  try {
+    actions = planSync(await loadRepoTemplates(), library.value, assignments.value, new Date())
+  } catch (error) {
+    console.warn('No se han podido leer las plantillas del repositorio.', error)
+    return
+  }
+  if (actions.length === 0) return
+
+  let approved: { season: string; name: string } | null = null
+  for (const action of actions) {
+    try {
+      const id = await repoTemplateId(action.template.svg)
+      if (action.approveFor) {
+        await store.publishTemplate(action.name, action.template.svg, action.approveFor, email, id)
+        approved = { season: action.approveFor, name: action.name }
+      } else {
+        await store.saveTemplate(action.name, action.template.svg, email, id)
+      }
+    } catch (error) {
+      console.warn(`No se ha podido guardar la plantilla ${action.template.path} del repositorio.`, error)
+    }
+  }
+  await loadLibrary()
+  // Se avisa en el paso 1, como cuando se aprueba a mano
+  if (approved) justApproved.value = approved
+}
+
 async function loadFonts(): Promise<void> {
   const entries = await Promise.all(
     Object.entries(FONT_URLS).map(async ([weight, url]) => {
@@ -217,8 +253,10 @@ export function useCarnets() {
     cropMarks,
     sideLayout,
 
-    async init() {
+    /** Carga lo necesario tras iniciar sesión y sincroniza las plantillas del repositorio con la biblioteca. */
+    async init(email: string | null) {
       await Promise.all([loadFonts(), loadLibrary()])
+      if (email) await syncRepoTemplates(email)
     },
 
     loadLibrary,

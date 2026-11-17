@@ -119,10 +119,16 @@ function assign(batch: ReturnType<typeof writeBatch>, id: string, name: string, 
   batch.set(doc(collection(db, SEASONS, season, HISTORY)), { template: id, name, assignedBy: email, assignedAt: serverTimestamp() })
 }
 
-/** Guarda una plantilla nueva en la biblioteca y la aprueba para `season`. Devuelve su id. */
-export async function publishTemplate(name: string, svg: string, season: string, email: string): Promise<string> {
+/** Documento para una plantilla nueva: con `id`, ese (las del repositorio); si no, uno al azar. */
+const newTemplate = (id?: string) => (id ? doc(db, TEMPLATES, id) : doc(collection(db, TEMPLATES)))
+
+/**
+ * Guarda una plantilla nueva en la biblioteca y la aprueba para `season`. Devuelve su id. Con `id`, si ya existe,
+ * las reglas lo rechazan (sería sobrescribirla) y no se escribe nada.
+ */
+export async function publishTemplate(name: string, svg: string, season: string, email: string, id?: string): Promise<string> {
   const batch = writeBatch(db)
-  const ref = doc(collection(db, TEMPLATES))
+  const ref = newTemplate(id)
   batch.set(ref, { name, svg, uploadedBy: email, uploadedAt: serverTimestamp() })
   assign(batch, ref.id, name, season, email)
   await batch.commit()
@@ -130,8 +136,8 @@ export async function publishTemplate(name: string, svg: string, season: string,
 }
 
 /** Guarda una plantilla en la biblioteca sin aprobarla para ninguna temporada (una alternativa para más adelante). */
-export async function saveTemplate(name: string, svg: string, email: string): Promise<string> {
-  const ref = doc(collection(db, TEMPLATES))
+export async function saveTemplate(name: string, svg: string, email: string, id?: string): Promise<string> {
+  const ref = newTemplate(id)
   await setDoc(ref, { name, svg, uploadedBy: email, uploadedAt: serverTimestamp() })
   return ref.id
 }

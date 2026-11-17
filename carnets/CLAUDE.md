@@ -43,7 +43,7 @@ Desde la raíz: `pnpm dev:carnets`, `pnpm test:carnets`, `pnpm build:carnets`, o
   `render.ts` (un carnet sobre pdf-lib), `pdf.ts` (imposición y marcas), `report.ts`, `xlsx.ts` (lector de Excel); `index.ts` lo reexporta todo
 - `src/pipeline/svg/`: compilador de la plantilla (`compile.ts`), estilos y CSS (`style.ts`), trazados (`path.ts`)
 - `src/app/`: estado de la interfaz (`useCarnets.ts`), sesión (`useSession.ts`), acceso a Firestore
-  (`templateLibrary.ts`) y lógica pura de la UI: temporadas (`season.ts`), cuentas del club (`club.ts`),
+  (`templateLibrary.ts`), plantillas del repositorio que llegan con el despliegue (`repoTemplates.ts`) y lógica pura de la UI: temporadas (`season.ts`), cuentas del club (`club.ts`),
   asignación automática de columnas (y conservarla al cambiar de plantilla), lista de socios con su estado,
   carnet de ejemplo, nombre más largo
 - `src/firebase.ts`: configuración de Firebase; en desarrollo se conecta siempre a los emuladores
@@ -63,7 +63,8 @@ Desde la raíz: `pnpm dev:carnets`, `pnpm test:carnets`, `pnpm build:carnets`, o
 - `src/assets/logotipo-acc.svg`: copia de `public/assets/svg/logotipo-acc.svg` de la web, para la cabecera.
   Si cambia el logo de la web, hay que volver a copiarlo (y el de la plantilla, ver más abajo)
 - `templates/`: plantillas oficiales, una por temporada (`plantilla-carnet-2026-27.svg`: diseño "Escut", dos caras).
-  No van en el bundle: se publican desde la app en Firestore. Sirven de punto de partida para la siguiente.
+  Van en el bundle (en un trozo aparte) y la app las sincroniza con Firestore al entrar (§ Plantillas del
+  repositorio): un cambio de diseño llega con el deploy. Sirven de punto de partida para la siguiente.
   `templates/propuestas/`: los otros dos diseños ("Diana" y "Fletxa"), para guardarlos en la biblioteca sin aprobar.
   Valen para cualquier temporada: su marca de agua es el campo `temporada_corta`
 - `fonts/`: Inter 4.1 en TTF estático (Medium, SemiBold, Bold, ExtraBold) + licencia OFL
@@ -80,7 +81,8 @@ Desde la raíz: `pnpm dev:carnets`, `pnpm test:carnets`, `pnpm build:carnets`, o
 - `scripts/make-template.mjs`: genera una plantilla oficial de dos caras para una temporada
   (`pnpm template [escut|diana|fletxa] [2027-28]`, deja `templates/plantilla-carnet-<temporada>.svg`). Son los tres
   diseños de las propuestas de 2026-27: "Escut" se eligió para 2026-27; "Diana" y "Fletxa" quedan para otros años.
-  Con la plantilla nueva: probarla en la app desde fichero y publicarla. Un test comprueba que regenera la de 2026-27
+  Con la plantilla nueva: probarla en la app desde fichero y desplegar; la app la publica y aprueba sola
+  (§ Plantillas del repositorio). Un test comprueba que regenera la de 2026-27
 - `scripts/pdf-to-png.mjs`: rasteriza un PDF a PNG (`node scripts/pdf-to-png.mjs fichero.pdf 150`).
   Úsalo para revisar a ojo cualquier cambio en la plantilla o en el render.
 
@@ -231,6 +233,15 @@ La UI muestra un resumen ("48 válidos, 2 con avisos, 3 excluidos") con la tabla
   renombrar y eliminar (solo las que no están asignadas a ninguna temporada), el historial de la temporada elegida
   y quitar su asignación. Al entrar se abre la de la temporada en curso (o la más reciente) y su temporada rellena
   el campo `temporada`.
+- **Plantillas del repositorio** (`src/app/repoTemplates.ts`): cada despliegue lleva los SVG de `templates/`. Al
+  entrar alguien de la junta, la app guarda en la biblioteca las versiones que no tiene (nombre "Escut · repo
+  2026-11-17", a nombre de quien entra) y aprueba la oficial de su temporada (`plantilla-carnet-<temporada>.svg`) si la
+  temporada no tiene plantilla o tiene una versión anterior del mismo diseño (el diseño sale del comentario
+  `(diseño "Escut")` que deja `make-template.mjs`). Si la temporada tiene aprobado otro diseño, la versión nueva
+  solo se guarda. Las propuestas solo se guardan. Cada versión se guarda una sola vez (se compara el SVG), así que si
+  la junta vuelve a aprobar otra a mano no se le cambia. El id del documento es un resumen del SVG (`repo-…`): si dos
+  personas entran a la vez, las reglas rechazan la segunda escritura. Las versiones anteriores siguen en la
+  biblioteca; se pueden eliminar desde el paso 1 si no están asignadas.
 - **`firestore.rules`** (raíz): todo solo con cuenta de Google del club verificada. Biblioteca: crear con nombre de
   1 a 80 caracteres, autor = quien publica, fecha del servidor, SVG de hasta 500 000 caracteres; después solo
   cambiar el nombre o eliminar. Temporadas: formato válido y plantilla existente; se pueden reasignar y quitar.

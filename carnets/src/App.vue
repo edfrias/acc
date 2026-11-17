@@ -101,7 +101,7 @@ watch(
   (value) => {
     if (value !== 'signed-in' || initialized) return
     initialized = true
-    void useCarnets().init()
+    void useCarnets().init(email.value)
   },
   { immediate: true },
 )
