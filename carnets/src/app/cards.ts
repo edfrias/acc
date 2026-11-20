@@ -1,16 +1,18 @@
 import { unitWidth } from '../pipeline/fonts'
-import type { CardData, DrawNode, FontSet, Template } from '../pipeline'
+import { formatName, NAME_FIELD } from '../pipeline'
+import type { CardData, DrawNode, FontSet, NameCase, Template } from '../pipeline'
 
 /**
  * Carnet con el texto de ejemplo de la plantilla, para previsualizarla antes de cargar socios.
- * Los campos estáticos ya configurados se muestran con su valor.
+ * Los campos estáticos ya configurados se muestran con su valor, y el nombre con las mayúsculas elegidas.
  */
-export function sampleCard(template: Template, staticValues: Record<string, string>): CardData {
+export function sampleCard(template: Template, staticValues: Record<string, string>, nameCase?: NameCase): CardData {
   const card: CardData = { rowNumber: 0, values: {}, fontSizes: {} }
   const visit = (node: DrawNode) => {
     if (node.type === 'group') node.children.forEach(visit)
     else if (node.type === 'text' && node.field !== null) {
-      card.values[node.field] = staticValues[node.field]?.trim() || node.content
+      const value = staticValues[node.field]?.trim() || node.content
+      card.values[node.field] = node.field === NAME_FIELD && nameCase ? formatName(value, nameCase) : value
       card.fontSizes[node.field] = node.fontSize
     }
   }

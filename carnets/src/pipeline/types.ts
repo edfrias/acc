@@ -137,10 +137,18 @@ export type DrawNode = GroupNode | ShapeNode | TextNode
  */
 export type ColumnMapping = Record<string, string | string[]>
 
+/**
+ * Cómo se escribe el nombre en el carnet, venga como venga en el fichero:
+ * `upper` todo en mayúsculas, `title` con la primera letra de cada palabra en mayúscula.
+ */
+export type NameCase = 'upper' | 'title'
+
 export interface ValidationConfig {
   mapping: ColumnMapping
   /** Valores de los campos estáticos (p. ej. `temporada`). */
   staticValues: Record<string, string>
+  /** Mayúsculas del campo del nombre (`NAME_FIELD`). Sin indicar, se deja tal como viene. */
+  nameCase?: NameCase
 }
 
 /** Datos listos para dibujar un carnet. */

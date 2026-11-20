@@ -155,6 +155,12 @@ así que hay mapeo de columnas en la UI. El nombre puede venir en una columna (n
 (nombre + apellidos, o nombre + primer y segundo apellido): en `ColumnMapping` un campo puede llevar una lista de
 columnas, que `validate` une con un espacio. `guessMapping` lo detecta solo si no hay columna de nombre completo.
 
+**Mayúsculas del nombre** (`ValidationConfig.nameCase`, a elegir en el paso 3): todo en mayúsculas (`upper`, por
+defecto, como el texto de ejemplo de las plantillas) o solo la inicial de cada palabra (`title`: "Maria del Carme
+Puig i Soler", partículas en minúscula, "Joan-Marc", "d'Alòs"). Así da igual cómo venga en el fichero. Lo aplica
+`validate` (`formatName`, `src/pipeline/case.ts`) antes de medir, así que el ancho y el aviso de reducción van con
+el texto final; el carnet de ejemplo también lo sigue.
+
 El formato se decide por el contenido, no por la extensión:
 - `.xlsx`: primera hoja con datos; número de fila = el de la hoja. Los números se leen sin formato (la licencia sale entera).
 - `.xls` que en realidad es una tabla HTML (lo que exportan muchas webs): se lee la primera `<table>`.

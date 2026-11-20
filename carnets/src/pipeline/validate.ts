@@ -1,3 +1,4 @@
+import { formatName } from './case'
 import { fontFor, missingGlyphs, unitWidth } from './fonts'
 import type { FontSet } from './fonts'
 import type {
@@ -13,6 +14,9 @@ import type {
 
 /** Campo con el número de federado: se normaliza y no puede repetirse. */
 export const LICENSE_FIELD = 'num_federado'
+
+/** Campo del nombre: puede venir en varias columnas y se le aplica `ValidationConfig.nameCase`. */
+export const NAME_FIELD = 'nombre'
 
 /** Por debajo de esta proporción del tamaño original, reducir la fuente genera un aviso. */
 export const REDUCTION_WARNING_RATIO = 0.8
@@ -94,6 +98,7 @@ function checkRow(row: RawRow, template: Template, config: ValidationConfig, fon
       }
       value = match[1]
     }
+    if (name === NAME_FIELD && config.nameCase) value = formatName(value, config.nameCase)
 
     const font = fontFor(fonts, field.fontWeight)
     const chars = missingGlyphs(font, value)

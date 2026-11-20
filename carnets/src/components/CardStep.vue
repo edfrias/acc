@@ -25,6 +25,21 @@
                   {{ t('card.change') }}
                 </button>
               </dd>
+              <dd v-if="field.name === NAME_FIELD" class="mt-2">
+                <fieldset>
+                  <legend class="mb-1 text-xs font-medium text-slate-600">{{ t('card.nameCase') }}</legend>
+                  <div class="flex flex-wrap gap-x-5 gap-y-1">
+                    <label class="flex items-center gap-2">
+                      <input v-model="nameCase" type="radio" value="upper" class="h-4 w-4 text-blue-600 focus:ring-blue-500" />
+                      {{ t('card.nameUpper') }}
+                    </label>
+                    <label class="flex items-center gap-2">
+                      <input v-model="nameCase" type="radio" value="title" class="h-4 w-4 text-blue-600 focus:ring-blue-500" />
+                      {{ t('card.nameTitle') }}
+                    </label>
+                  </div>
+                </fieldset>
+              </dd>
             </div>
             <div v-for="field in otherStatic" :key="field.name">
               <dt class="mb-1 font-medium text-slate-700">
@@ -69,7 +84,7 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { isSeasonField } from '../app/season'
-import { mappedColumns } from '../app/mapping'
+import { mappedColumns, NAME_FIELD } from '../app/mapping'
 import { useCarnets } from '../app/useCarnets'
 import { fieldLabel } from '../i18n'
 import CardPreview from './CardPreview.vue'
@@ -78,7 +93,7 @@ import DownloadStep from './DownloadStep.vue'
 import StepSection from './StepSection.vue'
 
 const { t, te } = useI18n()
-const { step, template, csv, csvFields, staticFields, mapping, extraStatic, result } = useCarnets()
+const { step, template, csv, csvFields, staticFields, mapping, nameCase, extraStatic, result } = useCarnets()
 /** Columna asignada al campo; si son varias (nombre + apellidos), unidas con «+». */
 const columnsOf = (field: string) => mappedColumns(mapping.value[field]).join(' + ')
 

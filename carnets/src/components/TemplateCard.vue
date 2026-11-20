@@ -101,7 +101,7 @@ import SeasonField from './SeasonField.vue'
 const props = defineProps<{ item: LibraryTemplate }>()
 
 const { t, locale } = useI18n()
-const { library, assignments, season, templateId, fontFiles, selectTemplate, approveTemplate, renameTemplate, deleteTemplate } =
+const { library, assignments, season, templateId, fontFiles, nameCase, selectTemplate, approveTemplate, renameTemplate, deleteTemplate } =
   useCarnets()
 const { email } = useSession()
 
@@ -124,7 +124,7 @@ const parsed = computed<Template | null>(() => {
 })
 const seasons = computed(() => seasonsOf(props.item.id, assignments.value))
 /** La miniatura muestra el texto de ejemplo, con la temporada para la que es oficial si lo es de alguna. */
-const sample = computed(() => (parsed.value ? sampleCard(parsed.value, seasons.value[0] ? seasonValues(seasons.value[0]) : {}) : undefined))
+const sample = computed(() => (parsed.value ? sampleCard(parsed.value, seasons.value[0] ? seasonValues(seasons.value[0]) : {}, nameCase.value) : undefined))
 const inUse = computed(() => templateId.value === props.item.id)
 
 /** Acción abierta en esta plantilla: solo una a la vez. */

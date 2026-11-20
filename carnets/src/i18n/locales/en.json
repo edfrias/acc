@@ -81,7 +81,10 @@
     "noColumn": "No column",
     "change": "Change",
     "summary": "{valid} cards will be generated ({rejected} excluded).",
-    "review": "Review the list"
+    "review": "Review the list",
+    "nameCase": "Name capitalisation",
+    "nameUpper": "All capitals (MARIA PUIG)",
+    "nameTitle": "Capitalised (Maria Puig)"
   },
   "template": {
     "official": "Official template for the {season} season: {name}",

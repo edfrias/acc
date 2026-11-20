@@ -81,7 +81,10 @@
     "noColumn": "Sense columna",
     "change": "Canviar",
     "summary": "Es generaran {valid} carnets ({rejected} exclosos).",
-    "review": "Revisar la llista"
+    "review": "Revisar la llista",
+    "nameCase": "Com s'escriu el nom",
+    "nameUpper": "Tot en majúscules (MARIA PUIG)",
+    "nameTitle": "Primera lletra en majúscula (Maria Puig)"
   },
   "template": {
     "official": "Plantilla oficial de la temporada {season}: {name}",

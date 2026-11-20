@@ -116,6 +116,7 @@ const {
   templateError,
   fontFiles,
   staticValues,
+  nameCase,
   loadLibrary,
   loadTemplateFile,
 } = useCarnets()
@@ -123,7 +124,7 @@ const {
 const hasSeason = computed(() => template.value?.fields.some((f) => f.isStatic && isSeasonField(f.name)) ?? false)
 
 /** La plantilla en uso con su texto de ejemplo y los campos estáticos ya configurados (la temporada). */
-const sample = computed(() => (template.value ? sampleCard(template.value, staticValues.value) : undefined))
+const sample = computed(() => (template.value ? sampleCard(template.value, staticValues.value, nameCase.value) : undefined))
 
 const day = (date: Date) => date.toLocaleDateString(locale.value)
 const fieldList = computed(() => template.value?.fields.map((f) => fieldLabel(t, te, f.name)).join(', ') ?? '')

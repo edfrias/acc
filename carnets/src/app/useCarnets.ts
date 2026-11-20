@@ -1,6 +1,6 @@
 import { computed, ref, shallowRef, watch } from 'vue'
 import { CsvError, loadFontSet, parseCsv, parseTemplate } from '../pipeline'
-import type { CardData, ColumnMapping, CsvErrorCode, FontFiles, ParsedCsv, SideLayout, Template, ValidationResult } from '../pipeline'
+import type { CardData, ColumnMapping, CsvErrorCode, FontFiles, NameCase, ParsedCsv, SideLayout, Template, ValidationResult } from '../pipeline'
 import { validate } from '../pipeline'
 import { guessMapping, keepMapping, mappedColumns } from './mapping'
 import { loadRepoTemplates, planSync, repoTemplateId } from './repoTemplates'
@@ -77,6 +77,8 @@ const cropMarks = ref(true)
 const sideLayout = ref<SideLayout>('separate')
 
 const mapping = ref<ColumnMapping>({})
+/** Cómo se escribe el nombre en el carnet (paso 3): así da igual si el fichero lo trae en mayúsculas o no. */
+const nameCase = ref<NameCase>('upper')
 /** Carnet válido que se está previsualizando. */
 const selected = ref(0)
 /** Temporada de los carnets ("2026-27"). Rellena los campos de temporada de la plantilla (`SEASON_FIELDS`). */
@@ -92,7 +94,7 @@ const mappingComplete = computed(() => csvFields.value.every((f) => mappedColumn
 
 const result = computed<ValidationResult | null>(() => {
   if (!template.value || !csv.value || !fonts.value || !mappingComplete.value) return null
-  return validate(csv.value.rows, template.value, { mapping: mapping.value, staticValues: staticValues.value }, fonts.value)
+  return validate(csv.value.rows, template.value, { mapping: mapping.value, staticValues: staticValues.value, nameCase: nameCase.value }, fonts.value)
 })
 
 // Con un CSV nuevo se vuelve a proponer la asignación de columnas. Con una plantilla nueva se conserva la que había:
@@ -239,6 +241,7 @@ export function useCarnets() {
     csvName,
     csvError,
     mapping,
+    nameCase,
     selected,
     cardSeason,
     extraStatic,

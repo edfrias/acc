@@ -1,4 +1,7 @@
+import { NAME_FIELD } from '../pipeline'
 import type { ColumnMapping, TemplateField } from '../pipeline'
+
+export { NAME_FIELD }
 
 /**
  * Cabeceras habituales de cada campo, normalizadas (sin acentos, espacios ni signos).
@@ -14,9 +17,6 @@ const KNOWN_HEADERS: Record<string, { exact: string[]; partial: string[] }> = {
     partial: ['llicenc', 'licenc', 'licens', 'federa', 'num'],
   },
 }
-
-/** Campo del nombre: es el que puede venir en dos columnas (nombre + apellidos). */
-export const NAME_FIELD = 'nombre'
 
 /** Columna con el nombre completo: si la hay, se usa aunque también haya nombre y apellidos por separado. */
 const FULL_NAME = ['nomcomplet', 'nombrecompleto', 'fullname', 'nomicognoms', 'nomcognoms', 'nombreyapellidos', 'nombreapellidos']

@@ -38,13 +38,13 @@ import CardCanvas from './CardCanvas.vue'
 import StepSection from './StepSection.vue'
 
 const { t } = useI18n()
-const { template, fontFiles, fonts, result, selected, staticValues } = useCarnets()
+const { template, fontFiles, fonts, result, selected, staticValues, nameCase } = useCarnets()
 
 const cards = computed(() => result.value?.valid ?? [])
 /** Sin socios cargados se enseña la plantilla con su texto de ejemplo. */
 const card = computed(() => {
   if (cards.value.length > 0) return cards.value[selected.value]
-  return template.value ? sampleCard(template.value, staticValues.value) : undefined
+  return template.value ? sampleCard(template.value, staticValues.value, nameCase.value) : undefined
 })
 
 const buttonClass =
