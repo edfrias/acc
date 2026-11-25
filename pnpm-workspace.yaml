@@ -1,3 +1,8 @@
 # La web del club es el paquete raíz; carnets/ es una app independiente dentro del mismo workspace.
 packages:
   - carnets
+
+# @firebase/firestore fija @grpc/grpc-js en 1.9.x, con avisos de seguridad (GHSA-f596-whhp-79r4).
+# Solo lo usa la versión de Node de Firestore (los tests de reglas), no el navegador. Quitar cuando Firebase lo suba.
+overrides:
+  '@grpc/grpc-js': ^1.13.6

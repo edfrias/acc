@@ -42,4 +42,21 @@ describe('buildReport', () => {
   it('separa las filas con CRLF, como Excel', () => {
     expect(csv).toContain('Motiu\r\n12;')
   })
+
+  it('neutraliza las celdas que Excel ejecutaría como fórmula, pero no los números con signo', () => {
+    const values = ['=HYPERLINK("http://x")', '@SUM(A1)', '+cmd|calc', '-1+1', '+34 600 111 222', '-5']
+    const rows: RejectedRow[] = values.map((value, i) => ({
+      row: { rowNumber: i + 2, data: { Nom: value } },
+      reasons: [{ rowNumber: i + 2, field: 'nombre', code: 'empty-field' }],
+    }))
+    const { data } = Papa.parse<string[]>(buildReport(rows, ['Nom'], labels).slice(1), { delimiter: ';' })
+    expect(data.slice(1).map((row) => row[1])).toEqual([
+      `'=HYPERLINK("http://x")`,
+      `'@SUM(A1)`,
+      `'+cmd|calc`,
+      `'-1+1`,
+      '+34 600 111 222',
+      '-5',
+    ])
+  })
 })

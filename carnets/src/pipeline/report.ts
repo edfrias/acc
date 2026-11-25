@@ -4,6 +4,12 @@ import type { RejectedRow, ValidationIssue } from './types'
 /** Marca de orden de bytes: sin ella, Excel abre un CSV en UTF-8 como si fuera Windows-1252. */
 const UTF8_BOM = '\uFEFF'
 
+/**
+ * Celdas que Excel ejecutar\u00EDa como f\u00F3rmula al abrir el informe (inyecci\u00F3n de CSV): Papa les antepone un ap\u00F3strofo.
+ * Un "+" o "-" seguido solo de cifras ("+34 600 111 222", "-5") es un n\u00FAmero, no una f\u00F3rmula: se deja tal cual.
+ */
+const FORMULA = /^[=@\t\r]|^[+-](?![\d\s.,]*$)/
+
 export interface ReportLabels {
   /** Cabecera de la columna con el número de fila. */
   row: string
@@ -24,6 +30,9 @@ export function buildReport(rejected: RejectedRow[], headers: string[], labels: 
     ...headers.map((header) => row.data[header] ?? ''),
     reasons.map(labels.describe).join(' | '),
   ])
-  const csv = Papa.unparse({ fields: [labels.row, ...headers, labels.reason], data: rows }, { delimiter: ';', newline: '\r\n' })
+  const csv = Papa.unparse(
+    { fields: [labels.row, ...headers, labels.reason], data: rows },
+    { delimiter: ';', newline: '\r\n', escapeFormulae: FORMULA },
+  )
   return UTF8_BOM + csv
 }
